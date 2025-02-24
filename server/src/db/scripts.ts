@@ -3,12 +3,21 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.user.create({
-    data: {
-      email: "emiryscn@gmail.com",
-      name: "emir",
-    },
-  });
+  // await prisma.user.deleteMany();
+
+  // await prisma.user.create({
+  //   data: {
+  //     email: "emiryscn@gmail.com",
+  //     username: "emir",
+  //   },
+  // });
+
+  // await prisma.user.findUnique({
+  //   where: { id: 3 },
+  //   include: {
+  //     posts: {select: {}}
+  //   }
+  // });
 
   const users = await prisma.user.findMany();
   console.dir(users, { depth: null });
