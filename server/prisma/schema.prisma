@@ -24,11 +24,13 @@ model User {
   id       Int       @id @default(autoincrement())
   email    String    @unique
   username String?
+  password String?
   role     ROLE      @default(USER)
+  avatar   String?   // Direct URL to avatar image
   posts    Post[]
   profile  Profile?
   comments Comment[]
-  media    Media[]
+  media    Media[]   // For other media uploaded by the user
 }
 
 model Post {

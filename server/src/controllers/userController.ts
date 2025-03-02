@@ -1,9 +1,18 @@
 import { NextFunction, Request, Response } from "express";
-import { prisma } from "../db/prismaClient";
 import * as userQueries from "../db/user.queries";
 
 import catchAsync from "../utils/catchAsync";
 import AppError from "../utils/appError";
+import { User } from "@prisma/client";
+
+export const getMe = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.user as User;
+    const user = await userQueries.getUser(id);
+
+    res.status(200).json({ status: "success", data: { user } });
+  }
+);
 
 export const getUsers = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {

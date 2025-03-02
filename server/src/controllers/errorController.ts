@@ -1,6 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import AppError from "../utils/appError";
 
+const handleJWTError = () =>
+  new AppError("Invalid token. Please log in again!", 401);
+
+const handleJWTExpiredError = () =>
+  new AppError("Your token has expired! Please log in again.", 401);
+
 const sendErrorDev = (err: AppError, req: Request, res: Response) => {
   // A) API
   if (req.originalUrl.startsWith("/api")) {
@@ -79,8 +85,8 @@ export const globalErrorHandler = (
     // if (error.code === 11000) error = handleDuplicateFieldsDB(error);
     // if (error.name === "ValidationError")
     //   error = handleValidationErrorDB(error);
-    // if (error.name === "JsonWebTokenError") error = handleJWTError();
-    // if (error.name === "TokenExpiredError") error = handleJWTExpiredError();
+    if (error.name === "JsonWebTokenError") error = handleJWTError();
+    if (error.name === "TokenExpiredError") error = handleJWTExpiredError();
 
     sendErrorProd(error, req, res);
   }

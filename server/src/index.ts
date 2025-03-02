@@ -8,6 +8,10 @@ import { rateLimit } from "express-rate-limit";
 import morgan from "morgan";
 
 import { router as userRouter } from "./routes/userRoutes";
+import { router as postRouter } from "./routes/postRoutes";
+import { router as commentRouter } from "./routes/commentRoutes";
+import { router as authRouter } from "./routes/authRoutes";
+
 import AppError from "./utils/appError";
 import { globalErrorHandler } from "./controllers/errorController";
 
@@ -49,7 +53,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../public")));
 
 // Routes
+app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/posts", postRouter);
+app.use("/api/v1/comments", commentRouter);
 
 // Handle undefined routes
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
