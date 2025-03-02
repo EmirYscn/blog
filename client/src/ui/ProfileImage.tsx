@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useUser } from "../hooks/useUser";
 
 const sizes = {
   sm: "3rem",
@@ -40,10 +41,12 @@ type ProfileImageProps = {
 };
 
 function ProfileImage({ size }: ProfileImageProps) {
+  const { user } = useUser();
+
   return (
     <StyledProfileImage>
       <ImageWrapper size={size}>
-        <Image src="/default-profile-icon.png" />
+        <Image src={user?.avatar || "/default-profile-icon.png"} />
       </ImageWrapper>
     </StyledProfileImage>
   );

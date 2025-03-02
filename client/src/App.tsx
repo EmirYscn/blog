@@ -10,6 +10,7 @@ import ProtectedRoute from "./hooks/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
 import Signup from "./pages/Signup";
 import { ThemeContextProvider } from "./contexts/DarkMode/ThemeContextProvider";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,9 +28,11 @@ function App() {
             <Routes>
               <Route element={<AppLayout />}>
                 <Route index element={<Home />} />
+                <Route path="profile" element={<Profile />} />
               </Route>
 
               <Route path="login" element={<Login />} />
+              {/* <Route path="settings" element={<Settings />} /> */}
               <Route path="signup" element={<Signup />} />
               <Route path="*" element={<PageNotFound />} />
             </Routes>

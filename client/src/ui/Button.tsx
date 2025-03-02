@@ -58,7 +58,6 @@ const variations = {
   `,
   icon: css`
     border-radius: 50%;
-    border: 1px solid var(--color-grey-300);
     padding: 1rem;
   `,
   login: css`
@@ -75,6 +74,17 @@ const variations = {
       color: var(--color-brand-600);
     }
   `,
+  iconWithText: css`
+    border-radius: 6px;
+
+    &:hover {
+      color: var(--color-brand-600);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  `,
 };
 
 type ButtonProps = {
@@ -86,7 +96,8 @@ type ButtonProps = {
     | "create"
     | "icon"
     | "login"
-    | "logout";
+    | "logout"
+    | "iconWithText";
   icon?: React.ReactNode;
   children?: React.ReactNode;
   onClick?: () => void;

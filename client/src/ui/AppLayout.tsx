@@ -25,13 +25,7 @@ const Main = styled.main<{ $isDarkMode?: boolean }>`
 `;
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 60%; /* Adjust container width to 70% */
-  margin: 0 auto; /* Center container horizontally */
-  height: 100%;
-  padding: 1rem;
+  padding: 4rem 1rem;
 `;
 
 function AppLayout() {

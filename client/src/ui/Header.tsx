@@ -5,11 +5,14 @@ import Button from "./Button";
 import { FiPlus } from "react-icons/fi";
 import SearchBar from "./SearchBar";
 import Logo from "./Logo";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useUser } from "../hooks/useUser";
 import { useLogout } from "../hooks/useLogout";
 import DarkModeToggle from "./DarkModeToggle";
 import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
+import Menus from "./Menus";
+import { IoPerson, IoSettingsOutline } from "react-icons/io5";
+import { TbLogout } from "react-icons/tb";
 
 const StyledHeader = styled.div<{ $isDarkMode?: boolean }>`
   padding: 1rem 4rem;
@@ -17,7 +20,7 @@ const StyledHeader = styled.div<{ $isDarkMode?: boolean }>`
   /* box-shadow: var(--shadow-md); */
   border-bottom: 1px solid
     ${(props) => (props.$isDarkMode ? "#d1a5864d" : "#1d5d914d")};
-  position: fixed; /* Make the header fixed at the top */
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -26,7 +29,6 @@ const StyledHeader = styled.div<{ $isDarkMode?: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* position: relative; */
 
   ${(props) =>
     props.$isDarkMode &&
@@ -50,9 +52,10 @@ const SearchContainer = styled.div`
 `;
 
 function Header() {
-  const { isAuthenticated } = useUser();
+  const { user, isAuthenticated } = useUser();
   const { logout, isPending } = useLogout();
   const { isDarkMode } = useDarkMode();
+  const navigate = useNavigate();
 
   return (
     <StyledHeader $isDarkMode={isDarkMode}>
@@ -68,10 +71,30 @@ function Header() {
         <Button icon={<FaRegBell />} />
         {isAuthenticated ? (
           <>
-            <ProfileImage size="sm" />
-            <Button variation="logout" onClick={logout}>
-              Logout
-            </Button>
+            <Menus>
+              <Menus.Menu>
+                <Menus.Toggle id={user!.id}>
+                  <ProfileImage size="sm" />
+                </Menus.Toggle>
+                <Menus.List id={user!.id}>
+                  <Menus.Button
+                    icon={<IoPerson />}
+                    onClick={() => navigate("/profile")}
+                  >
+                    Profile
+                  </Menus.Button>
+                  <Menus.Button
+                    icon={<IoSettingsOutline />}
+                    onClick={() => navigate("/settings")}
+                  >
+                    Settings
+                  </Menus.Button>
+                  <Menus.Button icon={<TbLogout />} onClick={logout}>
+                    Logout
+                  </Menus.Button>
+                </Menus.List>
+              </Menus.Menu>
+            </Menus>
           </>
         ) : (
           <Button variation="login">
