@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { useDarkMode } from "../context/DarkModeContext";
 import { Link } from "react-router";
+import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
 
 const sizes = {
   sm: css`
@@ -30,14 +30,14 @@ type LogoProps = {
 };
 
 function Logo({ size }: LogoProps) {
-  // const { isDarkMode } = useDarkMode();
+  const { isDarkMode } = useDarkMode();
 
-  // const src = isDarkMode ? "/logo-dark.png" : "/logo-light.png";
+  const src = isDarkMode ? "/logo-dark.svg" : "/logo-light.svg";
 
   return (
     <StyledLogo>
       <Link to={"/"}>
-        <Img src={"/logo.svg"} alt="Logo" size={size} />
+        <Img src={src} alt="Logo" size={size} />
       </Link>
     </StyledLogo>
   );

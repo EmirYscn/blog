@@ -1,11 +1,11 @@
-import axios from "axios";
+import { Post } from "../types/types";
+import { api } from "./apiAuth";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
-
-export const getPosts = async () => {
+export const getPosts = async (): Promise<Post[]> => {
   try {
-    const res = await axios.get(`${API_BASE_URL}/posts`);
-    return res.data; // Axios automatically parses JSON
+    const res = await api.get("/api/v1/posts");
+    console.log(res);
+    return res.data.posts; // Axios automatically parses JSON
   } catch (error) {
     console.log(error);
     throw new Error("Couldn't fetch posts");

@@ -4,10 +4,90 @@ export enum ROLE {
   AUTHOR = "AUTHOR",
 }
 
-export type User = {
-  id: number;
-  email: string;
-  username: string;
-  role: ROLE;
-  avatar: string;
+export type Profile = {
+  id: string;
+  bio?: string | null;
+  userId: string;
+  user?: User;
 };
+
+export type User = {
+  id: string;
+  email: string;
+  username?: string | null;
+  password?: string | null;
+  role: ROLE;
+  avatar?: string | null;
+
+  posts?: Post[];
+  profile?: Profile | null;
+  comments?: Comment[];
+  media?: Media[];
+  likes?: Like[];
+};
+
+export type Post = {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt?: Date | null;
+  title: string;
+  content?: string | null;
+  published: boolean;
+  authorId: string;
+
+  author?: User;
+  comments?: Comment[];
+  tags: string[];
+  media?: Media[];
+  likes?: Like[];
+};
+
+export type Comment = {
+  id: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+  postId: string;
+  authorId: string;
+  parentId?: string | null;
+
+  post?: Post;
+  author?: User;
+  parent?: Comment | null;
+  replies?: Comment[];
+  likes?: Like[];
+};
+
+export type Like = {
+  id: string;
+  createdAt: Date;
+  userId: string;
+  postId?: string | null;
+  commentId?: string | null;
+
+  user?: User;
+  post?: Post | null;
+  comment?: Comment | null;
+};
+
+export type Media = {
+  id: string;
+  url: string;
+  type: string;
+  createdAt: Date;
+  userId: string;
+  postId?: string | null;
+
+  user?: User;
+  post?: Post | null;
+};
+
+// Optional: Type guards and utility types
+export function isAdmin(user: User): boolean {
+  return user.role === ROLE.ADMIN;
+}
+
+export function isAuthor(user: User): boolean {
+  return user.role === ROLE.AUTHOR;
+}

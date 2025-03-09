@@ -33,7 +33,7 @@ function LoginForm() {
 
   return (
     <Form onSubmit={handleSubmit} $isDarkMode={isDarkMode}>
-      <FormRowVertical label="Email address">
+      <FormRowVertical label="Email">
         <Input
           type="email"
           id="email"

@@ -4,7 +4,7 @@ import { User } from "../types/types";
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
 // Create axios instance with base URL
-const api = axios.create({
+export const api = axios.create({
   baseURL: API_BASE_URL,
 });
 

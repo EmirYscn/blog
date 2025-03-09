@@ -23,11 +23,11 @@ const StyledToggle = styled.button<{ $isDarkMode?: boolean }>`
   &:hover {
     background-color: var(--color-grey-100);
 
-    ${(props) =>
+    /* ${(props) =>
       props.$isDarkMode &&
       css`
         background-color: var(--color-black-500);
-      `}
+      `} */
   }
 
   &:focus {
@@ -39,11 +39,11 @@ const StyledToggle = styled.button<{ $isDarkMode?: boolean }>`
     height: 2.4rem;
     color: var(--color-grey-700);
 
-    ${(props) =>
+    /* ${(props) =>
       props.$isDarkMode &&
       css`
         color: var(--color-grey-200);
-      `}
+      `} */
   }
 `;
 
@@ -57,12 +57,12 @@ const StyledList = styled.ul<{ position: Position; $isDarkMode?: boolean }>`
   right: ${(props) => props?.position!.x}px;
   top: ${(props) => props?.position!.y}px;
 
-  ${(props) =>
+  /* ${(props) =>
     props.$isDarkMode &&
     css`
       background-color: var(--color-black-300);
       color: var(--color-grey-200);
-    `}
+    `} */
 
   z-index: 200;
 `;
@@ -86,11 +86,11 @@ const StyledButton = styled.button<{
   &:hover {
     background-color: var(--color-grey-50);
 
-    ${(props) =>
+    /* ${(props) =>
       props.$isDarkMode &&
       css`
         background-color: var(--color-black-400);
-      `}
+      `} */
   }
 
   & svg {
@@ -155,6 +155,7 @@ function Toggle({ id, children, icon }: ToggleProps) {
   const { openId, close, open, setPosition, isDarkMode } = context;
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+    e.stopPropagation();
     const button = (e.target as HTMLElement).closest("button");
     if (button) {
       const rect = button.getBoundingClientRect();
@@ -183,7 +184,7 @@ function Toggle({ id, children, icon }: ToggleProps) {
 }
 
 type ListProps = {
-  id: number;
+  id: number | string;
   children: React.ReactNode;
 };
 
@@ -194,7 +195,7 @@ function List({ id, children }: ListProps) {
   }
   const { openId, position, close, isDarkMode } = context;
 
-  const ref = useOutsideClick<HTMLUListElement>(close);
+  const ref = useOutsideClick<HTMLUListElement>(close, false);
 
   if (openId !== id) return null;
 

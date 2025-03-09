@@ -17,25 +17,13 @@ import { TbLogout } from "react-icons/tb";
 const StyledHeader = styled.div<{ $isDarkMode?: boolean }>`
   padding: 1rem 4rem;
   background-color: var(--color-grey-50);
-  /* box-shadow: var(--shadow-md); */
-  border-bottom: 1px solid
-    ${(props) => (props.$isDarkMode ? "#d1a5864d" : "#1d5d914d")};
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10; /* Ensures the header stays on top of other elements */
-  width: 100%; /* Make sure it stretches across the screen */
+  box-shadow: var(--shadow-sm);
+  z-index: 100;
+  /* border-bottom: 1px solid
+    ${(props) => (props.$isDarkMode ? "#d1a5864d" : "#1d5d914d")}; */
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  ${(props) =>
-    props.$isDarkMode &&
-    css`
-      background-color: var(--color-black-200);
-      color: var(--color-grey-200);
-    `}
 `;
 
 const ProfileContainer = styled.div`
@@ -74,12 +62,12 @@ function Header() {
             <Menus>
               <Menus.Menu>
                 <Menus.Toggle id={user!.id}>
-                  <ProfileImage size="sm" />
+                  <ProfileImage imgSrc={user?.avatar} size="sm" />
                 </Menus.Toggle>
                 <Menus.List id={user!.id}>
                   <Menus.Button
                     icon={<IoPerson />}
-                    onClick={() => navigate("/profile")}
+                    onClick={() => navigate(`/profile/${user!.id}`)}
                   >
                     Profile
                   </Menus.Button>

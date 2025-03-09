@@ -2,7 +2,6 @@ import { Outlet } from "react-router";
 import styled, { css } from "styled-components";
 
 import Header from "./Header";
-import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
 
 const StyledAppLayout = styled.div`
   display: grid;
@@ -12,16 +11,8 @@ const StyledAppLayout = styled.div`
 
 const Main = styled.main<{ $isDarkMode?: boolean }>`
   background-color: var(--color-grey-50);
-  padding: 6.4rem 4.8rem 6.4rem; /* Add top padding to compensate for the header height */
-  align-items: center;
-  margin-top: 4rem; /* This margin will create space for the fixed header */
-
-  ${(props) =>
-    props.$isDarkMode &&
-    css`
-      background-color: var(--color-black-200);
-      color: var(--color-grey-200);
-    `}
+  padding: 6.4rem 4.8rem 6.4rem;
+  overflow-y: auto;
 `;
 
 const Container = styled.div`
@@ -29,12 +20,10 @@ const Container = styled.div`
 `;
 
 function AppLayout() {
-  const { isDarkMode } = useDarkMode();
-
   return (
     <StyledAppLayout>
       <Header />
-      <Main $isDarkMode={isDarkMode}>
+      <Main>
         <Container>
           <Outlet />
         </Container>

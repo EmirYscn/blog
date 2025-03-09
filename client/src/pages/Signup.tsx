@@ -11,10 +11,12 @@ const SignupLayout = styled.main<{ $isDarkMode?: boolean }>`
   align-content: center;
   justify-content: center;
   gap: 3.2rem;
-  background-color: ${(props) =>
+  background-color: var(--color-grey-50);
+  color: var(--color-grey-900);
+  /* background-color: ${(props) =>
     props.$isDarkMode ? "var(--color-black-200)" : "var(--color-grey-50)"};
   color: ${(props) =>
-    props.$isDarkMode ? "var(--color-grey-50)" : "var(--color-black-200)"};
+    props.$isDarkMode ? "var(--color-grey-50)" : "var(--color-black-200)"}; */
 `;
 
 function Signup() {

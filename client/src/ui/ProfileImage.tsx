@@ -36,17 +36,16 @@ const Image = styled.img`
 type ProfileImageProps = {
   children?: React.ReactNode;
   onClick?: () => void;
+  imgSrc: string | undefined | null;
   size?: "sm" | "md" | "lg";
   context?: "header" | "settings";
 };
 
-function ProfileImage({ size }: ProfileImageProps) {
-  const { user } = useUser();
-
+function ProfileImage({ imgSrc, size }: ProfileImageProps) {
   return (
     <StyledProfileImage>
       <ImageWrapper size={size}>
-        <Image src={user?.avatar || "/default-profile-icon.png"} />
+        <Image src={imgSrc || "/default-profile-icon.png"} />
       </ImageWrapper>
     </StyledProfileImage>
   );

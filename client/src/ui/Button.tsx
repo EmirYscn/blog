@@ -23,7 +23,7 @@ const sizes = {
 const variations = {
   create: css`
     background-color: var(--color-brand-600);
-    color: var(--color-grey-50);
+    color: var(--color-white);
     border-radius: 100px;
 
     & svg {
@@ -32,9 +32,8 @@ const variations = {
     }
   `,
   primary: css`
-    color: var(--color-grey-50);
     background-color: var(--color-brand-600);
-
+    color: var(--color-white);
     &:hover {
       background-color: var(--color-brand-700);
     }
@@ -111,6 +110,7 @@ const StyledButton = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
   gap: 0.2rem;
+  color: var(--color-grey-900);
 
   ${(props) => props.size && sizes[props.size]}
   ${(props) => props.variation && variations[props.variation]}

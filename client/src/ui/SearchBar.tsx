@@ -19,6 +19,7 @@ const SearchInput = styled.input`
   border-radius: 100px;
   outline: none;
   transition: border-color 0.3s ease;
+  background-color: var(--color-grey-50);
 
   &:focus {
     border-color: #1d5d914d;

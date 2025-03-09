@@ -22,14 +22,25 @@ export const getUsers = catchAsync(
   }
 );
 
-export const getUser = catchAsync(
+export const getProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const id = parseInt(req.params.id, 10);
-    if (isNaN(id)) {
-      return next(new AppError("Invalid user ID", 400));
+    const { id } = req.params;
+
+    const profile = await userQueries.getProfile(id);
+
+    if (!profile) {
+      return next(new AppError(`Profile with ID ${id} not found`, 404));
     }
 
-    const user = await userQueries.getUser(+id);
+    res.status(200).json({ status: "success", profile });
+  }
+);
+
+export const getUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+
+    const user = await userQueries.getUser(id);
 
     if (!user) {
       return next(new AppError(`User with ID ${id} not found`, 404));

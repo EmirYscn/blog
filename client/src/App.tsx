@@ -11,6 +11,7 @@ import { Toaster } from "react-hot-toast";
 import Signup from "./pages/Signup";
 import { ThemeContextProvider } from "./contexts/DarkMode/ThemeContextProvider";
 import Profile from "./pages/Profile";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,11 +25,12 @@ function App() {
       <ThemeContextProvider>
         <GlobalStyles />
         <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
           <BrowserRouter>
             <Routes>
               <Route element={<AppLayout />}>
                 <Route index element={<Home />} />
-                <Route path="profile" element={<Profile />} />
+                <Route path="profile/:profileId" element={<Profile />} />
               </Route>
 
               <Route path="login" element={<Login />} />

@@ -4,4 +4,14 @@ export type ChangeEvent = React.ChangeEvent<
   HTMLInputElement | HTMLSelectElement
 >;
 
-export type { ROLE, User } from "../../../shared/types";
+export type {
+  ROLE,
+  User,
+  Comment,
+  Like,
+  Media,
+  Post,
+  Profile,
+  isAdmin,
+  isAuthor,
+} from "../../../shared/types";

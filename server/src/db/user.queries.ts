@@ -6,7 +6,7 @@ export const getUsers = async () => {
   return users;
 };
 
-export const getUser = async (id: number) => {
+export const getUser = async (id: string) => {
   const user = await prisma.user.findUnique({
     where: { id },
   });
@@ -18,7 +18,7 @@ export const findUserByEmail = async (email: string) => {
   return user;
 };
 
-export const findUserById = async (id: number) => {
+export const findUserById = async (id: string) => {
   const user = await prisma.user.findUnique({ where: { id } });
   return user;
 };
@@ -26,4 +26,12 @@ export const findUserById = async (id: number) => {
 export const createUser = async (body: User) => {
   const user = await prisma.user.create({ data: body });
   return user;
+};
+
+export const getProfile = async (id: string) => {
+  const profile = await prisma.profile.findUnique({
+    where: { userId: id },
+    include: { user: true },
+  });
+  return profile;
 };

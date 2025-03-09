@@ -7,6 +7,6 @@
     "esModuleInterop": true, // For importing CommonJS modules
     "strict": true // Enable strict type checking
   },
-  "include": ["src/**/*.ts"], // Include all TypeScript files in src
+  "include": ["src/**/*.ts", "prisma/seed.js"], // Include all TypeScript files in src
   "exclude": ["node_modules"]
 }
