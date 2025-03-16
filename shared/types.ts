@@ -16,7 +16,7 @@ export type User = {
   email: string;
   username?: string | null;
   password?: string | null;
-  role: ROLE;
+  role?: ROLE;
   avatar?: string | null;
 
   posts?: Post[];
@@ -28,9 +28,9 @@ export type User = {
 
 export type Post = {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt?: Date | null;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+  deletedAt?: Date | string | null;
   title: string;
   content?: string | null;
   published: boolean;
@@ -46,8 +46,8 @@ export type Post = {
 export type Comment = {
   id: string;
   content: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | string;
+  updatedAt: Date | string;
   postId: string;
   authorId: string;
   parentId?: string | null;
@@ -61,7 +61,7 @@ export type Comment = {
 
 export type Like = {
   id: string;
-  createdAt: Date;
+  createdAt: Date | string;
   userId: string;
   postId?: string | null;
   commentId?: string | null;
@@ -75,7 +75,7 @@ export type Media = {
   id: string;
   url: string;
   type: string;
-  createdAt: Date;
+  createdAt: Date | string;
   userId: string;
   postId?: string | null;
 

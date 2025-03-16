@@ -1,8 +1,6 @@
-import styled from "styled-components";
 import Menus from "./Menus";
 import { useNavigate } from "react-router";
 import { useUser } from "../hooks/useUser";
-import { User } from "../types/types";
 import { FaRegUser } from "react-icons/fa6";
 import { HiOutlineTrash } from "react-icons/hi2";
 

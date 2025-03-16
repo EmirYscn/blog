@@ -6,7 +6,6 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import ProtectedRoute from "./hooks/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
 import Signup from "./pages/Signup";
 import { ThemeContextProvider } from "./contexts/DarkMode/ThemeContextProvider";

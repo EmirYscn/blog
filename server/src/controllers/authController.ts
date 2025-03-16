@@ -40,7 +40,6 @@ export const getCurrentUser = (
 
 export const signup = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body);
     const result = validationResult(req);
     if (!result.isEmpty()) {
       return res.status(403).json({
@@ -55,7 +54,7 @@ export const signup = catchAsync(
     const user = { ...req.body, password: hashedPassword };
 
     const newUser = await userQueries.createUser(user);
-    console.log(newUser);
+
     res.status(201).json({
       status: "success",
       data: {

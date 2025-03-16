@@ -40,12 +40,12 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // Limit requests from same API
-const limiter = rateLimit({
-  max: 100,
-  windowMs: 60 * 60 * 1000,
-  message: "Too many requests from this IP, please try again in an hour!",
-});
-app.use("/api", limiter);
+// const limiter = rateLimit({
+//   max: 100,
+//   windowMs: 60 * 60 * 1000,
+//   message: "Too many requests from this IP, please try again in an hour!",
+// });
+// app.use("/api", limiter);
 
 // app middleware to use form body in post router
 app.use(express.json());

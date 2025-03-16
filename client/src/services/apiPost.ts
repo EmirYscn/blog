@@ -1,7 +1,7 @@
-import { Post } from "../types/types";
+import { PostType } from "../types/types";
 import { api } from "./apiAuth";
 
-export const getPosts = async (): Promise<Post[]> => {
+export const getPosts = async (): Promise<PostType[]> => {
   try {
     const res = await api.get("/api/v1/posts");
     console.log(res);

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useUser } from "../hooks/useUser";
 
 const sizes = {
   sm: "3rem",

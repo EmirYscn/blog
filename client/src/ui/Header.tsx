@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import ProfileImage from "./ProfileImage";
 import { FaRegBell } from "react-icons/fa6";
 import Button from "./Button";
@@ -41,7 +41,7 @@ const SearchContainer = styled.div`
 
 function Header() {
   const { user, isAuthenticated } = useUser();
-  const { logout, isPending } = useLogout();
+  const { logout } = useLogout();
   const { isDarkMode } = useDarkMode();
   const navigate = useNavigate();
 
@@ -67,7 +67,7 @@ function Header() {
                 <Menus.List id={user!.id}>
                   <Menus.Button
                     icon={<IoPerson />}
-                    onClick={() => navigate(`/profile/${user!.id}`)}
+                    onClick={() => navigate(`/profile/${user?.id}`)}
                   >
                     Profile
                   </Menus.Button>

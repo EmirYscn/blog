@@ -24,14 +24,33 @@ export const findUserById = async (id: string) => {
 };
 
 export const createUser = async (body: User) => {
-  const user = await prisma.user.create({ data: body });
-  return user;
+  return await prisma.$transaction(async (prisma) => {
+    const user = await prisma.user.create({ data: body });
+    await prisma.profile.create({
+      data: {
+        userId: user.id,
+      },
+    });
+
+    return user;
+  });
 };
 
 export const getProfile = async (id: string) => {
   const profile = await prisma.profile.findUnique({
     where: { userId: id },
-    include: { user: true },
+    include: {
+      user: {
+        select: {
+          avatar: true,
+          email: true,
+          id: true,
+          role: true,
+          username: true,
+          posts: true,
+        },
+      },
+    },
   });
   return profile;
 };

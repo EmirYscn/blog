@@ -1,5 +1,5 @@
 import { Outlet } from "react-router";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import Header from "./Header";
 
