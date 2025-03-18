@@ -16,7 +16,7 @@ const Main = styled.main<{ $isDarkMode?: boolean }>`
 `;
 
 const Container = styled.div`
-  padding: 4rem 1rem;
+  padding: 2rem 1rem;
 `;
 
 function AppLayout() {

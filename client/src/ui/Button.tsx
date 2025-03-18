@@ -1,3 +1,4 @@
+import { subscribe } from "diagnostics_channel";
 import styled, { css } from "styled-components";
 
 const sizes = {
@@ -30,6 +31,36 @@ const variations = {
       height: 1.6rem;
       width: auto;
     }
+  `,
+  subscribe: css`
+    background-color: var(--color-brand-600);
+    color: var(--color-white);
+    border: none;
+    border-radius: 0 8px 8px 0;
+  `,
+  search: css`
+    border: none;
+    padding: 0.5rem;
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      color: red;
+    }
+  `,
+  tag: css`
+    border: 2px solid;
+    border-color: var(--color-brand-600);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.2s ease-in;
+
+    &:hover {
+      background-color: var(--color-brand-600);
+      color: var(--color-white);
+    }
+    /* color: var(--color-white); */
   `,
   primary: css`
     background-color: var(--color-brand-600);
@@ -96,7 +127,10 @@ type ButtonProps = {
     | "icon"
     | "login"
     | "logout"
-    | "iconWithText";
+    | "iconWithText"
+    | "subscribe"
+    | "tag"
+    | "search";
   icon?: React.ReactNode;
   children?: React.ReactNode;
   onClick?: () => void;
@@ -105,7 +139,7 @@ type ButtonProps = {
 const StyledButton = styled.button<ButtonProps>`
   border: none;
   border-radius: var(--border-radius-sm);
-  box-shadow: var(--shadow-sm);
+  /* box-shadow: var(--shadow-sm); */
   background: none;
   display: flex;
   align-items: center;

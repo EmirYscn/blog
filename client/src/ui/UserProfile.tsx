@@ -4,6 +4,7 @@ import ProfileImage from "./ProfileImage";
 import Spinner from "./Spinner";
 import { formatPostDate } from "../utils/formatPostDate";
 import { formatString } from "../utils/formatString";
+import { Link } from "react-router";
 
 const StyledUserProfile = styled.div`
   display: flex;
@@ -81,13 +82,15 @@ function UserProfile() {
       <Posts>
         {profile?.user?.posts?.map((post) => (
           <Post>
-            <ImageWrapper>
-              <Image src="/logo.jpg" />
-            </ImageWrapper>
-            <PostDetails>
-              <Title>{formatString(post.title)}</Title>
-              <span>{formatPostDate(post.createdAt)}</span>
-            </PostDetails>
+            <Link to={`/post/${post.id}`}>
+              <ImageWrapper>
+                <Image src="/logo.jpg" />
+              </ImageWrapper>
+              <PostDetails>
+                <Title>{formatString(post.title)}</Title>
+                <span>{formatPostDate(post.createdAt)}</span>
+              </PostDetails>
+            </Link>
           </Post>
         ))}
       </Posts>

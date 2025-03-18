@@ -1,14 +1,14 @@
 import styled from "styled-components";
-import Posts from "../ui/Posts";
+import Home from "../ui/Home";
 
 const StyledHome = styled.div``;
 
-function Home() {
+function HomePage() {
   return (
     <StyledHome>
-      <Posts />
+      <Home />
     </StyledHome>
   );
 }
 
-export default Home;
+export default HomePage;

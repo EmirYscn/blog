@@ -1,6 +1,14 @@
 import { User } from "@prisma/client";
 import { prisma } from "./prismaClient";
 
+export const getAuthor = async () => {
+  const user = await prisma.user.findUnique({
+    where: { email: process.env.AUTHOR_EMAIL },
+  });
+
+  return user;
+};
+
 export const getUsers = async () => {
   const users = await prisma.user.findMany();
   return users;

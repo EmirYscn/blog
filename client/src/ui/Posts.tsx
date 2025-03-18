@@ -114,7 +114,7 @@ function Posts() {
           <PostDetail>
             <Author>
               <ProfileImage imgSrc={post.author?.avatar} size="sm" />
-              <AuthorLink to={`profile/${post.author?.id}`}>
+              <AuthorLink to={`/profile/${post.author?.id}`}>
                 {post.author?.username}
               </AuthorLink>
               <span>&#x2022;</span>

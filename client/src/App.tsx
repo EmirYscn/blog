@@ -1,16 +1,20 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "react-hot-toast";
 import GlobalStyles from "./styles/GlobalStyles";
-import AppLayout from "./ui/AppLayout";
-import Home from "./pages/Home";
+
+import Feed from "./pages/Feed";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "react-hot-toast";
 import Signup from "./pages/Signup";
-import { ThemeContextProvider } from "./contexts/DarkMode/ThemeContextProvider";
 import Profile from "./pages/Profile";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import PostPage from "./pages/PostPage";
+import Home from "./pages/HomePage";
+
+import AppLayout from "./ui/AppLayout";
+
+import { ThemeContextProvider } from "./contexts/DarkMode/ThemeContextProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,6 +33,8 @@ function App() {
             <Routes>
               <Route element={<AppLayout />}>
                 <Route index element={<Home />} />
+                <Route path="feed" element={<Feed />} />
+                <Route path="post/:postId" element={<PostPage />} />
                 <Route path="profile/:profileId" element={<Profile />} />
               </Route>
 

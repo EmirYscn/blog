@@ -22,6 +22,14 @@ export const getUsers = catchAsync(
   }
 );
 
+export const getAuthor = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const author = await userQueries.getAuthor();
+
+    res.status(200).json({ status: "success", author });
+  }
+);
+
 export const getProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;

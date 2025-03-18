@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UserType } from "../types/types";
+import { User } from "../types/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
@@ -32,7 +32,7 @@ export type SignupType = {
   passwordConfirm?: string;
 };
 
-export const getCurrentUser = async (): Promise<UserType> => {
+export const getCurrentUser = async (): Promise<User> => {
   try {
     const res = await api.get("/api/v1/auth/getCurrentUser");
     return res.data.user;
@@ -50,7 +50,7 @@ export const signup = async (data: SignupType) => {
   return res.data;
 };
 
-export const login = async (data: LoginCredentials): Promise<UserType> => {
+export const login = async (data: LoginCredentials): Promise<User> => {
   const res = await api.post("/api/v1/auth/login", data);
   localStorage.setItem("jwt", res.data.token);
   return res.data.user;

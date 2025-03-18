@@ -48,15 +48,15 @@ function Header() {
   return (
     <StyledHeader $isDarkMode={isDarkMode}>
       <Logo size="sm" />
-      <SearchContainer>
+      {/* <SearchContainer>
         <SearchBar />
-      </SearchContainer>
+      </SearchContainer> */}
       <ProfileContainer>
-        <Button icon={<FiPlus />} variation="create">
-          <span>Create</span>
-        </Button>
         <DarkModeToggle />
         <Button icon={<FaRegBell />} />
+        <Button variation="primary">
+          <span>Subscribe</span>
+        </Button>
         {isAuthenticated ? (
           <>
             <Menus>
