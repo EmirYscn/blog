@@ -6,7 +6,6 @@ import FeaturedPosts from "./FeaturedPosts";
 import Archive from "./Archive";
 import Footer from "./Footer";
 import Head from "./Head";
-import { useAuthorPosts } from "../hooks/useAuthorPosts";
 
 const StyledHome = styled.div`
   display: flex;
@@ -27,8 +26,6 @@ function Home() {
       <FeaturedPosts author={author!} />
 
       <Archive author={author!} />
-
-      <Footer />
     </StyledHome>
   );
 }

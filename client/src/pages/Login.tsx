@@ -23,6 +23,7 @@ const LoginLayout = styled.main<{ $isDarkMode?: boolean }>`
 
 function Login() {
   const { isDarkMode } = useDarkMode();
+
   return (
     <LoginLayout $isDarkMode={isDarkMode}>
       <Logo />

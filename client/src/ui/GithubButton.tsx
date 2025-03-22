@@ -46,7 +46,7 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
 function GitHubButton() {
   const handleGitHubLogin = () => {
-    window.location.href = `${API_BASE_URL}/api/auth/github`;
+    window.location.href = `${API_BASE_URL}/api/v1/auth/github`;
   };
 
   return (

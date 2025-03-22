@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import catchAsync from "../utils/catchAsync";
 import * as postQueries from "../db/post.queries";
+import { Post } from "@prisma/client";
 
 export const getFeaturedAuthorPosts = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -40,5 +41,15 @@ export const getPost = catchAsync(
     const post = await postQueries.getPost(id);
 
     res.status(200).json({ status: "success", post });
+  }
+);
+
+// type PostQueryParams = Partial<Record<keyof Post, string>>;
+
+export const createPost = catchAsync(
+  async (req: Request<{}, {}, Post, {}>, res: Response, next: NextFunction) => {
+    const post = await postQueries.createPost(req.body);
+
+    res.status(201).json({ status: "success", post });
   }
 );

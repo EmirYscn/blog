@@ -56,6 +56,33 @@ export const login = async (data: LoginCredentials): Promise<User> => {
   return res.data.user;
 };
 
+export const handleOAuthCallback = (): { user: User; token: string } | null => {
+  // Get URL parameters
+  const params = new URLSearchParams(window.location.search);
+  const data = params.get("data");
+
+  if (!data) return null;
+
+  try {
+    // Decode the base64 payload
+    const decoded = JSON.parse(atob(data));
+
+    if (!decoded.token || !decoded.user) {
+      throw new Error("Invalid token or user data");
+    }
+    // Store JWT token
+    localStorage.setItem("jwt", decoded.token);
+
+    return {
+      user: decoded.user,
+      token: decoded.token,
+    };
+  } catch (error) {
+    console.error("Failed to parse OAuth callback data", error);
+    return null;
+  }
+};
+
 export const logout = async (): Promise<void> => {
   return new Promise((resolve) => {
     localStorage.removeItem("jwt");

@@ -165,8 +165,8 @@ function Archive({ author }: { author: User }) {
                 </Title>
                 <ContentPeek>{formatString(post.content!, 100)}</ContentPeek>
                 <Author>
-                  <ProfileImage imgSrc={author.avatar} size="sm" />
-                  <span>{author.username}</span>
+                  <ProfileImage imgSrc={author?.avatar} size="sm" />
+                  <span>{author?.username}</span>
                 </Author>
               </PostDetails>
             </Post>

@@ -17,7 +17,7 @@ model Profile {
   id     String  @id @default(uuid())
   bio    String?
   
-  user   User    @relation(fields: [userId], references: [id])
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String  @unique
 }
 
@@ -81,10 +81,10 @@ model Like {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
 
-  post      Post?    @relation(fields: [postId], references: [id])
+  post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    String?
 
-  comment   Comment? @relation(fields: [commentId], references: [id])
+  comment   Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
   commentId String?
 
   @@unique([userId, postId])
@@ -97,12 +97,18 @@ model Media {
   type      String // 'image', 'video', etc.
   createdAt DateTime @default(now())
 
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
 
-  post      Post?    @relation(fields: [postId], references: [id])
+  post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    String?
   
+}
+
+model Subscriber {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
 }
 
 enum ROLE {

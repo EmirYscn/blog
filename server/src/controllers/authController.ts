@@ -4,8 +4,9 @@ import catchAsync from "../utils/catchAsync";
 import bcrypt from "bcryptjs";
 
 import passport, { generateToken } from "../strategies/passport";
-import { User } from "@prisma/client";
+import { ROLE, User } from "@prisma/client";
 import { validationResult } from "express-validator";
+import AppError from "../utils/appError";
 
 export const getCurrentUser = (
   req: Request,
@@ -31,6 +32,7 @@ export const getCurrentUser = (
         id: user.id,
         email: user.email,
         username: user.username,
+        avatar: user.avatar,
       },
     });
   } catch (error) {
@@ -117,4 +119,18 @@ export const requireAuth = (
       return next();
     }
   )(req, res, next);
+};
+
+export const restrictTo = (...roles: ROLE[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const user = req.user as User;
+
+    if (!roles.includes(user.role)) {
+      return next(
+        new AppError("You do not have permission to perform this action", 403)
+      );
+    }
+
+    next();
+  };
 };

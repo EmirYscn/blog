@@ -15,6 +15,8 @@ import Home from "./pages/HomePage";
 import AppLayout from "./ui/AppLayout";
 
 import { ThemeContextProvider } from "./contexts/DarkMode/ThemeContextProvider";
+import AuthSuccess from "./pages/AuthSuccess";
+import Subscribe from "./pages/Subscribe";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,11 +36,14 @@ function App() {
               <Route element={<AppLayout />}>
                 <Route index element={<Home />} />
                 <Route path="feed" element={<Feed />} />
+
                 <Route path="post/:postId" element={<PostPage />} />
                 <Route path="profile/:profileId" element={<Profile />} />
               </Route>
 
+              <Route path="subscribe" element={<Subscribe />} />
               <Route path="login" element={<Login />} />
+              <Route path="auth-success" element={<AuthSuccess />} />
               {/* <Route path="settings" element={<Settings />} /> */}
               <Route path="signup" element={<Signup />} />
               <Route path="*" element={<PageNotFound />} />

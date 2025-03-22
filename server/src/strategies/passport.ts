@@ -45,90 +45,102 @@ const localStrategy = new LocalStrategy(
   verifyCallback
 );
 
-// const googleStrategy = new GoogleStrategy(
-//   {
-//     clientID: process.env.GOOGLE_CLIENT_ID!,
-//     clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-//     callbackURL: `${SERVER_URL}/api/auth/google/callback`,
-//   },
-//   async function (
-//     accessToken: string,
-//     refreshToken: string,
-//     profile: GoogleProfile,
-//     done: (error: any, user?: any) => void
-//   ) {
-//     let findUser;
+const googleStrategy = new GoogleStrategy(
+  {
+    clientID: process.env.GOOGLE_CLIENT_ID!,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    callbackURL: `${SERVER_URL}/api/v1/auth/google/callback`,
+  },
+  async function (
+    accessToken: string,
+    refreshToken: string,
+    profile: GoogleProfile,
+    done: (error: any, user?: any) => void
+  ) {
+    let findUser;
 
-//     try {
-//       findUser = await prisma.user.findUnique({
-//         where: { email: profile.emails?.[0]?.value },
-//       });
-//     } catch (error) {
-//       return done(error);
-//     }
+    try {
+      findUser = await prisma.user.findUnique({
+        where: { email: profile.emails?.[0]?.value },
+      });
+    } catch (error) {
+      return done(error);
+    }
 
-//     try {
-//       if (!findUser) {
-//         const newUser = await prisma.user.create({
-//           data: {
-//             email: profile.emails![0].value,
-//             username: profile.displayName,
-//             avatar: profile.photos?.[0]?.value,
-//           },
-//         });
+    try {
+      if (!findUser) {
+        const newUser = await prisma.$transaction(async (prisma) => {
+          const user = await prisma.user.create({
+            data: {
+              email: profile.emails![0].value,
+              username: profile.displayName,
+              avatar: profile.photos?.[0]?.value,
+            },
+          });
+          await prisma.profile.create({
+            data: { userId: user.id },
+          });
+          return user;
+        });
 
-//         return done(null, newUser);
-//       }
-//       return done(null, findUser);
-//     } catch (error) {
-//       console.log(error);
-//       return done(error);
-//     }
-//   }
-// );
+        return done(null, newUser);
+      }
+      return done(null, findUser);
+    } catch (error) {
+      console.log(error);
+      return done(error);
+    }
+  }
+);
 
-// const githubStrategy = new GithubStrategy(
-//   {
-//     clientID: process.env.GITHUB_CLIENT_ID!,
-//     clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-//     callbackURL: `${SERVER_URL}/api/auth/github/callback`,
-//     scope: ["user:email"],
-//   },
-//   async function (
-//     accessToken: string,
-//     refreshToken: string,
-//     profile: GithubProfile,
-//     done: (error: any, user?: any) => void
-//   ) {
-//     let findUser;
+const githubStrategy = new GithubStrategy(
+  {
+    clientID: process.env.GITHUB_CLIENT_ID!,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    callbackURL: `${SERVER_URL}/api/v1/auth/github/callback`,
+    scope: ["user:email"],
+  },
+  async function (
+    accessToken: string,
+    refreshToken: string,
+    profile: GithubProfile,
+    done: (error: any, user?: any) => void
+  ) {
+    let findUser;
 
-//     try {
-//       findUser = await prisma.user.findUnique({
-//         where: { email: profile.emails?.[0]?.value },
-//       });
-//     } catch (error) {
-//       return done(error);
-//     }
+    try {
+      findUser = await prisma.user.findUnique({
+        where: { email: profile.emails?.[0]?.value },
+      });
+    } catch (error) {
+      return done(error);
+    }
 
-//     try {
-//       if (!findUser) {
-//         const newUser = await prisma.user.create({
-//           data: {
-//             email: profile.emails![0].value,
-//             username: profile.username || profile.displayName,
-//             avatar: profile.photos?.[0]?.value,
-//           },
-//         });
+    try {
+      if (!findUser) {
+        const newUser = await prisma.$transaction(async (prisma) => {
+          const user = await prisma.user.create({
+            data: {
+              email: profile.emails![0].value,
+              username: profile.displayName,
+              avatar: profile.photos?.[0]?.value,
+            },
+          });
+          await prisma.profile.create({
+            data: { userId: user.id },
+          });
+          return user;
+        });
 
-//         return done(null, newUser);
-//       }
-//       return done(null, findUser);
-//     } catch (error) {
-//       console.log(error);
-//       return done(error);
-//     }
-//   }
-// );
+        return done(null, newUser);
+      }
+      return done(null, findUser);
+    } catch (error) {
+      console.log(error);
+      return done(error);
+    }
+  }
+);
 
 // JWT Strategy configuration
 const jwtOptions = {
@@ -149,8 +161,8 @@ const jwtStrategy = new JwtStrategy(jwtOptions, async (payload, done) => {
 });
 
 passport.use("local", localStrategy);
-// passport.use("google", googleStrategy);
-// passport.use("github", githubStrategy);
+passport.use("google", googleStrategy);
+passport.use("github", githubStrategy);
 passport.use("jwt", jwtStrategy);
 
 export default passport;

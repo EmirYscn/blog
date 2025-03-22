@@ -1,4 +1,6 @@
+import { Post } from "@prisma/client";
 import { prisma } from "./prismaClient";
+import AppError from "../utils/appError";
 
 export const getFeaturedAuthorPosts = async () => {
   const posts = await prisma.post.findMany({
@@ -114,5 +116,16 @@ export const getPost = async (id: string) => {
     },
   });
 
+  if (!post) {
+    throw new AppError("Post not found", 404);
+  }
+
+  return post;
+};
+
+export const createPost = async (body: Post) => {
+  const post = await prisma.post.create({
+    data: body,
+  });
   return post;
 };

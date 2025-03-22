@@ -5,10 +5,19 @@ import Button from "./Button";
 import Input from "./Input";
 
 const StyledFooter = styled.div`
+  width: 100%;
+  background-color: var(--color-grey-50);
+`;
+
+const Container = styled.div`
+  max-width: 120rem;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 40rem auto auto auto;
   gap: 3rem;
   margin-top: 5rem;
+  background-color: var(--color-grey-50);
+  padding: 3rem 0;
 `;
 
 const Subscribe = styled.div`
@@ -29,51 +38,53 @@ const Media = styled.div`
 function Footer() {
   return (
     <StyledFooter>
-      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <Logo size="sm" />
-          <span>Backend Weekly</span>
+      <Container>
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Logo size="sm" />
+            <span>Backend Weekly</span>
+          </div>
+          <p>
+            Explain complex concepts in Backend Engineering, sharing exclusive
+            backend engineering resources, and helping you become a great
+            Backend Engineer.
+          </p>
+          <span>&copy; {new Date().getFullYear()} Backend Weekly</span>
         </div>
-        <p>
-          Explain complex concepts in Backend Engineering, sharing exclusive
-          backend engineering resources, and helping you become a great Backend
-          Engineer.
-        </p>
-        <span>&copy; {new Date().getFullYear()} Backend Weekly</span>
-      </div>
-      <div>
-        <strong>Home</strong>
-        <p>Posts</p>
-      </div>
-      <div>
-        <strong>Products</strong>
-        <p>products</p>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-        <Subscribe style={{ alignSelf: "flex-end" }}>
-          <Input
-            type="text"
-            placeholder="Enter your email"
-            style={{
-              width: "300px",
-              borderTopRightRadius: "0",
-              borderBottomRightRadius: "0",
-            }}
-          />
-          <Button variation="subscribe">Subscribe</Button>
-        </Subscribe>
-        <Media>
-          <a href="https://github.com/EmirYscn" target="_blank">
-            <FaGithub />
-          </a>
-          <a href="https://github.com/EmirYscn" target="_blank">
-            <FaLinkedin />
-          </a>
-          <a href="https://github.com/EmirYscn" target="_blank">
-            <FaXTwitter />
-          </a>
-        </Media>
-      </div>
+        <div>
+          <strong>Home</strong>
+          <p>Posts</p>
+        </div>
+        <div>
+          <strong>Products</strong>
+          <p>products</p>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+          <Subscribe style={{ alignSelf: "flex-end" }}>
+            <Input
+              type="text"
+              placeholder="Enter your email"
+              style={{
+                width: "300px",
+                borderTopRightRadius: "0",
+                borderBottomRightRadius: "0",
+              }}
+            />
+            <Button variation="subscribe">Subscribe</Button>
+          </Subscribe>
+          <Media>
+            <a href="https://github.com/EmirYscn" target="_blank">
+              <FaGithub />
+            </a>
+            <a href="https://github.com/EmirYscn" target="_blank">
+              <FaLinkedin />
+            </a>
+            <a href="https://github.com/EmirYscn" target="_blank">
+              <FaXTwitter />
+            </a>
+          </Media>
+        </div>
+      </Container>
     </StyledFooter>
   );
 }

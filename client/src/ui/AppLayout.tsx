@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import styled from "styled-components";
 
 import Header from "./Header";
+import Footer from "./Footer";
 
 const StyledAppLayout = styled.div`
   display: grid;
@@ -12,7 +13,7 @@ const StyledAppLayout = styled.div`
 const Main = styled.main<{ $isDarkMode?: boolean }>`
   background-color: var(--color-grey-50);
   padding: 6.4rem 4.8rem 6.4rem;
-  overflow-y: auto;
+  /* overflow-y: auto; */
 `;
 
 const Container = styled.div`
@@ -28,6 +29,7 @@ function AppLayout() {
           <Outlet />
         </Container>
       </Main>
+      <Footer />
     </StyledAppLayout>
   );
 }

@@ -3,6 +3,7 @@ import Logo from "./Logo";
 import Button from "./Button";
 import Input from "./Input";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
+import SubscribeButton from "./SubscribeButton";
 
 const Header = styled.div`
   display: flex;
@@ -62,18 +63,7 @@ function Head() {
         backend engineering resources, and helping you become a great Backend
         Engineer.
       </Para>
-      <Subscribe>
-        <Input
-          placeholder="Enter your email"
-          type="text"
-          style={{
-            width: "300px",
-            borderTopRightRadius: "0",
-            borderBottomRightRadius: "0",
-          }}
-        />
-        <Button variation="subscribe">Subscribe</Button>
-      </Subscribe>
+      <SubscribeButton />
       <Social>
         <Author>
           <span>Written By EmirYscn</span>

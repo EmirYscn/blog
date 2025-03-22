@@ -11,6 +11,7 @@ import { router as userRouter } from "./routes/userRoutes";
 import { router as postRouter } from "./routes/postRoutes";
 import { router as commentRouter } from "./routes/commentRoutes";
 import { router as authRouter } from "./routes/authRoutes";
+import { router as subscriptionRouter } from "./routes/subscriptionRoutes";
 
 import AppError from "./utils/appError";
 import { globalErrorHandler } from "./controllers/errorController";
@@ -57,6 +58,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/posts", postRouter);
 app.use("/api/v1/comments", commentRouter);
+app.use("/api/v1/subscribe", subscriptionRouter);
 
 // Handle undefined routes
 app.all("*", (req: Request, res: Response, next: NextFunction) => {

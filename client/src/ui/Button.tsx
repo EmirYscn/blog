@@ -134,6 +134,7 @@ type ButtonProps = {
   icon?: React.ReactNode;
   children?: React.ReactNode;
   onClick?: () => void;
+  disabled?: boolean;
 };
 
 const StyledButton = styled.button<ButtonProps>`
@@ -146,6 +147,9 @@ const StyledButton = styled.button<ButtonProps>`
   gap: 0.2rem;
   color: var(--color-grey-900);
 
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  opacity: ${(props) => (props.disabled ? 0.6 : 1)};
+
   ${(props) => props.size && sizes[props.size]}
   ${(props) => props.variation && variations[props.variation]}
 `;
@@ -156,9 +160,15 @@ function Button({
   icon,
   children,
   onClick,
+  disabled,
 }: ButtonProps) {
   return (
-    <StyledButton size={size} variation={variation} onClick={onClick}>
+    <StyledButton
+      size={size}
+      variation={variation}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {icon}
       {children}
     </StyledButton>

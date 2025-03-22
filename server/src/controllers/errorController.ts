@@ -1,11 +1,21 @@
 import { NextFunction, Request, Response } from "express";
 import AppError from "../utils/appError";
+import { PrismaClientValidationError } from "@prisma/client/runtime/library";
+import { Prisma } from "@prisma/client";
+
+// const handleCastErrorDB = (err) => {
+//   const message = `Invalid ${err.path}: ${err.value}.`;
+//   return new AppError(message, 400);
+// };
 
 const handleJWTError = () =>
   new AppError("Invalid token. Please log in again!", 401);
 
 const handleJWTExpiredError = () =>
   new AppError("Your token has expired! Please log in again.", 401);
+
+const handleValidationError = (err: Error) =>
+  new AppError("Validation Error", 401);
 
 const sendErrorDev = (err: AppError, req: Request, res: Response) => {
   // A) API
@@ -17,13 +27,6 @@ const sendErrorDev = (err: AppError, req: Request, res: Response) => {
       stack: err.stack,
     });
   }
-
-  // B) RENDERED WEBSITE
-  // console.error("ERROR 💥", err);
-  // return res.status(err.statusCode).render("error", {
-  //   title: "Something went wrong!",
-  //   msg: err.message,
-  // });
 };
 
 const sendErrorProd = (err: AppError, req: Request, res: Response) => {
@@ -45,23 +48,6 @@ const sendErrorProd = (err: AppError, req: Request, res: Response) => {
       message: "Something went very wrong!",
     });
   }
-
-  // B) RENDERED WEBSITE
-  // A) Operational, trusted error: send message to client
-  if (err.isOperational) {
-    return res.status(err.statusCode).render("error", {
-      title: "Something went wrong!",
-      msg: err.message,
-    });
-  }
-  // B) Programming or other unknown error: don't leak error details
-  // 1) Log error
-  console.error("ERROR 💥", err);
-  // 2) Send generic message
-  return res.status(err.statusCode).render("error", {
-    title: "Something went wrong!",
-    msg: "Please try again later.",
-  });
 };
 
 export const globalErrorHandler = (
@@ -81,11 +67,44 @@ export const globalErrorHandler = (
     let error = { ...err };
     error.message = err.message;
 
+    // Prisma Errors Handling
+    if (err instanceof PrismaClientValidationError)
+      error = handleValidationError(error);
+
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      switch (err.code) {
+        case "P2002":
+          error = new AppError(
+            "Duplicate entry. This value must be unique.",
+            400
+          );
+          break;
+        case "P2003":
+          error = new AppError("Foreign key constraint failed.", 400);
+          break;
+        case "P2025":
+          error = new AppError("Record not found.", 404);
+          break;
+        case "P2014":
+          error = new AppError("Violation of required relation.", 400);
+          break;
+        case "P2018":
+          error = new AppError("Required connected record not found.", 400);
+          break;
+        case "P2024":
+        case "P1017":
+          error = new AppError("Database connection error.", 500);
+          break;
+        default:
+          error = new AppError("Database operation failed.", 500);
+      }
+    }
+
     // if (error.name === "CastError") error = handleCastErrorDB(error);
     // if (error.code === 11000) error = handleDuplicateFieldsDB(error);
     // if (error.name === "ValidationError")
     //   error = handleValidationErrorDB(error);
-    // if (error.name === "JsonWebTokenError") error = handleJWTError();
+    if (error.name === "JsonWebTokenError") error = handleJWTError();
     // if (error.name === "TokenExpiredError") error = handleJWTExpiredError();
 
     sendErrorProd(error, req, res);

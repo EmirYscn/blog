@@ -45,6 +45,7 @@ router.get("/google/callback", (req, res, next) => {
         JSON.stringify({
           token,
           user: userData,
+          provider: "Google",
         })
       ).toString("base64");
 
@@ -83,6 +84,7 @@ router.get("/github/callback", (req, res, next) => {
         JSON.stringify({
           token,
           user: userData,
+          provider: "GitHub",
         })
       ).toString("base64");
 
