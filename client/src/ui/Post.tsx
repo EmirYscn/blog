@@ -3,6 +3,8 @@ import { usePost } from "../hooks/usePost";
 import PostUserCard from "./PostUserCard";
 import Spinner from "./Spinner";
 import Footer from "./Footer";
+import CommentBox from "./CommentBox";
+import Comments from "./Comments";
 
 const StyledPost = styled.div`
   display: grid;
@@ -53,6 +55,13 @@ function Post() {
           <PostUserCard post={post!} />
         </Intro>
         <Content>{post?.content}</Content>
+        <CommentBox />
+        {post?.comments && post.comments.length > 0 && (
+          <>
+            <h2>Comments</h2>
+            <Comments />
+          </>
+        )}
       </PostContent>
     </StyledPost>
   );

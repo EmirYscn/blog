@@ -4,7 +4,6 @@ import { useAuthor } from "../hooks/useAuthor";
 
 import FeaturedPosts from "./FeaturedPosts";
 import Archive from "./Archive";
-import Footer from "./Footer";
 import Head from "./Head";
 
 const StyledHome = styled.div`

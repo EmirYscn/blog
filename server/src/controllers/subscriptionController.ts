@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import catchAsync from "../utils/catchAsync";
 import * as subscriptionQueries from "../db/subscription.queries";
-import { Post } from "@prisma/client";
 import AppError from "../utils/appError";
 
 export const subscribe = catchAsync(

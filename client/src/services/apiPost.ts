@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Post } from "../types/types";
 import { PAGE_SIZE } from "../utils/constants";
 import { api } from "./apiAuth";

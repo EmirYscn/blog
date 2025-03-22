@@ -1,9 +1,11 @@
 import { Router } from "express";
-import * as userController from "../controllers/userController";
+import * as commentController from "../controllers/commentController";
+import { requireAuth } from "../controllers/authController";
 
 const router = Router();
 
-router.get("/", userController.getUsers);
-router.get("/:id", userController.getUser);
+router.delete("/:id", commentController.deleteComment);
+router.get("/post/:postId", commentController.getPostComments);
+router.post("/post/:postId", requireAuth, commentController.createComment);
 
 export { router };

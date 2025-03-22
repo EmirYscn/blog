@@ -52,6 +52,7 @@ export type Comment = {
   postId: string;
   authorId: string;
   parentId?: string | null;
+  _count: { likes: number; replies: number };
 
   post?: Post;
   author?: User;

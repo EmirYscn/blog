@@ -129,3 +129,27 @@ export const createPost = async (body: Post) => {
   });
   return post;
 };
+
+// export const getPostComments = async (postId: string) => {
+//   const comments = await prisma.comment.findMany({
+//     where: { postId },
+//   });
+
+//   return comments;
+// };
+
+// export const createPostComment = async (
+//   postId: string,
+//   authorId: string,
+//   comment: string
+// ) => {
+//   const comments = await prisma.comment.create({
+//     data: {
+//       postId,
+//       authorId,
+//       content: comment,
+//     },
+//   });
+
+//   return comments;
+// };

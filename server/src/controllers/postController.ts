@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import catchAsync from "../utils/catchAsync";
 import * as postQueries from "../db/post.queries";
-import { Post } from "@prisma/client";
+import { Post, User } from "@prisma/client";
 
 export const getFeaturedAuthorPosts = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -53,3 +53,27 @@ export const createPost = catchAsync(
     res.status(201).json({ status: "success", post });
   }
 );
+
+// export const createComment = catchAsync(
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     const { id: postId } = req.params;
+//     const { id: authorId } = req.user as User;
+
+//     const comment = await postQueries.createPostComment(
+//       postId,
+//       authorId,
+//       req.body
+//     );
+
+//     res.status(201).json({ status: "success", comment });
+//   }
+// );
+
+// export const getPostComments = catchAsync(
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     const { id } = req.params;
+//     const comments = await postQueries.getPostComments(id);
+
+//     res.status(201).json({ status: "success", comments });
+//   }
+// );

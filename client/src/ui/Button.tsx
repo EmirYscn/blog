@@ -115,6 +115,37 @@ const variations = {
       outline: none;
     }
   `,
+  normal: css`
+    border-radius: 6px;
+
+    &:hover {
+      color: var(--color-brand-600);
+    }
+  `,
+  action: css`
+    border-radius: 6px;
+    padding: 1rem 0;
+
+    &:hover {
+      color: var(--color-brand-600);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  `,
+  readmore: css`
+    border-radius: 6px;
+    padding: 0;
+
+    &:hover {
+      color: var(--color-brand-600);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  `,
 };
 
 type ButtonProps = {
@@ -130,7 +161,10 @@ type ButtonProps = {
     | "iconWithText"
     | "subscribe"
     | "tag"
-    | "search";
+    | "search"
+    | "normal"
+    | "action"
+    | "readmore";
   icon?: React.ReactNode;
   children?: React.ReactNode;
   onClick?: () => void;

@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import ProfileImage from "./ProfileImage";
-import { FaRegBell } from "react-icons/fa6";
+import { FaBars, FaRegBell } from "react-icons/fa6";
 import Button from "./Button";
-import { FiPlus } from "react-icons/fi";
-import SearchBar from "./SearchBar";
 import Logo from "./Logo";
 import { Link, useNavigate } from "react-router";
 import { useUser } from "../hooks/useUser";
@@ -13,6 +11,7 @@ import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
 import Menus from "./Menus";
 import { IoPerson, IoSettingsOutline } from "react-icons/io5";
 import { TbLogout } from "react-icons/tb";
+import { useState } from "react";
 
 const StyledHeader = styled.div<{ $isDarkMode?: boolean }>`
   /* padding: 1rem 20rem; */
@@ -25,6 +24,9 @@ const StyledHeader = styled.div<{ $isDarkMode?: boolean }>`
   /* display: flex;
   justify-content: space-between;
   align-items: center; */
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const Container = styled.div`
@@ -35,22 +37,48 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 1308px) {
+    padding: 0 2rem;
+  }
 `;
 
 const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  @media (max-width: 768px) {
+    display: none; /* Hide profile section on small screens */
+  }
 `;
 
-const SearchContainer = styled.div`
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
+const MobileMenu = styled.div`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+`;
+
+const MenuDrawer = styled.div<{ $isOpen: boolean }>`
+  position: fixed;
+  top: 0;
+  right: ${({ $isOpen }) => ($isOpen ? "0" : "-100%")};
+  width: 250px;
+  height: 100vh;
+  background: var(--color-grey-50);
+  box-shadow: var(--shadow-lg);
+  transition: right 0.3s ease-in-out;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 `;
 
 function Header() {
+  const [isMenuOpen, setMenuOpen] = useState(false);
   const { user, isAuthenticated } = useUser();
   const { logout } = useLogout();
   const { isDarkMode } = useDarkMode();
@@ -60,9 +88,6 @@ function Header() {
     <StyledHeader $isDarkMode={isDarkMode}>
       <Container>
         <Logo size="sm" />
-        {/* <SearchContainer>
-        <SearchBar />
-      </SearchContainer> */}
         <ProfileContainer>
           <DarkModeToggle />
           <Button icon={<FaRegBell />} />
@@ -102,6 +127,49 @@ function Header() {
             </Button>
           )}
         </ProfileContainer>
+
+        {/* Mobile Menu */}
+        <MobileMenu>
+          <Button
+            variation="icon"
+            icon={<FaBars />}
+            onClick={() => setMenuOpen(true)}
+          />
+        </MobileMenu>
+
+        {/* Mobile Drawer Menu */}
+        <MenuDrawer $isOpen={isMenuOpen}>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <Button icon={<FaBars />} onClick={() => setMenuOpen(false)} />
+            <div style={{ display: "flex" }}>
+              <DarkModeToggle />
+              <Button icon={<FaRegBell />} />
+            </div>
+          </div>
+          <Button variation="primary">
+            <Link to="/subscribe">Subscribe</Link>
+          </Button>
+          {isAuthenticated ? (
+            <>
+              <Button
+                variation="normal"
+                onClick={() => navigate(`/profile/${user?.id}`)}
+              >
+                Profile
+              </Button>
+              <Button variation="normal" onClick={() => navigate("/settings")}>
+                Settings
+              </Button>
+              <Button variation="normal" onClick={logout}>
+                Logout
+              </Button>
+            </>
+          ) : (
+            <Button variation="login">
+              <Link to={"/login"}>Login</Link>
+            </Button>
+          )}
+        </MenuDrawer>
       </Container>
     </StyledHeader>
   );

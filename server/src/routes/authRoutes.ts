@@ -38,6 +38,7 @@ router.get("/google/callback", (req, res, next) => {
         id: user.id,
         email: user.email,
         username: user.username,
+        role: user.role,
       };
 
       // Encode as base64 to avoid URL issues
@@ -77,6 +78,7 @@ router.get("/github/callback", (req, res, next) => {
         id: user.id,
         email: user.email,
         username: user.username,
+        role: user.role,
       };
 
       // Encode as base64 to avoid URL issues

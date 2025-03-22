@@ -33,6 +33,7 @@ export const getCurrentUser = (
         email: user.email,
         username: user.username,
         avatar: user.avatar,
+        role: user.role,
       },
     });
   } catch (error) {
@@ -88,7 +89,12 @@ export const login = async (
       // Simply return the token and user info
       return res.json({
         token,
-        user: { id: user.id, email: user.email, username: user.username },
+        user: {
+          id: user.id,
+          email: user.email,
+          username: user.username,
+          role: user.role,
+        },
       });
     }
   )(req, res, next);
