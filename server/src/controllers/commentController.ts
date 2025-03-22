@@ -7,10 +7,14 @@ export const createComment = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { postId } = req.params;
     const { id: authorId } = req.user as User;
-    const { comment } = req.body;
-    console.log(comment);
+    const { comment, parentCommentId } = req.body;
 
-    await commentQueries.createPostComment(postId, authorId, comment);
+    await commentQueries.createPostComment(
+      postId,
+      authorId,
+      comment,
+      parentCommentId
+    );
 
     res.status(201).json({ status: "success" });
   }

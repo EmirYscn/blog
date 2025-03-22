@@ -38,6 +38,7 @@ router.get("/google/callback", (req, res, next) => {
         id: user.id,
         email: user.email,
         username: user.username,
+        avatar: user.avatar,
         role: user.role,
       };
 
@@ -78,6 +79,7 @@ router.get("/github/callback", (req, res, next) => {
         id: user.id,
         email: user.email,
         username: user.username,
+        avatar: user.avatar,
         role: user.role,
       };
 

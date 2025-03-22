@@ -8,16 +8,23 @@ function useCreateComment() {
   const { postId } = useParams();
 
   const { mutate: comment, isPending: isLoading } = useMutation({
-    mutationFn: async (comment: string) => {
+    mutationFn: async ({
+      comment,
+      parentCommentId,
+    }: {
+      comment: string;
+      parentCommentId?: string | null;
+    }) => {
       if (!postId) {
         toast.error("Post ID is missing.");
         return;
       }
 
-      return createComment(postId!, comment);
+      return createComment(postId!, comment, parentCommentId);
     },
     onSuccess: () => {
       toast.success("Commented successfully!");
+      queryClient.invalidateQueries({ queryKey: ["post", postId] });
       queryClient.invalidateQueries({ queryKey: ["comments", postId] });
     },
     onError: (err: Error) => {

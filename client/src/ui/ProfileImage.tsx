@@ -41,10 +41,16 @@ type ProfileImageProps = {
 };
 
 function ProfileImage({ imgSrc, size }: ProfileImageProps) {
+  const imageSrc = imgSrc
+    ? `${imgSrc}?timestamp=${Date.now()}`
+    : "/default-profile-icon.png";
+
   return (
     <StyledProfileImage>
       <ImageWrapper size={size}>
+        {/* <Image src={imageSrc} /> */}
         <Image src={imgSrc || "/default-profile-icon.png"} />
+        {/* src={`${imgSrc}?timestamp=${new Date().getTime()}`} */}
       </ImageWrapper>
     </StyledProfileImage>
   );

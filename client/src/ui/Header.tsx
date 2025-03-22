@@ -91,8 +91,8 @@ function Header() {
         <ProfileContainer>
           <DarkModeToggle />
           <Button icon={<FaRegBell />} />
-          <Button variation="primary">
-            <Link to="/subscribe">Subscribe</Link>
+          <Button variation="primary" onClick={() => navigate("/subscribe")}>
+            Subscribe
           </Button>
           {isAuthenticated ? (
             <>

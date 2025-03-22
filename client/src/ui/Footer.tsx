@@ -63,8 +63,8 @@ const Media = styled.div`
 
 const EmailInput = styled(Input)`
   flex: 1;
-  min-width: 200px;
-  max-width: 300px;
+  /* min-width: 200px; */
+  /* max-width: 300px; */
   /* width: 300px; */
   border-top-right-radius: ${(props) => (props.type === "text" ? "0" : "4px")};
   border-bottom-right-radius: ${(props) =>

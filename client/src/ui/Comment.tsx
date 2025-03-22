@@ -13,6 +13,7 @@ import { IoPerson } from "react-icons/io5";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useUser } from "../hooks/useUser";
 import useDeleteComment from "../hooks/useDeleteComment";
+import CommentBox from "./CommentBox";
 
 const StyledComment = styled.div<{ $isReply?: boolean }>`
   display: flex;
@@ -127,6 +128,7 @@ function Comment({
   // const actionsRef = useRef<HTMLDivElement>(null);
   const contentEndRef = useRef<HTMLDivElement>(null);
   const { deleteComment, isLoading: isDeleting } = useDeleteComment();
+  const [isReplyExpanded, setIsReplyExpanded] = useState(false);
 
   const [isExpanded, setIsExpanded] = useState(false);
   // Handle "Read more" toggle
@@ -152,11 +154,15 @@ function Comment({
     // Calculate on initial render
     calculateHeight();
 
+    // Calculate after all content is rendered
+    // const timer = setTimeout(calculateHeight, 0);
+
     // Recalculate on window resize
     window.addEventListener("resize", calculateHeight);
 
     return () => {
       window.removeEventListener("resize", calculateHeight);
+      // clearTimeout(timer);
     };
   }, [comment, isExpanded]); // Recalculate when comment changes
 
@@ -230,12 +236,21 @@ function Comment({
           <Button icon={<LuHeart />} variation="action">
             <span>{comment._count.likes}</span>
           </Button>
-          <Button icon={<FaRegCommentDots />} variation="action">
+          <Button
+            icon={<FaRegCommentDots />}
+            variation="action"
+            onClick={() => setIsReplyExpanded((prev) => !prev)}
+          >
             <span>{comment._count.replies}</span>
           </Button>
         </Actions>
-        {/* This hidden div is used to measure the end of the comment content */}
-        <div ref={contentEndRef}></div>
+        {isReplyExpanded && (
+          <CommentBox
+            parentCommentId={comment.id}
+            onSuccess={() => setIsReplyExpanded(false)}
+          />
+        )}
+
         {comment.replies && comment.replies.length > 0 && (
           <RepliesContainer>
             {comment.replies.map((reply) => (
@@ -243,6 +258,8 @@ function Comment({
             ))}
           </RepliesContainer>
         )}
+        {/* This hidden div is used to measure the end of the comment content */}
+        <div ref={contentEndRef}></div>
       </CommentContent>
     </StyledComment>
   );

@@ -19,9 +19,16 @@ export const getPostComments = async (postId: string): Promise<Comment[]> => {
   }
 };
 
-export const createComment = async (postId: string, comment: string) => {
+export const createComment = async (
+  postId: string,
+  comment: string,
+  parentCommentId: string | null = null
+) => {
   try {
-    await api.post(`/api/v1/comments/post/${postId}`, { comment });
+    await api.post(`/api/v1/comments/post/${postId}`, {
+      comment,
+      parentCommentId,
+    });
   } catch (error) {
     console.error("Comment error:", error);
     // Extract error message from response

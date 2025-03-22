@@ -82,7 +82,13 @@ const CommentAction = styled.div`
   width: 100%;
 `;
 
-function CommentBox() {
+function CommentBox({
+  parentCommentId = null,
+  onSuccess,
+}: {
+  parentCommentId?: string | null;
+  onSuccess?: () => void;
+}) {
   const { user, isAuthenticated } = useUser();
   const [text, setText] = useState("");
   const { comment, isLoading: isSending } = useCreateComment();
@@ -90,11 +96,15 @@ function CommentBox() {
   async function handleComment() {
     if (!text) return;
 
-    comment(text, {
-      onSuccess: () => {
-        setText("");
-      },
-    });
+    comment(
+      { comment: text, parentCommentId },
+      {
+        onSuccess: () => {
+          setText("");
+          onSuccess?.();
+        },
+      }
+    );
   }
 
   return (

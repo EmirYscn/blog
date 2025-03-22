@@ -5,11 +5,12 @@ import Spinner from "./Spinner";
 import Footer from "./Footer";
 import CommentBox from "./CommentBox";
 import Comments from "./Comments";
+import NavInfo from "./NavInfo";
 
 const StyledPost = styled.div`
-  display: grid;
-  /* flex-direction: column; */
-  grid-template-rows: 1fr auto;
+  display: flex;
+  flex-direction: column;
+  /* grid-template-rows: 1fr auto; */
   /* height: 100vh; */
   /* flex-direction: column; */
   /* gap: 2rem; */
@@ -24,14 +25,14 @@ const PostContent = styled.div`
   max-width: 60rem;
   width: 100%;
   margin: 0 auto;
-  gap: 2rem;
+  gap: 4rem;
   /* flex-grow: 1; */
 `;
 
 const Intro = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 3rem;
 `;
 
 const Title = styled.h1``;
@@ -49,6 +50,7 @@ function Post() {
   return (
     <StyledPost>
       <PostContent>
+        <NavInfo postTitle={post?.title} />
         <Intro>
           <Title>{post?.title}</Title>
           <Description>{post?.content}</Description>

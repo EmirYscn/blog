@@ -37,13 +37,15 @@ export const getPostComments = async (postId: string) => {
 export const createPostComment = async (
   postId: string,
   authorId: string,
-  comment: string
+  comment: string,
+  parentCommentId: string | null
 ) => {
   const comments = await prisma.comment.create({
     data: {
       postId,
       authorId,
       content: comment,
+      parentId: parentCommentId,
     },
   });
 

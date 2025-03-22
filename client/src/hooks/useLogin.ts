@@ -20,7 +20,7 @@ export function useLogin() {
     onSuccess: (user) => {
       // Update user in cache
       queryClient.setQueryData([USER_QUERY_KEY], user);
-
+      // queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY] });
       navigate("/");
     },
     onError: (err) => {
