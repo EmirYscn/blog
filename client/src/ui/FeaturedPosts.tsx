@@ -12,6 +12,7 @@ import { useAuthor } from "../hooks/useAuthor";
 import { useAuthorPosts } from "../hooks/useAuthorPosts";
 import { useFeaturedAuthorPosts } from "../hooks/useFeaturedAuthorPosts";
 import Spinner from "./Spinner";
+import PostActions from "./PostActions";
 
 const Posts = styled.div`
   margin-top: 3rem;
@@ -88,7 +89,7 @@ const ContentPeek = styled.div``;
 
 const StyledFeaturedPosts = styled.div``;
 
-function FeaturedPosts({ author }: { author: User }) {
+function FeaturedPosts() {
   const { featuredPosts, isLoading } = useFeaturedAuthorPosts();
 
   if (isLoading) return <Spinner />;
@@ -108,18 +109,7 @@ function FeaturedPosts({ author }: { author: User }) {
             <PostDetails>
               <Head>
                 <span>{formatPostDate(post.createdAt)}</span>
-                <PostLikesComments>
-                  <Button icon={<LuHeart />} variation="iconWithText">
-                    <span>{post._count.likes}</span>
-                  </Button>
-                  <Button icon={<FaRegCommentDots />} variation="iconWithText">
-                    <span>{post._count.comments}</span>
-                  </Button>
-                  <Button
-                    icon={<RiShareForwardLine />}
-                    variation="iconWithText"
-                  />
-                </PostLikesComments>
+                <PostActions post={post} />
               </Head>
 
               <Title>
@@ -129,8 +119,8 @@ function FeaturedPosts({ author }: { author: User }) {
               </Title>
               <ContentPeek>{formatString(post.content!, 100)}</ContentPeek>
               <Author>
-                <ProfileImage imgSrc={author?.avatar} size="sm" />
-                <span>{author?.username}</span>
+                <ProfileImage imgSrc={post.author?.avatar} size="sm" />
+                <span>{post.author?.username}</span>
               </Author>
             </PostDetails>
           </Post>

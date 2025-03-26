@@ -34,6 +34,7 @@ export type Post = {
   title: string;
   content?: string | null;
   published: boolean;
+  featured: boolean;
   authorId: string;
   _count: { likes: number; comments: number };
 

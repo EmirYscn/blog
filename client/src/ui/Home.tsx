@@ -16,15 +16,13 @@ const StyledHome = styled.div`
 `;
 
 function Home() {
-  const { author } = useAuthor();
-
   return (
     <StyledHome>
       <Head />
 
-      <FeaturedPosts author={author!} />
+      <FeaturedPosts />
 
-      <Archive author={author!} />
+      <Archive />
     </StyledHome>
   );
 }

@@ -87,8 +87,12 @@ const variations = {
     }
   `,
   icon: css`
-    border-radius: 50%;
+    /* border-radius: 50%; */
     padding: 1rem;
+
+    &:focus {
+      outline: none;
+    }
   `,
   login: css`
     border-radius: 6px;
@@ -178,7 +182,7 @@ const StyledButton = styled.button<ButtonProps>`
   background: none;
   display: flex;
   align-items: center;
-  gap: 0.2rem;
+  gap: 0.5rem;
   color: var(--color-grey-900);
 
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};

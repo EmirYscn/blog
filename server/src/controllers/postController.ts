@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import catchAsync from "../utils/catchAsync";
 import * as postQueries from "../db/post.queries";
+import * as likeQueries from "../db/like.queries";
 import { Post, User } from "@prisma/client";
 
 export const getFeaturedAuthorPosts = catchAsync(
@@ -51,6 +52,18 @@ export const createPost = catchAsync(
     const post = await postQueries.createPost(req.body);
 
     res.status(201).json({ status: "success", post });
+  }
+);
+
+export const like = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id: postId } = req.params;
+    const { id: userId } = req.user as User;
+
+    console.log("postId: ", postId, "userId: ", userId);
+    await likeQueries.likePost(postId, userId);
+
+    res.status(200).json({ status: "success", message: "Like successful!" });
   }
 );
 

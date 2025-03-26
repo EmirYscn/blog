@@ -10,5 +10,6 @@ router.get("/author", postController.getAuthorPosts);
 router.get("/author/featured", postController.getFeaturedAuthorPosts);
 
 router.get("/:id", postController.getPost);
+router.post("/:id/like", requireAuth, postController.like);
 
 export { router };

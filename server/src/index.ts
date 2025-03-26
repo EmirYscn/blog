@@ -53,6 +53,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../public")));
 
+// app.post("/upload-image", (req, res) => {
+//   console.log("in upload image");
+//   console.log(req.body);
+//   res.status(200).send();
+// });
 // Routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);

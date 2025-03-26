@@ -8,17 +8,9 @@ export const getFeaturedAuthorPosts = async () => {
       author: { email: process.env.AUTHOR_EMAIL ?? "" },
       featured: true,
     },
-    select: {
-      id: true,
-      title: true,
-      createdAt: true,
-      updatedAt: true,
-      published: true,
-      media: true,
-      tags: true,
-      content: true,
-      authorId: true,
-      // Get counts
+    include: {
+      author: true,
+      likes: { select: { userId: true } },
       _count: {
         select: {
           likes: true,
@@ -65,17 +57,9 @@ export const getAuthorPosts = async (queryFields: {
 
   const posts = await prisma.post.findMany({
     where,
-    select: {
-      id: true,
-      title: true,
-      createdAt: true,
-      updatedAt: true,
-      published: true,
-      media: true,
-      tags: true,
-      content: true,
-      authorId: true,
-      // Get counts
+    include: {
+      author: true,
+      likes: { select: { userId: true } },
       _count: {
         select: {
           likes: true,

@@ -9,8 +9,6 @@ function HomePage() {
 
   if (encodedData) {
     const decodedData = JSON.parse(atob(encodedData)); // Decode Base64
-    console.log("Token:", decodedData.token);
-    console.log("User:", decodedData.user);
 
     // Save token to localStorage or cookies
     localStorage.setItem("jwt", decodedData.token);

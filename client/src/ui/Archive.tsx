@@ -14,6 +14,7 @@ import { User } from "../types/types";
 import { useAuthorPosts } from "../hooks/useAuthorPosts";
 import Spinner from "./Spinner";
 import PostTags from "./PostTags";
+import PostActions from "./PostActions";
 
 const Author = styled.div`
   display: flex;
@@ -103,7 +104,7 @@ const NoResults = styled.div`
   color: var(--color-grey-500);
 `;
 
-function Archive({ author }: { author: User }) {
+function Archive() {
   const { posts, count, isLoading } = useAuthorPosts();
   const [searchParams] = useSearchParams();
 
@@ -141,21 +142,7 @@ function Archive({ author }: { author: User }) {
               <PostDetails>
                 <Head>
                   <span>{formatPostDate(post.createdAt)}</span>
-                  <PostLikesComments>
-                    <Button icon={<LuHeart />} variation="iconWithText">
-                      <span>{post._count.likes}</span>
-                    </Button>
-                    <Button
-                      icon={<FaRegCommentDots />}
-                      variation="iconWithText"
-                    >
-                      <span>{post._count.comments}</span>
-                    </Button>
-                    <Button
-                      icon={<RiShareForwardLine />}
-                      variation="iconWithText"
-                    />
-                  </PostLikesComments>
+                  <PostActions post={post} />
                 </Head>
 
                 <Title>
@@ -165,8 +152,8 @@ function Archive({ author }: { author: User }) {
                 </Title>
                 <ContentPeek>{formatString(post.content!, 100)}</ContentPeek>
                 <Author>
-                  <ProfileImage imgSrc={author?.avatar} size="sm" />
-                  <span>{author?.username}</span>
+                  <ProfileImage imgSrc={post.author?.avatar} size="sm" />
+                  <span>{post.author?.username}</span>
                 </Author>
               </PostDetails>
             </Post>

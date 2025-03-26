@@ -41,6 +41,7 @@ function AuthSuccess() {
       }
     }
   }, [searchParams, navigate, queryClient]);
+
   return <Spinner />;
 }
 
