@@ -1,20 +1,26 @@
 import styled from "styled-components";
 import { Link, useSearchParams } from "react-router";
-import { FaRegCommentDots } from "react-icons/fa6";
+
 import { formatString } from "../utils/formatString";
 import { formatPostDate } from "../utils/formatPostDate";
-import { LuHeart } from "react-icons/lu";
-import { RiShareForwardLine } from "react-icons/ri";
-import Button from "./Button";
+
 import ProfileImage from "./ProfileImage";
 import SearchBar from "./SearchBar";
 import Pagination from "./Pagination";
 import Filter from "./Filter";
-import { User } from "../types/types";
 import { useAuthorPosts } from "../hooks/useAuthorPosts";
 import Spinner from "./Spinner";
 import PostTags from "./PostTags";
+
 import PostActions from "./PostActions";
+import ScrollToTop from "./ScrollToTop";
+
+const StyledArchive = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  /* margin-top: 10rem; */
+`;
 
 const Author = styled.div`
   display: flex;
@@ -39,6 +45,7 @@ const Post = styled.div`
   gap: 1rem;
   transition: all 0.2s ease-out;
   overflow: hidden; /* Ensures the image respects border-radius */
+  position: relative;
 
   &:hover {
     transform: scale(1.01);
@@ -66,6 +73,7 @@ const PostDetails = styled.div`
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
+  flex-grow: 1;
 `;
 
 const Title = styled.span`
@@ -83,18 +91,8 @@ const Head = styled.div`
   align-items: center;
 `;
 
-const PostLikesComments = styled.div`
-  display: flex;
-  /* gap: 1rem; */
-`;
-
-const ContentPeek = styled.div``;
-
-const StyledArchive = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 10rem;
+const ContentPeek = styled.div`
+  flex-grow: 1;
 `;
 
 const NoResults = styled.div`
@@ -116,9 +114,11 @@ function Archive() {
   return (
     <StyledArchive>
       <h2>Archive</h2>
-      <SearchBar />
+      <ScrollToTop />
+      <SearchBar navigateTo="archive" />
       <Filter
         filterField="tag"
+        navigateTo="archive"
         options={[
           { value: "all", label: "All" },
           { value: "api-design", label: "API Design" },
@@ -142,6 +142,7 @@ function Archive() {
               <PostDetails>
                 <Head>
                   <span>{formatPostDate(post.createdAt)}</span>
+
                   <PostActions post={post} />
                 </Head>
 
@@ -166,7 +167,7 @@ function Archive() {
         </NoResults>
       )}
 
-      {count > 0 && <Pagination count={count} />}
+      {count > 0 && <Pagination count={count} navigateTo="archive" />}
     </StyledArchive>
   );
 }

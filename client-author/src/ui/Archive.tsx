@@ -14,6 +14,14 @@ import PostTags from "./PostTags";
 
 import PostActions from "./PostActions";
 import BookmarkAction from "./BookmarkAction";
+import ScrollToTop from "./ScrollToTop";
+
+const StyledArchive = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  /* margin-top: 10rem; */
+`;
 
 const Author = styled.div`
   display: flex;
@@ -66,6 +74,7 @@ const PostDetails = styled.div`
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
+  flex-grow: 1;
 `;
 
 const Title = styled.span`
@@ -83,13 +92,8 @@ const Head = styled.div`
   align-items: center;
 `;
 
-const ContentPeek = styled.div``;
-
-const StyledArchive = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 10rem;
+const ContentPeek = styled.div`
+  flex-grow: 1;
 `;
 
 const NoResults = styled.div`
@@ -111,9 +115,11 @@ function Archive() {
   return (
     <StyledArchive>
       <h2>Archive</h2>
-      <SearchBar />
+      <ScrollToTop />
+      <SearchBar navigateTo="archive" />
       <Filter
         filterField="tag"
+        navigateTo="archive"
         options={[
           { value: "all", label: "All" },
           { value: "api-design", label: "API Design" },
@@ -134,11 +140,12 @@ function Archive() {
                 </ImageWrapper>
               </Link>
 
-              <BookmarkAction isFeatured={post.featured} />
+              <BookmarkAction post={post} />
 
               <PostDetails>
                 <Head>
                   <span>{formatPostDate(post.createdAt)}</span>
+
                   <PostActions post={post} />
                 </Head>
 
@@ -163,7 +170,7 @@ function Archive() {
         </NoResults>
       )}
 
-      {count > 0 && <Pagination count={count} />}
+      {count > 0 && <Pagination count={count} navigateTo="archive" />}
     </StyledArchive>
   );
 }

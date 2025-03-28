@@ -4,16 +4,19 @@ import { formatPostDate } from "../utils/formatPostDate";
 
 import { formatString } from "../utils/formatString";
 import ProfileImage from "./ProfileImage";
-import { useFeaturedAuthorPosts } from "../hooks/useFeaturedAuthorPosts";
+
 import Spinner from "./Spinner";
 
 import PostActions from "./PostActions";
+import BookmarkAction from "./BookmarkAction";
+
+import { useUnpublishedPosts } from "../hooks/useUnpublishedPosts";
 import Pagination from "./Pagination";
-import SearchBar from "./SearchBar";
 import ScrollToTop from "./ScrollToTop";
+import SearchBar from "./SearchBar";
 import Filter from "./Filter";
 
-const StyledFeaturedPosts = styled.div`
+const StyledUnpublishedPosts = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -87,10 +90,6 @@ const Head = styled.div`
   align-items: center;
 `;
 
-const ContentPeek = styled.div`
-  flex-grow: 1;
-`;
-
 const NoResults = styled.div`
   text-align: center;
   margin: 3rem 0;
@@ -98,8 +97,12 @@ const NoResults = styled.div`
   color: var(--color-grey-500);
 `;
 
-function FeaturedPosts() {
-  const { featuredPosts, count, isLoading } = useFeaturedAuthorPosts();
+const ContentPeek = styled.div`
+  flex-grow: 1;
+`;
+
+function UnpublishedPosts() {
+  const { unpublishedPosts, count, isLoading } = useUnpublishedPosts();
   const [searchParams] = useSearchParams();
 
   const currentTag = searchParams.get("tag") || "all";
@@ -108,13 +111,13 @@ function FeaturedPosts() {
   if (isLoading) return <Spinner />;
 
   return (
-    <StyledFeaturedPosts>
-      <h2>Featured Posts</h2>
+    <StyledUnpublishedPosts>
+      <h2>Unpublished Posts</h2>
       <ScrollToTop />
-      <SearchBar navigateTo="featured" />
+      <SearchBar navigateTo="unpublished" />
       <Filter
         filterField="tag"
-        navigateTo="featured"
+        navigateTo="unpublished"
         options={[
           { value: "all", label: "All" },
           { value: "api-design", label: "API Design" },
@@ -123,15 +126,16 @@ function FeaturedPosts() {
           { value: "databases", label: "Databases" },
         ]}
       />
-      {featuredPosts && featuredPosts?.length > 0 ? (
+      {unpublishedPosts && unpublishedPosts?.length > 0 ? (
         <Posts>
-          {featuredPosts?.map((post) => (
+          {unpublishedPosts?.map((post) => (
             <Post key={post.id}>
               <Link to={`/post/${post.id}`}>
                 <ImageWrapper>
                   <Image src="/logo.jpg" />
                 </ImageWrapper>
               </Link>
+              <BookmarkAction post={post} />
               <PostDetails>
                 <Head>
                   <span>{formatPostDate(post.createdAt)}</span>
@@ -158,9 +162,9 @@ function FeaturedPosts() {
           {currentTag !== "all" && ` with tag "${currentTag}"`}.
         </NoResults>
       )}
-      {count > 0 && <Pagination count={count} navigateTo="featured" />}
-    </StyledFeaturedPosts>
+      {count > 0 && <Pagination count={count} navigateTo="unpublished" />}
+    </StyledUnpublishedPosts>
   );
 }
 
-export default FeaturedPosts;
+export default UnpublishedPosts;

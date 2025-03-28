@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import Button from "./Button";
-import { FaComment, FaHeart, FaShare } from "react-icons/fa6";
+import { FaComment, FaCopy, FaHeart, FaShare } from "react-icons/fa6";
 import { Post } from "../types/types";
 import { useLikePost } from "../hooks/useLikePost";
 import { useUser } from "../hooks/useUser";
+import useCopyPostLink from "../hooks/useCopyPostLink";
+import { IoIosCopy } from "react-icons/io";
 
 const StyledPostActions = styled.div`
   display: flex;
@@ -37,6 +39,7 @@ const ShareButtonWrapper = styled.div`
 
 function PostActions({ post }: { post: Post }) {
   const { like } = useLikePost();
+  const { copyLink, isLoading: isCopying } = useCopyPostLink();
   const { user } = useUser();
   const isLiked = post.likes?.some((like) => like.userId === user?.id);
 
@@ -57,7 +60,12 @@ function PostActions({ post }: { post: Post }) {
         </Button>
       </CommentButtonWrapper>
       <ShareButtonWrapper>
-        <Button icon={<FaShare />} variation="icon" />
+        <Button
+          icon={<IoIosCopy />}
+          variation="icon"
+          onClick={() => copyLink(post.id)}
+          disabled={isCopying}
+        />
       </ShareButtonWrapper>
     </StyledPostActions>
   );

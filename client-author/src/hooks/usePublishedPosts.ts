@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { getFeaturedPosts } from "../services/apiPost";
+import { getPublishedPosts } from "../services/apiPost";
 import { useSearchParams } from "react-router";
 
-export const useFeaturedAuthorPosts = () => {
+export const usePublishedPosts = () => {
   const [searchParams] = useSearchParams();
 
   const search = searchParams.get("s") || "";
@@ -11,12 +11,12 @@ export const useFeaturedAuthorPosts = () => {
 
   const {
     isLoading,
-    data: { posts: featuredPosts, count } = { featuredPosts: [], count: 0 },
+    data: { posts: publishedPosts, count } = { publishedPosts: [], count: 0 },
     error,
   } = useQuery({
-    queryKey: ["featuredPosts", search, tag, page],
-    queryFn: () => getFeaturedPosts({ search, tag, page }),
+    queryKey: ["publishedPosts", search, tag, page],
+    queryFn: () => getPublishedPosts({ search, tag, page }),
   });
 
-  return { isLoading, featuredPosts, count, error };
+  return { isLoading, publishedPosts, count, error };
 };

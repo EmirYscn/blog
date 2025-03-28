@@ -16,6 +16,10 @@ import { ThemeContextProvider } from "./contexts/DarkMode/ThemeContextProvider";
 import AuthSuccess from "./pages/AuthSuccess";
 import Subscribe from "./pages/Subscribe";
 import ProtectedRoute from "./hooks/ProtectedRoute";
+import ArchivePage from "./pages/ArchivePage";
+import PublishedPage from "./pages/PublishedPage";
+import UnpublishedPage from "./pages/UnpublishedPage";
+import FeaturedPage from "./pages/FeaturedPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,7 +45,10 @@ function App() {
               >
                 <Route index element={<Home />} />
                 {/* <Route path="feed" element={<Feed />} /> */}
-
+                <Route path="featured" element={<FeaturedPage />} />
+                <Route path="archive" element={<ArchivePage />} />
+                <Route path="published" element={<PublishedPage />} />
+                <Route path="unpublished" element={<UnpublishedPage />} />
                 <Route path="post/:postId" element={<PostPage />} />
                 <Route path="profile/:profileId" element={<Profile />} />
               </Route>

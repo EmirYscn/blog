@@ -17,6 +17,8 @@ import AppLayout from "./ui/AppLayout";
 import { ThemeContextProvider } from "./contexts/DarkMode/ThemeContextProvider";
 import AuthSuccess from "./pages/AuthSuccess";
 import Subscribe from "./pages/Subscribe";
+import ArchivePage from "./pages/ArchivePage";
+import FeaturedPage from "./pages/FeaturedPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,8 +37,9 @@ function App() {
             <Routes>
               <Route element={<AppLayout />}>
                 <Route index element={<Home />} />
-                <Route path="feed" element={<Feed />} />
-
+                {/* <Route path="feed" element={<Feed />} /> */}
+                <Route path="featured" element={<FeaturedPage />} />
+                <Route path="archive" element={<ArchivePage />} />
                 <Route path="post/:postId" element={<PostPage />} />
                 <Route path="profile/:profileId" element={<Profile />} />
               </Route>

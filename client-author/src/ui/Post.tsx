@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { usePost } from "../hooks/usePost";
 import PostUserCard from "./PostUserCard";
 import Spinner from "./Spinner";
-import Footer from "./Footer";
 import CommentBox from "./CommentBox";
 import Comments from "./Comments";
 import NavInfo from "./NavInfo";

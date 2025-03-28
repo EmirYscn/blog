@@ -1,5 +1,5 @@
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import styled from "styled-components";
 import { PAGE_SIZE } from "../utils/constants";
 import PageButtons from "./PageButtons";
@@ -60,9 +60,15 @@ const PaginationButton = styled.button<{ active?: boolean }>`
     color: var(--color-brand-50);
   }
 `;
+type PaginationProps = {
+  count: number;
+  navigateTo?: string;
+};
 
-function Pagination({ count }: { count: number }) {
-  const [searchParams, setSearchParams] = useSearchParams();
+function Pagination({ count, navigateTo = "" }: PaginationProps) {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
   const currentPage = !searchParams.get("page")
     ? 1
     : Number(searchParams.get("page"));
@@ -70,22 +76,28 @@ function Pagination({ count }: { count: number }) {
   const pageCount = Math.ceil(count / PAGE_SIZE);
 
   function nextPage() {
+    const newSearchParams = new URLSearchParams(searchParams);
     const next = currentPage === pageCount ? currentPage : currentPage + 1;
 
-    searchParams.set("page", next.toString());
-    setSearchParams(searchParams);
+    newSearchParams.set("page", next.toString());
+    // setSearchParams(searchParams);
+    navigate(`/${navigateTo}?${newSearchParams.toString()}`);
   }
 
   function goToPage(page: number) {
-    searchParams.set("page", page.toString());
-    setSearchParams(searchParams);
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("page", page.toString());
+    // setSearchParams(searchParams);
+    navigate(`/${navigateTo}?${newSearchParams.toString()}`);
   }
 
   function prevPage() {
+    const newSearchParams = new URLSearchParams(searchParams);
     const prev = currentPage === 1 ? currentPage : currentPage - 1;
 
-    searchParams.set("page", prev.toString());
-    setSearchParams(searchParams);
+    newSearchParams.set("page", prev.toString());
+    // setSearchParams(searchParams);
+    navigate(`/${navigateTo}?${newSearchParams.toString()}`);
   }
 
   if (pageCount <= 1) return null;

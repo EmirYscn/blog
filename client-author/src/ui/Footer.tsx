@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import Logo from "./Logo";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
-import Button from "./Button";
-import Input from "./Input";
+import SubscribeButton from "./SubscribeButton";
 
 const StyledFooter = styled.div`
   width: 100%;
@@ -20,8 +19,10 @@ const Container = styled.div`
   background-color: var(--color-grey-50);
   padding: 3rem 0;
 
-  @media (max-width: 800px) {
-    grid-template-columns: 1fr;
+  @media (max-width: 920px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
   }
 `;
@@ -30,19 +31,6 @@ const Column = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-`;
-
-const Subscribe = styled.div`
-  display: flex;
-  justify-content: center;
-  /* flex-wrap: wrap; */
-  /* gap: 0.5rem; */
-  width: 100%;
-
-  @media (max-width: 568px) {
-    flex-direction: column;
-    align-items: stretch;
-  }
 `;
 
 const Media = styled.div`
@@ -58,27 +46,6 @@ const Media = styled.div`
 
   @media (max-width: 768px) {
     align-self: center;
-  }
-`;
-
-const EmailInput = styled(Input)`
-  flex: 1;
-  /* min-width: 200px; */
-  /* max-width: 300px; */
-  /* width: 300px; */
-  border-top-right-radius: ${(props) => (props.type === "text" ? "0" : "4px")};
-  border-bottom-right-radius: ${(props) =>
-    props.type === "text" ? "0" : "4px"};
-
-  @media (max-width: 568px) {
-    max-width: none;
-    border-radius: 4px;
-  }
-`;
-
-const SubscribeButton = styled(Button)`
-  @media (max-width: 568px) {
-    border-radius: 4px;
   }
 `;
 
@@ -113,10 +80,7 @@ function Footer() {
           <p>products</p>
         </Column>
         <Column>
-          <Subscribe>
-            <EmailInput type="text" placeholder="Enter your email" />
-            <SubscribeButton variation="subscribe">Subscribe</SubscribeButton>
-          </Subscribe>
+          <SubscribeButton style={{ alignSelf: "flex-end" }} />
           <Media>
             <a
               href="https://github.com/EmirYscn"

@@ -4,16 +4,19 @@ import { formatPostDate } from "../utils/formatPostDate";
 
 import { formatString } from "../utils/formatString";
 import ProfileImage from "./ProfileImage";
-import { useFeaturedAuthorPosts } from "../hooks/useFeaturedAuthorPosts";
+
 import Spinner from "./Spinner";
 
 import PostActions from "./PostActions";
+import BookmarkAction from "./BookmarkAction";
+
+import { usePublishedPosts } from "../hooks/usePublishedPosts";
 import Pagination from "./Pagination";
-import SearchBar from "./SearchBar";
 import ScrollToTop from "./ScrollToTop";
+import SearchBar from "./SearchBar";
 import Filter from "./Filter";
 
-const StyledFeaturedPosts = styled.div`
+const StyledPublishedPosts = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -98,8 +101,8 @@ const NoResults = styled.div`
   color: var(--color-grey-500);
 `;
 
-function FeaturedPosts() {
-  const { featuredPosts, count, isLoading } = useFeaturedAuthorPosts();
+function PublishedPosts() {
+  const { publishedPosts, isLoading, count } = usePublishedPosts();
   const [searchParams] = useSearchParams();
 
   const currentTag = searchParams.get("tag") || "all";
@@ -108,13 +111,13 @@ function FeaturedPosts() {
   if (isLoading) return <Spinner />;
 
   return (
-    <StyledFeaturedPosts>
-      <h2>Featured Posts</h2>
+    <StyledPublishedPosts>
+      <h2>Published Posts</h2>
       <ScrollToTop />
-      <SearchBar navigateTo="featured" />
+      <SearchBar navigateTo="published" />
       <Filter
         filterField="tag"
-        navigateTo="featured"
+        navigateTo="published"
         options={[
           { value: "all", label: "All" },
           { value: "api-design", label: "API Design" },
@@ -123,15 +126,16 @@ function FeaturedPosts() {
           { value: "databases", label: "Databases" },
         ]}
       />
-      {featuredPosts && featuredPosts?.length > 0 ? (
+      {publishedPosts && publishedPosts?.length > 0 ? (
         <Posts>
-          {featuredPosts?.map((post) => (
+          {publishedPosts?.map((post) => (
             <Post key={post.id}>
               <Link to={`/post/${post.id}`}>
                 <ImageWrapper>
                   <Image src="/logo.jpg" />
                 </ImageWrapper>
               </Link>
+              <BookmarkAction post={post} />
               <PostDetails>
                 <Head>
                   <span>{formatPostDate(post.createdAt)}</span>
@@ -158,9 +162,9 @@ function FeaturedPosts() {
           {currentTag !== "all" && ` with tag "${currentTag}"`}.
         </NoResults>
       )}
-      {count > 0 && <Pagination count={count} navigateTo="featured" />}
-    </StyledFeaturedPosts>
+      {count > 0 && <Pagination count={count} navigateTo="published" />}
+    </StyledPublishedPosts>
   );
 }
 
-export default FeaturedPosts;
+export default PublishedPosts;

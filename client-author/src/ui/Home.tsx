@@ -4,6 +4,8 @@ import FeaturedPosts from "./FeaturedPosts";
 import Archive from "./Archive";
 
 import CreatePost from "./CreatePost";
+import PublishedPosts from "./PublishedPosts";
+import UnpublishedPosts from "./UnpublishedPosts";
 
 const StyledHome = styled.div`
   display: flex;
@@ -12,6 +14,10 @@ const StyledHome = styled.div`
   max-width: 120rem;
   width: 100%;
   margin: 0 auto;
+
+  & > *:nth-child(n + 3) {
+    margin-top: 10rem;
+  }
 `;
 
 function Home() {
@@ -19,6 +25,8 @@ function Home() {
     <StyledHome>
       <CreatePost />
       <FeaturedPosts />
+      <UnpublishedPosts />
+      <PublishedPosts />
       <Archive />
     </StyledHome>
   );

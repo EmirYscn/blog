@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
 import styled, { css } from "styled-components";
-import { createPortal } from "react-dom";
 import { HiEllipsisVertical } from "react-icons/hi2";
 
 import { useOutsideClick } from "../hooks/useOutsideClick";
@@ -10,6 +9,7 @@ const Menu = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  position: relative;
 `;
 
 const StyledToggle = styled.button<{ $isDarkMode?: boolean }>`
@@ -22,33 +22,17 @@ const StyledToggle = styled.button<{ $isDarkMode?: boolean }>`
 
   &:hover {
     background-color: var(--color-grey-100);
-
-    /* ${(props) =>
-      props.$isDarkMode &&
-      css`
-        background-color: var(--color-black-500);
-      `} */
-  }
-
-  &:focus {
-    outline: none;
   }
 
   & svg {
     width: 2.4rem;
     height: 2.4rem;
-    color: var(--color-grey-700);
-
-    /* ${(props) =>
-      props.$isDarkMode &&
-      css`
-        color: var(--color-grey-200);
-      `} */
+    color: var(--color-grey-900);
   }
 `;
 
 const StyledList = styled.ul<{ position: Position; $isDarkMode?: boolean }>`
-  position: fixed;
+  position: absolute;
 
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
@@ -57,14 +41,8 @@ const StyledList = styled.ul<{ position: Position; $isDarkMode?: boolean }>`
   right: ${(props) => props?.position!.x}px;
   top: ${(props) => props?.position!.y}px;
 
-  /* ${(props) =>
-    props.$isDarkMode &&
-    css`
-      background-color: var(--color-black-300);
-      color: var(--color-grey-200);
-    `} */
-
-  z-index: 200;
+  z-index: 1;
+  width: max-content;
 `;
 
 const StyledButton = styled.button<{
@@ -85,12 +63,6 @@ const StyledButton = styled.button<{
 
   &:hover {
     background-color: var(--color-grey-50);
-
-    /* ${(props) =>
-      props.$isDarkMode &&
-      css`
-        background-color: var(--color-black-400);
-      `} */
   }
 
   & svg {
@@ -160,8 +132,8 @@ function Toggle({ id, children, icon }: ToggleProps) {
     if (button) {
       const rect = button.getBoundingClientRect();
       setPosition({
-        x: window.innerWidth - rect.width - rect.x,
-        y: rect.y + rect.height + 8,
+        x: -8,
+        y: rect.height + 10,
       });
       if (openId === "" || openId !== id) open(id);
       else close();
@@ -195,15 +167,14 @@ function List({ id, children }: ListProps) {
   }
   const { openId, position, close, isDarkMode } = context;
 
-  const ref = useOutsideClick<HTMLUListElement>(close, false);
+  const ref = useOutsideClick<HTMLUListElement>(close);
 
   if (openId !== id) return null;
 
-  return createPortal(
+  return (
     <StyledList position={position} ref={ref} $isDarkMode={isDarkMode}>
       {children}
-    </StyledList>,
-    document.body
+    </StyledList>
   );
 }
 
@@ -215,7 +186,13 @@ type ButtonProps = {
   isSelected?: boolean | undefined;
 };
 
-function Button({ children, icon, onClick, isSelected }: ButtonProps) {
+function Button({
+  children,
+  icon,
+  onClick,
+  isSelected,
+  disabled,
+}: ButtonProps) {
   const context = useContext(MenusContext);
   if (!context) {
     throw new Error("Toggle must be used within a MenusProvider");
@@ -237,6 +214,7 @@ function Button({ children, icon, onClick, isSelected }: ButtonProps) {
         onClick={handleClick}
         $isDarkMode={isDarkMode}
         selected={isSelected}
+        disabled={disabled}
       >
         {icon}
         <span>{children}</span>

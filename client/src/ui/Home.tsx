@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-import { useAuthor } from "../hooks/useAuthor";
-
 import FeaturedPosts from "./FeaturedPosts";
 import Archive from "./Archive";
 import Head from "./Head";
@@ -13,6 +11,10 @@ const StyledHome = styled.div`
   max-width: 120rem;
   width: 100%;
   margin: 0 auto;
+
+  & > *:nth-child(n + 2) {
+    margin-top: 10rem;
+  }
 `;
 
 function Home() {

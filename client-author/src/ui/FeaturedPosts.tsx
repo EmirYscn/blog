@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import styled from "styled-components";
 import { formatPostDate } from "../utils/formatPostDate";
 
@@ -9,6 +9,16 @@ import Spinner from "./Spinner";
 
 import PostActions from "./PostActions";
 import BookmarkAction from "./BookmarkAction";
+import Pagination from "./Pagination";
+import SearchBar from "./SearchBar";
+import ScrollToTop from "./ScrollToTop";
+import Filter from "./Filter";
+
+const StyledFeaturedPosts = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
 
 const Posts = styled.div`
   margin-top: 3rem;
@@ -60,6 +70,7 @@ const PostDetails = styled.div`
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
+  flex-grow: 1;
 `;
 
 const Title = styled.span`
@@ -77,47 +88,80 @@ const Head = styled.div`
   align-items: center;
 `;
 
-const ContentPeek = styled.div``;
+const NoResults = styled.div`
+  text-align: center;
+  margin: 3rem 0;
+  font-size: 1.6rem;
+  color: var(--color-grey-500);
+`;
 
-const StyledFeaturedPosts = styled.div``;
+const ContentPeek = styled.div`
+  flex-grow: 1;
+`;
 
 function FeaturedPosts() {
-  const { featuredPosts, isLoading } = useFeaturedAuthorPosts();
+  const { featuredPosts, count, isLoading } = useFeaturedAuthorPosts();
+
+  const [searchParams] = useSearchParams();
+
+  const currentTag = searchParams.get("tag") || "all";
+  const currentSearch = searchParams.get("s") || "";
 
   if (isLoading) return <Spinner />;
 
   return (
     <StyledFeaturedPosts>
-      <h3>Featured Posts</h3>
-      <Posts>
-        {featuredPosts?.map((post) => (
-          <Post key={post.id}>
-            <Link to={`/post/${post.id}`}>
-              <ImageWrapper>
-                <Image src="/logo.jpg" />
-              </ImageWrapper>
-            </Link>
-            <BookmarkAction isFeatured={post.featured} />
-            <PostDetails>
-              <Head>
-                <span>{formatPostDate(post.createdAt)}</span>
-                <PostActions post={post} />
-              </Head>
+      <h2>Featured Posts</h2>
+      <ScrollToTop />
+      <SearchBar navigateTo="featured" />
+      <Filter
+        filterField="tag"
+        navigateTo="featured"
+        options={[
+          { value: "all", label: "All" },
+          { value: "api-design", label: "API Design" },
+          { value: "design-patterns", label: "Design Patterns" },
+          { value: "system-design", label: "System Design" },
+          { value: "databases", label: "Databases" },
+        ]}
+      />
+      {featuredPosts && featuredPosts?.length > 0 ? (
+        <Posts>
+          {featuredPosts?.map((post) => (
+            <Post key={post.id}>
+              <Link to={`/post/${post.id}`}>
+                <ImageWrapper>
+                  <Image src="/logo.jpg" />
+                </ImageWrapper>
+              </Link>
+              <BookmarkAction post={post} />
+              <PostDetails>
+                <Head>
+                  <span>{formatPostDate(post.createdAt)}</span>
+                  <PostActions post={post} />
+                </Head>
 
-              <Title>
-                <Link to={`/post/${post.id}`}>
-                  {formatString(post.title, 100)}
-                </Link>
-              </Title>
-              <ContentPeek>{formatString(post.content!, 100)}</ContentPeek>
-              <Author>
-                <ProfileImage imgSrc={post.author?.avatar} size="sm" />
-                <span>{post.author?.username}</span>
-              </Author>
-            </PostDetails>
-          </Post>
-        ))}
-      </Posts>
+                <Title>
+                  <Link to={`/post/${post.id}`}>
+                    {formatString(post.title, 100)}
+                  </Link>
+                </Title>
+                <ContentPeek>{formatString(post.content!, 100)}</ContentPeek>
+                <Author>
+                  <ProfileImage imgSrc={post.author?.avatar} size="sm" />
+                  <span>{post.author?.username}</span>
+                </Author>
+              </PostDetails>
+            </Post>
+          ))}
+        </Posts>
+      ) : (
+        <NoResults>
+          No posts found {currentSearch && `for "${currentSearch}"`}
+          {currentTag !== "all" && ` with tag "${currentTag}"`}.
+        </NoResults>
+      )}
+      {count > 0 && <Pagination count={count} navigateTo="featured" />}
     </StyledFeaturedPosts>
   );
 }

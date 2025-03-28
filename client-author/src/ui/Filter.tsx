@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import styled, { css } from "styled-components";
 
 const StyledFilter = styled.div`
@@ -42,23 +42,27 @@ type FilterOption = {
 
 type FilterProps = {
   filterField: string;
+  navigateTo?: string;
   options: FilterOption[];
 };
 
-function Filter({ filterField, options }: FilterProps) {
-  const [searchParams, setSearchParams] = useSearchParams();
+function Filter({ filterField, navigateTo = "", options }: FilterProps) {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const currentFilter = searchParams.get(filterField) || options.at(0)?.value;
 
   function handleClick(value: string) {
-    searchParams.set("page", "1");
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("page", "1");
 
     if (value === "all") {
-      searchParams.delete(filterField);
+      newSearchParams.delete(filterField);
     } else {
-      searchParams.set(filterField, value);
+      newSearchParams.set(filterField, value);
     }
 
-    setSearchParams(searchParams);
+    // setSearchParams(searchParams);
+    navigate(`/${navigateTo}?${newSearchParams.toString()}`);
   }
 
   return (

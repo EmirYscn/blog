@@ -4,13 +4,13 @@ import * as postQueries from "../db/post.queries";
 import * as likeQueries from "../db/like.queries";
 import { Post, User } from "@prisma/client";
 
-export const getFeaturedAuthorPosts = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const posts = await postQueries.getFeaturedAuthorPosts();
+// export const getFeaturedAuthorPosts = catchAsync(
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     const posts = await postQueries.getFeaturedAuthorPosts();
 
-    res.status(200).json({ status: "success", posts });
-  }
-);
+//     res.status(200).json({ status: "success", posts });
+//   }
+// );
 
 export const getAuthorPosts = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -19,6 +19,8 @@ export const getAuthorPosts = catchAsync(
       tag: (req.query.tag as string) ?? "",
       page: Number(req.query.page) || 1,
       pageSize: Number(req.query.pageSize) || 10,
+      published: (req.query.published as string) ?? "",
+      featured: (req.query.featured as string) ?? "",
     };
 
     const { posts, count } = await postQueries.getAuthorPosts(queryFields);
@@ -64,6 +66,16 @@ export const like = catchAsync(
     await likeQueries.likePost(postId, userId);
 
     res.status(200).json({ status: "success", message: "Like successful!" });
+  }
+);
+
+export const updatePost = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id: postId } = req.params;
+
+    await postQueries.updatePost(postId, req.body);
+
+    res.status(200).json({ status: "success", message: "Update successful!" });
   }
 );
 

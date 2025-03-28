@@ -1,6 +1,6 @@
 import { useState, KeyboardEvent } from "react";
 import { IoClose, IoSearchOutline } from "react-icons/io5";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import styled from "styled-components";
 import Button from "./Button";
 
@@ -71,16 +71,22 @@ const CurrentSearch = styled.div`
   gap: 0.3rem;
 `;
 
-const SearchBar = () => {
+type SearchBarProps = {
+  navigateTo?: string; // Optional prop with default value
+};
+
+const SearchBar = ({ navigateTo = "" }: SearchBarProps) => {
   const [value, setValue] = useState<string>("");
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
   function handleSearch() {
     if (!value.trim()) return;
 
-    searchParams.set("page", "1");
-    searchParams.set("s", value.trim());
-    setSearchParams(searchParams);
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("page", "1");
+    newSearchParams.set("s", value.trim());
+    navigate(`/${navigateTo}?${newSearchParams.toString()}`);
   }
 
   function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {

@@ -3,6 +3,7 @@ import { Post } from "../types/types";
 import ProfileImage from "./ProfileImage";
 import { formatDate } from "../utils/formatPostDate";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
+import { Link } from "react-router";
 
 const StyledPostUserCard = styled.div`
   display: flex;
@@ -20,7 +21,7 @@ const Profile = styled.div`
   }
 `;
 
-const Author = styled.span`
+const Author = styled(Link)`
   text-decoration: underline;
 `;
 const Date = styled.span``;
@@ -41,7 +42,9 @@ function PostUserCard({ post }: { post: Post }) {
     <StyledPostUserCard>
       <Profile>
         <ProfileImage imgSrc={post.author?.avatar} size="md" />
-        <Author>{post.author?.username}</Author>
+        <Author to={`/profile/${post.author?.id}`}>
+          {post.author?.username}
+        </Author>
         <Date>{formatDate(post.createdAt)}</Date>
       </Profile>
       <Social>

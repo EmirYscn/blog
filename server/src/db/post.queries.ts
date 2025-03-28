@@ -2,37 +2,46 @@ import { Post } from "@prisma/client";
 import { prisma } from "./prismaClient";
 import AppError from "../utils/appError";
 
-export const getFeaturedAuthorPosts = async () => {
-  const posts = await prisma.post.findMany({
-    where: {
-      author: { email: process.env.AUTHOR_EMAIL ?? "" },
-      featured: true,
-    },
-    include: {
-      author: true,
-      likes: { select: { userId: true } },
-      _count: {
-        select: {
-          likes: true,
-          comments: true,
-        },
-      },
-    },
-    orderBy: {
-      createdAt: "desc", // Most recent posts first
-    },
-  });
+// export const getFeaturedAuthorPosts = async () => {
+//   const posts = await prisma.post.findMany({
+//     where: {
+//       author: { email: process.env.AUTHOR_EMAIL ?? "" },
+//       featured: true,
+//     },
+//     include: {
+//       author: true,
+//       likes: { select: { userId: true } },
+//       _count: {
+//         select: {
+//           likes: true,
+//           comments: true,
+//         },
+//       },
+//     },
+//     orderBy: {
+//       createdAt: "desc", // Most recent posts first
+//     },
+//   });
 
-  return posts;
-};
+//   return posts;
+// };
 
 export const getAuthorPosts = async (queryFields: {
   search: string;
   tag: string;
   page: number;
   pageSize: number;
+  published: string;
+  featured: string;
 }) => {
-  const { search = "", tag = "all", page = 1, pageSize = 10 } = queryFields;
+  const {
+    search = "",
+    tag = "all",
+    page = 1,
+    pageSize = 10,
+    published = "",
+    featured = "",
+  } = queryFields;
 
   // Create where clause
   const where: any = {
@@ -47,6 +56,14 @@ export const getAuthorPosts = async (queryFields: {
   // Only add tag filter if it's not 'all'
   if (tag && tag !== "all") {
     where.tags = { has: tag };
+  }
+
+  if (published) {
+    where.published = published === "true" ? true : false;
+  }
+
+  if (featured) {
+    where.featured = featured === "true" ? true : false;
   }
 
   // Get total count for pagination
@@ -109,6 +126,14 @@ export const getPost = async (id: string) => {
 
 export const createPost = async (body: Post) => {
   const post = await prisma.post.create({
+    data: body,
+  });
+  return post;
+};
+
+export const updatePost = async (id: string, body: Post) => {
+  const post = await prisma.post.update({
+    where: { id },
     data: body,
   });
   return post;

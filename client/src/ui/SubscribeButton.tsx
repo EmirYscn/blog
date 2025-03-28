@@ -10,7 +10,7 @@ const StyledSubscribeButton = styled.div`
   justify-content: center;
 `;
 
-function SubscribeButton() {
+function SubscribeButton(props: React.ComponentPropsWithoutRef<"div">) {
   const [email, setEmail] = useState("");
   const { subscribe, isLoading } = useSubscribe();
 
@@ -35,7 +35,7 @@ function SubscribeButton() {
   }
 
   return (
-    <StyledSubscribeButton>
+    <StyledSubscribeButton {...props}>
       <Input
         value={email}
         onChange={(e) => setEmail(e.target.value)}
