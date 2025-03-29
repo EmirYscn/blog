@@ -24,7 +24,7 @@ export function useLikeComment() {
         exact: false,
       });
       queryClient.invalidateQueries({
-        queryKey: ["authorPosts"],
+        queryKey: ["archivePosts"],
         exact: false,
       });
     },

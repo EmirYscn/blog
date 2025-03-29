@@ -2,30 +2,6 @@ import { Post } from "@prisma/client";
 import { prisma } from "./prismaClient";
 import AppError from "../utils/appError";
 
-// export const getFeaturedAuthorPosts = async () => {
-//   const posts = await prisma.post.findMany({
-//     where: {
-//       author: { email: process.env.AUTHOR_EMAIL ?? "" },
-//       featured: true,
-//     },
-//     include: {
-//       author: true,
-//       likes: { select: { userId: true } },
-//       _count: {
-//         select: {
-//           likes: true,
-//           comments: true,
-//         },
-//       },
-//     },
-//     orderBy: {
-//       createdAt: "desc", // Most recent posts first
-//     },
-//   });
-
-//   return posts;
-// };
-
 export const getAuthorPosts = async (queryFields: {
   search: string;
   tag: string;
@@ -46,6 +22,7 @@ export const getAuthorPosts = async (queryFields: {
   // Create where clause
   const where: any = {
     author: { email: process.env.AUTHOR_EMAIL ?? "" },
+    deletedAt: null,
   };
 
   // Only add search filter if there's a search term
@@ -124,9 +101,12 @@ export const getPost = async (id: string) => {
   return post;
 };
 
-export const createPost = async (body: Post) => {
+export const createPost = async (postData: Post, authorId: string) => {
   const post = await prisma.post.create({
-    data: body,
+    data: {
+      ...postData,
+      authorId,
+    },
   });
   return post;
 };
@@ -139,26 +119,8 @@ export const updatePost = async (id: string, body: Post) => {
   return post;
 };
 
-// export const getPostComments = async (postId: string) => {
-//   const comments = await prisma.comment.findMany({
-//     where: { postId },
-//   });
-
-//   return comments;
-// };
-
-// export const createPostComment = async (
-//   postId: string,
-//   authorId: string,
-//   comment: string
-// ) => {
-//   const comments = await prisma.comment.create({
-//     data: {
-//       postId,
-//       authorId,
-//       content: comment,
-//     },
-//   });
-
-//   return comments;
-// };
+export const deletePost = async (id: string) => {
+  await prisma.post.delete({
+    where: { id },
+  });
+};

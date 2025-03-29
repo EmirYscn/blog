@@ -132,15 +132,46 @@ export const getPost = async (postId: string): Promise<Post> => {
   }
 };
 
+export const createPost = async (postData: Partial<Post>) => {
+  try {
+    await api.post("/api/v1/posts", postData);
+  } catch (error) {
+    console.error("Create post error:", error);
+    if (axios.isAxiosError(error)) {
+      const serverMessage =
+        error.response?.data?.message || "Couldn't create post";
+      throw new Error(serverMessage);
+    }
+
+    throw new Error("An unexpected error occurred.");
+  }
+};
+
 export const updatePost = async (postId: string, body: Partial<Post>) => {
   try {
     await api.patch(`/api/v1/posts/${postId}`, body);
   } catch (error) {
-    console.error("Like error:", error);
+    console.error("Update post error:", error);
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =
         error.response?.data?.message || "Couldn't update post";
+      throw new Error(serverMessage);
+    }
+
+    throw new Error("An unexpected error occurred.");
+  }
+};
+
+export const deletePost = async (postId: string) => {
+  try {
+    await api.delete(`/api/v1/posts/${postId}`);
+  } catch (error) {
+    console.error("Delete post error:", error);
+    // Extract error message from response
+    if (axios.isAxiosError(error)) {
+      const serverMessage =
+        error.response?.data?.message || "Couldn't delete post";
       throw new Error(serverMessage);
     }
 

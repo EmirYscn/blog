@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useSearchParams } from "react-router";
+import { useParams } from "react-router";
 import { getPostComments } from "../services/apiComment";
 // import { Comment as CommentType } from "../types/types";
 

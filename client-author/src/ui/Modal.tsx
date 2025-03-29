@@ -12,18 +12,18 @@ const StyledModal = styled.div<{ $isDarkMode?: boolean }>`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: var(--color-grey-0);
+  background-color: var(--color-grey-100);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-lg);
   padding: 3.2rem 4rem;
   transition: all 0.5s;
   z-index: 300;
 
-  ${(props) =>
+  /* ${(props) =>
     props.$isDarkMode &&
     css`
       background-color: var(--color-black-300);
-    `}
+    `} */
 `;
 
 const Overlay = styled.div`

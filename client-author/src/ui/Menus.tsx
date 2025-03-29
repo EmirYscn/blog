@@ -1,15 +1,16 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { HiEllipsisVertical } from "react-icons/hi2";
 
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
+import { createPortal } from "react-dom";
 
 const Menu = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  position: relative;
+  /* position: relative; */
 `;
 
 const StyledToggle = styled.button<{ $isDarkMode?: boolean }>`
@@ -32,7 +33,7 @@ const StyledToggle = styled.button<{ $isDarkMode?: boolean }>`
 `;
 
 const StyledList = styled.ul<{ position: Position; $isDarkMode?: boolean }>`
-  position: absolute;
+  position: fixed;
 
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
@@ -104,6 +105,19 @@ function Menus({ children }: MenusProps) {
   const close = () => setOpenId("");
   const open = setOpenId;
 
+  // Close menu when user scrolls
+  useEffect(() => {
+    function handleScroll() {
+      close();
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <MenusContext.Provider
       value={{ openId, close, open, position, setPosition, isDarkMode }}
@@ -132,8 +146,8 @@ function Toggle({ id, children, icon }: ToggleProps) {
     if (button) {
       const rect = button.getBoundingClientRect();
       setPosition({
-        x: -8,
-        y: rect.height + 10,
+        x: window.innerWidth - rect.width - rect.x,
+        y: rect.y + rect.height + 8,
       });
       if (openId === "" || openId !== id) open(id);
       else close();
@@ -171,10 +185,11 @@ function List({ id, children }: ListProps) {
 
   if (openId !== id) return null;
 
-  return (
+  return createPortal(
     <StyledList position={position} ref={ref} $isDarkMode={isDarkMode}>
       {children}
-    </StyledList>
+    </StyledList>,
+    document.body
   );
 }
 

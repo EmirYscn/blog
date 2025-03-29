@@ -5,6 +5,7 @@ import Spinner from "./Spinner";
 import CommentBox from "./CommentBox";
 import Comments from "./Comments";
 import NavInfo from "./NavInfo";
+import DOMPurify from "dompurify";
 
 const StyledPost = styled.div`
   display: flex;
@@ -38,10 +39,15 @@ const Title = styled.h1``;
 
 const Description = styled.p``;
 
-const Content = styled.div``;
+const Content = styled.div`
+  /* width: 40rem; */
+  line-break: anywhere;
+`;
 
 function Post() {
   const { post, isLoading, error } = usePost();
+
+  // const description = formatString(post?.content);
 
   if (isLoading) return <Spinner />;
   if (error) return <p>Post could not found</p>;
@@ -52,10 +58,14 @@ function Post() {
         <NavInfo postTitle={post?.title} />
         <Intro>
           <Title>{post?.title}</Title>
-          <Description>{post?.content}</Description>
+          <Description>{post?.description}</Description>
           <PostUserCard post={post!} />
         </Intro>
-        <Content>{post?.content}</Content>
+        <Content
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(post?.content || ""),
+          }}
+        />
         <CommentBox />
         {post?.comments && post.comments.length > 0 && (
           <>

@@ -1,19 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { Post } from "../types/types";
-import { updatePost } from "../services/apiPost";
+import { deletePost as deletePostApi } from "../services/apiPost";
 
-export function useUpdatePost() {
+export function useDeletePost() {
   const queryClient = useQueryClient();
 
-  const { mutate: update, isPending: isLoading } = useMutation({
-    mutationFn: async ({
-      postId,
-      body,
-    }: {
-      postId: string;
-      body: Partial<Post>;
-    }) => updatePost(postId, body),
+  const { mutate: deletePost, isPending: isLoading } = useMutation({
+    mutationFn: (postId: string) => deletePostApi(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["featuredPosts"],
@@ -37,5 +30,5 @@ export function useUpdatePost() {
     },
   });
 
-  return { update, isLoading };
+  return { deletePost, isLoading };
 }

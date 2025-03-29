@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { usePost } from "../hooks/usePost";
 import PostUserCard from "./PostUserCard";
 import Spinner from "./Spinner";
-import Footer from "./Footer";
+import DOMPurify from "dompurify";
 import CommentBox from "./CommentBox";
 import Comments from "./Comments";
 import NavInfo from "./NavInfo";
@@ -39,7 +39,9 @@ const Title = styled.h1``;
 
 const Description = styled.p``;
 
-const Content = styled.div``;
+const Content = styled.div`
+  line-break: anywhere;
+`;
 
 function Post() {
   const { post, isLoading, error } = usePost();
@@ -53,10 +55,14 @@ function Post() {
         <NavInfo postTitle={post?.title} />
         <Intro>
           <Title>{post?.title}</Title>
-          <Description>{post?.content}</Description>
+          <Description>{post?.description}</Description>
           <PostUserCard post={post!} />
         </Intro>
-        <Content>{post?.content}</Content>
+        <Content
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(post?.content || ""),
+          }}
+        />
         <CommentBox />
         {post?.comments && post.comments.length > 0 && (
           <>

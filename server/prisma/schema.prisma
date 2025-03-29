@@ -42,6 +42,7 @@ model Post {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime? // Soft delete timestamp
   title     String    @db.VarChar(255)
+  description String?
   content   String?
   published Boolean   @default(false)
   featured  Boolean   @default(false)

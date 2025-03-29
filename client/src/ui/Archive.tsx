@@ -91,7 +91,7 @@ const Head = styled.div`
   align-items: center;
 `;
 
-const ContentPeek = styled.div`
+const Description = styled.div`
   flex-grow: 1;
 `;
 
@@ -151,7 +151,9 @@ function Archive() {
                     {formatString(post.title, 100)}
                   </Link>
                 </Title>
-                <ContentPeek>{formatString(post.content!, 100)}</ContentPeek>
+                <Description>
+                  {formatString(post?.description, 150)}
+                </Description>
                 <Author>
                   <ProfileImage imgSrc={post.author?.avatar} size="sm" />
                   <span>{post.author?.username}</span>

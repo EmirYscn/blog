@@ -1,19 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { createPost as createPostApi } from "../services/apiPost";
 import { Post } from "../types/types";
-import { updatePost } from "../services/apiPost";
 
-export function useUpdatePost() {
+export function useCreatePost() {
   const queryClient = useQueryClient();
 
-  const { mutate: update, isPending: isLoading } = useMutation({
-    mutationFn: async ({
-      postId,
-      body,
-    }: {
-      postId: string;
-      body: Partial<Post>;
-    }) => updatePost(postId, body),
+  const { mutate: createPost, isPending: isLoading } = useMutation({
+    mutationFn: (postData: Partial<Post>) => createPostApi(postData),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["featuredPosts"],
@@ -37,5 +31,5 @@ export function useUpdatePost() {
     },
   });
 
-  return { update, isLoading };
+  return { createPost, isLoading };
 }

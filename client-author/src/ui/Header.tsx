@@ -77,6 +77,19 @@ const MenuDrawer = styled.div<{ $isOpen: boolean }>`
   gap: 1.5rem;
 `;
 
+const NavRight = styled.div`
+  display: flex;
+  gap: 2rem;
+`;
+
+const Pages = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  border-right: 1px solid var(--color-grey-900);
+  padding: 0 1rem;
+`;
+
 function Header() {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const { user, isAuthenticated } = useUser();
@@ -88,45 +101,53 @@ function Header() {
     <StyledHeader $isDarkMode={isDarkMode}>
       <Container>
         <Logo size="sm" />
-        <ProfileContainer>
-          <DarkModeToggle />
-          <Button icon={<FaRegBell />} />
-          <Button variation="primary" onClick={() => navigate("/subscribe")}>
-            Subscribe
-          </Button>
-          {isAuthenticated ? (
-            <>
-              <Menus>
-                <Menus.Menu>
-                  <Menus.Toggle id={user!.id}>
-                    <ProfileImage imgSrc={user?.avatar} size="sm" />
-                  </Menus.Toggle>
-                  <Menus.List id={user!.id}>
-                    <Menus.Button
-                      icon={<IoPerson />}
-                      onClick={() => navigate(`/profile/${user?.id}`)}
-                    >
-                      Profile
-                    </Menus.Button>
-                    <Menus.Button
-                      icon={<IoSettingsOutline />}
-                      onClick={() => navigate("/settings")}
-                    >
-                      Settings
-                    </Menus.Button>
-                    <Menus.Button icon={<TbLogout />} onClick={logout}>
-                      Logout
-                    </Menus.Button>
-                  </Menus.List>
-                </Menus.Menu>
-              </Menus>
-            </>
-          ) : (
-            <Button variation="login" onClick={() => navigate("/login")}>
-              Login
+        <NavRight>
+          <Pages>
+            <Button variation="secondary" onClick={() => navigate("/archive")}>
+              Archive
             </Button>
-          )}
-        </ProfileContainer>
+          </Pages>
+
+          <ProfileContainer>
+            <DarkModeToggle />
+            <Button icon={<FaRegBell />} />
+            <Button variation="primary" onClick={() => navigate("/subscribe")}>
+              Subscribe
+            </Button>
+            {isAuthenticated ? (
+              <>
+                <Menus>
+                  <Menus.Menu>
+                    <Menus.Toggle id={user!.id}>
+                      <ProfileImage imgSrc={user?.avatar} size="sm" />
+                    </Menus.Toggle>
+                    <Menus.List id={user!.id}>
+                      <Menus.Button
+                        icon={<IoPerson />}
+                        onClick={() => navigate(`/profile/${user?.id}`)}
+                      >
+                        Profile
+                      </Menus.Button>
+                      <Menus.Button
+                        icon={<IoSettingsOutline />}
+                        onClick={() => navigate("/settings")}
+                      >
+                        Settings
+                      </Menus.Button>
+                      <Menus.Button icon={<TbLogout />} onClick={logout}>
+                        Logout
+                      </Menus.Button>
+                    </Menus.List>
+                  </Menus.Menu>
+                </Menus>
+              </>
+            ) : (
+              <Button variation="login" onClick={() => navigate("/login")}>
+                Login
+              </Button>
+            )}
+          </ProfileContainer>
+        </NavRight>
 
         {/* Mobile Menu */}
         <MobileMenu>

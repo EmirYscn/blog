@@ -32,6 +32,7 @@ export type Post = {
   updatedAt: Date | string;
   deletedAt?: Date | string | null;
   title: string;
+  description?: string | null;
   content?: string | null;
   published: boolean;
   featured: boolean;

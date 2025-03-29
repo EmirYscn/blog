@@ -10,6 +10,9 @@ import { useUpdatePost } from "../hooks/useUpdatePost";
 import toast from "react-hot-toast";
 import { IoIosCopy } from "react-icons/io";
 import useCopyPostLink from "../hooks/useCopyPostLink";
+import Modal from "./Modal";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
+import { useDeletePost } from "../hooks/useDeletePost";
 
 const StyledPostActions = styled.div`
   display: flex;
@@ -44,6 +47,7 @@ const ShareButtonWrapper = styled.div`
 function PostActions({ post }: { post: Post }) {
   const { user } = useUser();
   const { update, isLoading: isUpdating } = useUpdatePost();
+  const { deletePost, isLoading: isDeleting } = useDeletePost();
   const { copyLink, isLoading: isCopying } = useCopyPostLink();
   const isLiked = post.likes?.some((like) => like.userId === user?.id);
 
@@ -79,6 +83,25 @@ function PostActions({ post }: { post: Post }) {
     );
   }
 
+  function handleDeletePost(isSoftDelete: boolean) {
+    if (isSoftDelete) {
+      update(
+        { postId: post.id, body: { deletedAt: new Date() } },
+        {
+          onSuccess: () => {
+            toast.success("Post successfully soft deleted");
+          },
+        }
+      );
+    } else {
+      deletePost(post.id, {
+        onSuccess: () => {
+          toast.success("Post successfully deleted");
+        },
+      });
+    }
+  }
+
   return (
     <StyledPostActions>
       <LikeButtonWrapper $isLiked={isLiked}>
@@ -99,29 +122,42 @@ function PostActions({ post }: { post: Post }) {
           disabled={isCopying}
         />
       </ShareButtonWrapper>
-      <Menus>
-        <Menus.Menu>
-          <Menus.Toggle id={post.id} />
-          <Menus.List id={post.id}>
-            <Menus.Button icon={<FaEdit />}>Edit</Menus.Button>
-            <Menus.Button icon={<FaTrash />}>Delete</Menus.Button>
-            <Menus.Button
-              icon={<TbWorldUp />}
-              onClick={handlePublish}
-              disabled={isUpdating}
-            >
-              {post.published ? "Unpublish" : "Publish"}
-            </Menus.Button>
-            <Menus.Button
-              icon={<FaBookmark />}
-              onClick={handleBookmark}
-              disabled={isUpdating}
-            >
-              {post.featured ? "Unmark as featured" : "Mark as featured"}
-            </Menus.Button>
-          </Menus.List>
-        </Menus.Menu>
-      </Menus>
+      <Modal>
+        <Menus>
+          <Menus.Menu>
+            <Menus.Toggle id={post.id} />
+            <Menus.List id={post.id}>
+              <Menus.Button icon={<FaEdit />}>Edit</Menus.Button>
+              <Modal.Open opens="delete">
+                <Menus.Button icon={<FaTrash />}>Delete</Menus.Button>
+              </Modal.Open>
+              <Menus.Button
+                icon={<TbWorldUp />}
+                onClick={handlePublish}
+                disabled={isUpdating}
+              >
+                {post.published ? "Unpublish" : "Publish"}
+              </Menus.Button>
+              <Menus.Button
+                icon={<FaBookmark />}
+                onClick={handleBookmark}
+                disabled={isUpdating}
+              >
+                {post.featured ? "Unmark as featured" : "Mark as featured"}
+              </Menus.Button>
+            </Menus.List>
+
+            <Modal.Window name="delete">
+              <ConfirmDeleteModal
+                disabled={isDeleting}
+                onConfirm={(isSoftDelete: boolean) =>
+                  handleDeletePost(isSoftDelete)
+                }
+              />
+            </Modal.Window>
+          </Menus.Menu>
+        </Menus>
+      </Modal>
     </StyledPostActions>
   );
 }

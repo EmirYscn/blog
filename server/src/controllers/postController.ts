@@ -4,14 +4,6 @@ import * as postQueries from "../db/post.queries";
 import * as likeQueries from "../db/like.queries";
 import { Post, User } from "@prisma/client";
 
-// export const getFeaturedAuthorPosts = catchAsync(
-//   async (req: Request, res: Response, next: NextFunction) => {
-//     const posts = await postQueries.getFeaturedAuthorPosts();
-
-//     res.status(200).json({ status: "success", posts });
-//   }
-// );
-
 export const getAuthorPosts = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const queryFields = {
@@ -47,11 +39,11 @@ export const getPost = catchAsync(
   }
 );
 
-// type PostQueryParams = Partial<Record<keyof Post, string>>;
-
 export const createPost = catchAsync(
   async (req: Request<{}, {}, Post, {}>, res: Response, next: NextFunction) => {
-    const post = await postQueries.createPost(req.body);
+    const { id: userId } = req.user as User;
+
+    const post = await postQueries.createPost(req.body, userId);
 
     res.status(201).json({ status: "success", post });
   }
@@ -79,26 +71,15 @@ export const updatePost = catchAsync(
   }
 );
 
-// export const createComment = catchAsync(
-//   async (req: Request, res: Response, next: NextFunction) => {
-//     const { id: postId } = req.params;
-//     const { id: authorId } = req.user as User;
+export const deletePost = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id: postId } = req.params;
 
-//     const comment = await postQueries.createPostComment(
-//       postId,
-//       authorId,
-//       req.body
-//     );
+    await postQueries.deletePost(postId);
 
-//     res.status(201).json({ status: "success", comment });
-//   }
-// );
-
-// export const getPostComments = catchAsync(
-//   async (req: Request, res: Response, next: NextFunction) => {
-//     const { id } = req.params;
-//     const comments = await postQueries.getPostComments(id);
-
-//     res.status(201).json({ status: "success", comments });
-//   }
-// );
+    res.status(200).json({
+      status: "success",
+      message: `Post with ID: ${postId} deleted successfully!`,
+    });
+  }
+);
