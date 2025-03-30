@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import Input from "./Input";
 import TextEditor from "./TextEditor";
 import { BiSave } from "react-icons/bi";
+import { ChangeEvent } from "../types/types";
 
 const StyledEditPost = styled.div`
   display: flex;
@@ -48,6 +49,8 @@ function EditPost() {
   const [title, setTitle] = useState(post?.title);
   const [description, setDescription] = useState(post?.description);
   const [content, setContent] = useState(post?.content);
+  const [tags, setTags] = useState<string[]>(post?.tags ?? []);
+  const [currentTag, setCurrentTag] = useState("");
   const [hasEditChanged, setHasEditChanged] = useState(false);
   const { edit, isLoading: isEditing } = useEditPost();
 
@@ -55,13 +58,19 @@ function EditPost() {
     if (
       title !== post?.title ||
       description !== post?.description ||
-      content !== post?.content
+      content !== post?.content ||
+      !areArraysEqual(tags, post?.tags)
     ) {
       setHasEditChanged(true);
     } else {
       setHasEditChanged(false);
     }
-  }, [title, description, content, post]);
+  }, [title, description, content, post, tags]);
+
+  function areArraysEqual(arr1: string[], arr2: string[] = []) {
+    if (arr1.length !== arr2.length) return false;
+    return arr1.every((tag) => arr2.includes(tag));
+  }
 
   function handleEditPost() {
     if (!hasEditChanged) return;
@@ -70,6 +79,7 @@ function EditPost() {
       title,
       description,
       content,
+      tags,
     };
     edit(
       { postId: post!.id, body: postData },
@@ -80,6 +90,32 @@ function EditPost() {
         },
       }
     );
+  }
+
+  function handleAddTag(e: ChangeEvent) {
+    const value = e.target.value.trim();
+
+    // Prevent spaces inside the tag while typing
+    if (value.includes(" ")) return;
+
+    setCurrentTag(value);
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === " " && currentTag.trim() !== "") {
+      e.preventDefault(); // Prevent space from being added in input
+
+      if (!tags.includes(currentTag)) {
+        setTags([...tags, currentTag]);
+      }
+
+      setCurrentTag(""); // Clear input after saving tag
+    }
+
+    if (e.key === "Backspace" && currentTag === "" && tags.length > 0) {
+      e.preventDefault();
+      setTags(tags.slice(0, -1)); // Remove last tag when input is empty
+    }
   }
 
   function reset() {
@@ -124,6 +160,13 @@ function EditPost() {
             value={description!}
             required
             onChange={(e) => setDescription(e.target.value)}
+          />
+          <Input
+            id="tags"
+            value={currentTag}
+            placeholder={tags.join(" ")} // Show tags inside input
+            onChange={handleAddTag}
+            onKeyDown={handleKeyDown}
           />
           <TextEditor content={content!} setContent={setContent} />
         </>

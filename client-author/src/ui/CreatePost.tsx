@@ -4,7 +4,7 @@ import Button from "./Button";
 import styled from "styled-components";
 import { BiSave } from "react-icons/bi";
 import { useCreatePost } from "../hooks/useCreatePost";
-import { Post } from "../types/types";
+import { ChangeEvent, Post } from "../types/types";
 import toast from "react-hot-toast";
 import Input from "./Input";
 
@@ -39,6 +39,8 @@ const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
+  const [tags, setTags] = useState<string[]>([]);
+  const [currentTag, setCurrentTag] = useState("");
   const [showEditor, setShowEditor] = useState(false);
   const { createPost, isLoading: isCreating } = useCreatePost();
 
@@ -50,6 +52,7 @@ const CreatePost = () => {
       title,
       description,
       content,
+      tags,
       published: flagPublished,
     };
 
@@ -63,6 +66,32 @@ const CreatePost = () => {
       },
     });
   };
+
+  function handleAddTag(e: ChangeEvent) {
+    const value = e.target.value.trim();
+
+    // Prevent spaces inside the tag while typing
+    if (value.includes(" ")) return;
+
+    setCurrentTag(value);
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === " " && currentTag.trim() !== "") {
+      e.preventDefault(); // Prevent space from being added in input
+
+      if (!tags.includes(currentTag)) {
+        setTags([...tags, currentTag]);
+      }
+
+      setCurrentTag(""); // Clear input after saving tag
+    }
+
+    if (e.key === "Backspace" && currentTag === "" && tags.length > 0) {
+      e.preventDefault();
+      setTags(tags.slice(0, -1)); // Remove last tag when input is empty
+    }
+  }
 
   return (
     <StyledCreatePost>
@@ -103,6 +132,14 @@ const CreatePost = () => {
             value={description}
             required
             onChange={(e) => setDescription(e.target.value)}
+          />
+          <Label htmlFor="tags">Tags</Label>
+          <Input
+            id="tags"
+            value={currentTag}
+            placeholder={tags.join(" ")} // Show tags inside input
+            onChange={handleAddTag}
+            onKeyDown={handleKeyDown}
           />
           <TextEditor content={content} setContent={setContent} />
         </>

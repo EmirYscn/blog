@@ -1,158 +1,139 @@
 import styled from "styled-components";
 import ProfileImage from "./ProfileImage";
-import Button from "./Button";
-import { LuHeart } from "react-icons/lu";
-import { FaRegCommentDots } from "react-icons/fa6";
-import { RiShareForwardLine } from "react-icons/ri";
-import PostMenus from "./PostMenus";
+
 import { formatPostDate } from "../utils/formatPostDate";
-import { usePosts } from "../hooks/usePosts";
+
 import Spinner from "./Spinner";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
+import { Post as PostType } from "../types/types";
+import { formatString } from "../utils/formatString";
+import PostActions from "./PostActions";
+import BookmarkAction from "./BookmarkAction";
+import PostTags from "./PostTags";
 
 const StyledPosts = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-
-  width: 50%;
-  margin: 0 auto;
-  height: 100%;
-  padding: 1rem;
-  align-items: center;
-`;
-
-const PostCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  width: 80%;
-  min-width: 400px;
-  border-radius: 8px;
-  box-shadow: var(--shadow-md);
-  padding: 3rem;
-  /* border: 1px solid var(--color-brand-200); */
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-`;
-
-const PostDetail = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  margin-top: 3rem;
+  /* padding: 2rem; */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 3rem;
 `;
 
 const Author = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  font-size: 1.5rem;
-`;
-
-const Title = styled.div`
-  display: grid;
-  grid-template-columns: 1fr auto;
-  /* justify-content: space-between; */
-  /* padding-bottom: 1rem; */
-`;
-
-const Content = styled.div``;
-
-const Actions = styled.div`
-  display: flex;
-  align-items: center;
   gap: 1rem;
+  /* flex-direction: column; */
 `;
 
-const CommentBox = styled.textarea`
-  width: 100%;
-  height: 40px;
-  /* height: min-content; */
-  /* height: auto; */
+const Post = styled.div`
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: all 0.2s ease-out;
+  overflow: hidden; /* Ensures the image respects border-radius */
+  position: relative;
 
-  padding: 1rem 1.2rem;
-  border: 2px solid var(--color-brand-200);
-  border-radius: 100px;
-  font-size: 1.4rem;
-  resize: none;
-  outline: none;
-  background: var(--color-grey-50);
-  transition: all 0.3s ease;
-
-  &:focus {
-    border-color: var(--color-brand-500);
-    background: var(--color-grey-50);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  &:hover {
+    transform: scale(1.01);
   }
 `;
 
-const AuthorLink = styled(Link)`
+const ImageWrapper = styled.div`
+  width: 100%;
+  aspect-ratio: 1.9 / 1; /* Maintain aspect ratio */
+  overflow: hidden; /* Ensures rounded corners */
+  border-radius: 8px 8px 0 0; /* Rounded top corners only */
+  display: flex;
+`;
+
+const Image = styled.img`
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  display: block;
+`;
+
+const PostDetails = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  flex-grow: 1;
+`;
+
+const Title = styled.span`
+  font-size: 1.8rem;
+  font-weight: 600;
+
   &:hover {
     text-decoration: underline;
   }
 `;
 
-const Comments = styled.div`
+const Head = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
 `;
 
-const Comment = styled.div`
-  display: flex;
-  flex-direction: column;
+const Description = styled.div`
+  flex-grow: 1;
 `;
 
-function Posts() {
-  const { posts } = usePosts();
+const NoResults = styled.div`
+  text-align: center;
+  margin: 3rem 0;
+  font-size: 1.6rem;
+  color: var(--color-grey-500);
+`;
+
+function Posts({ posts }: { posts: PostType[] }) {
+  const [searchParams] = useSearchParams();
+
+  const currentTag = searchParams.get("tag") || "all";
+  const currentSearch = searchParams.get("s") || "";
 
   if (!posts) return <Spinner />;
 
-  return (
+  return posts && posts.length > 0 ? (
     <StyledPosts>
       {posts.map((post) => (
-        <PostCard key={post.id}>
-          <PostDetail>
+        <Post key={post.id}>
+          <Link to={`/post/${post.id}`}>
+            <ImageWrapper>
+              <Image src="/logo.jpg" />
+              <PostTags tags={post.tags} />
+            </ImageWrapper>
+          </Link>
+          <BookmarkAction post={post} />
+          <PostDetails>
+            <Head>
+              <span>{formatPostDate(post.createdAt)}</span>
+              <PostActions post={post} />
+            </Head>
+
+            <Title>
+              <Link to={`/post/${post.id}`}>
+                {formatString(post.title, 100)}
+              </Link>
+            </Title>
+            <Description>{formatString(post.description, 150)}</Description>
             <Author>
               <ProfileImage imgSrc={post.author?.avatar} size="sm" />
-              <AuthorLink to={`/profile/${post.author?.id}`}>
-                {post.author?.username}
-              </AuthorLink>
-              <span>&#x2022;</span>
-              <span>{formatPostDate(post.createdAt)}</span>
+              <span>{post.author?.username}</span>
             </Author>
-            <PostMenus postId={post.id} authorId={post.author!.id} />
-          </PostDetail>
-          <Title>
-            <h3>{post.title}</h3>
-          </Title>
-          <Content>
-            <p>{post.content}</p>
-          </Content>
-          <Actions>
-            <Button icon={<LuHeart />} variation="iconWithText">
-              <span>1,2K</span>
-            </Button>
-            <Button icon={<FaRegCommentDots />} variation="iconWithText">
-              <span>16</span>
-            </Button>
-            <Button icon={<RiShareForwardLine />} variation="iconWithText">
-              <span>Share</span>
-            </Button>
-          </Actions>
-          <CommentBox placeholder="Comment..." />
-          <Comments>
-            {post.comments?.map((comment) => (
-              <Comment key={comment.id}>
-                <AuthorLink to={`profile/${comment?.author?.id}`}>
-                  {comment.author?.username}
-                </AuthorLink>
-                <span>{comment.content}</span>
-              </Comment>
-            ))}
-          </Comments>
-        </PostCard>
+          </PostDetails>
+        </Post>
       ))}
     </StyledPosts>
+  ) : (
+    <NoResults>
+      No posts found {currentSearch && `for "${currentSearch}"`}
+      {currentTag !== "all" && ` with tag "${currentTag}"`}.
+    </NoResults>
   );
 }
 
