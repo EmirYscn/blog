@@ -20,6 +20,7 @@ import ArchivePage from "./pages/ArchivePage";
 import PublishedPage from "./pages/PublishedPage";
 import UnpublishedPage from "./pages/UnpublishedPage";
 import FeaturedPage from "./pages/FeaturedPage";
+import PostEditPage from "./pages/PostEditPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -50,6 +51,7 @@ function App() {
                 <Route path="published" element={<PublishedPage />} />
                 <Route path="unpublished" element={<UnpublishedPage />} />
                 <Route path="post/:postId" element={<PostPage />} />
+                <Route path="post/edit/:postId" element={<PostEditPage />} />
                 <Route path="profile/:profileId" element={<Profile />} />
               </Route>
 

@@ -5,11 +5,13 @@ export const getPostComments = async (postId: string) => {
     where: { postId, parentId: null },
     include: {
       author: { omit: { password: true } },
+      likes: { select: { userId: true } },
       replies: {
         select: {
           id: true,
           content: true,
           author: { omit: { password: true } },
+          likes: { select: { userId: true } },
           createdAt: true,
           _count: {
             select: {

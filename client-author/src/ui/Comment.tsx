@@ -14,6 +14,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { useUser } from "../hooks/useUser";
 import useDeleteComment from "../hooks/useDeleteComment";
 import CommentBox from "./CommentBox";
+import CommentActions from "./CommentActions";
 
 const StyledComment = styled.div<{ $isReply?: boolean }>`
   display: flex;
@@ -232,18 +233,10 @@ function Comment({
             </Button>
           )}
         </Content>
-        <Actions>
-          <Button icon={<LuHeart />} variation="action">
-            <span>{comment._count.likes}</span>
-          </Button>
-          <Button
-            icon={<FaRegCommentDots />}
-            variation="action"
-            onClick={() => setIsReplyExpanded((prev) => !prev)}
-          >
-            <span>{comment._count.replies}</span>
-          </Button>
-        </Actions>
+        <CommentActions
+          comment={comment}
+          commentAction={() => setIsReplyExpanded((prev) => !prev)}
+        />
         {isReplyExpanded && (
           <CommentBox
             parentCommentId={comment.id}

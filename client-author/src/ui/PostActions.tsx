@@ -13,6 +13,8 @@ import useCopyPostLink from "../hooks/useCopyPostLink";
 import Modal from "./Modal";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
 import { useDeletePost } from "../hooks/useDeletePost";
+import { useNavigate } from "react-router";
+import { useLikePost } from "../hooks/useLikePost";
 
 const StyledPostActions = styled.div`
   display: flex;
@@ -45,11 +47,17 @@ const ShareButtonWrapper = styled.div`
 `;
 
 function PostActions({ post }: { post: Post }) {
+  const navigate = useNavigate();
+  const { like } = useLikePost();
   const { user } = useUser();
   const { update, isLoading: isUpdating } = useUpdatePost();
   const { deletePost, isLoading: isDeleting } = useDeletePost();
   const { copyLink, isLoading: isCopying } = useCopyPostLink();
   const isLiked = post.likes?.some((like) => like.userId === user?.id);
+
+  async function handleLike() {
+    like(post.id);
+  }
 
   function handleBookmark() {
     const featured = post.featured ? false : true;
@@ -105,7 +113,7 @@ function PostActions({ post }: { post: Post }) {
   return (
     <StyledPostActions>
       <LikeButtonWrapper $isLiked={isLiked}>
-        <Button icon={<FaHeart />} variation="icon">
+        <Button icon={<FaHeart />} variation="icon" onClick={handleLike}>
           <span>{post._count.likes}</span>
         </Button>
       </LikeButtonWrapper>
@@ -127,7 +135,12 @@ function PostActions({ post }: { post: Post }) {
           <Menus.Menu>
             <Menus.Toggle id={post.id} />
             <Menus.List id={post.id}>
-              <Menus.Button icon={<FaEdit />}>Edit</Menus.Button>
+              <Menus.Button
+                icon={<FaEdit />}
+                onClick={() => navigate(`/post/edit/${post.id}`)}
+              >
+                Edit
+              </Menus.Button>
               <Modal.Open opens="delete">
                 <Menus.Button icon={<FaTrash />}>Delete</Menus.Button>
               </Modal.Open>
