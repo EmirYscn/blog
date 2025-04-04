@@ -76,7 +76,6 @@ export const login = async (
     "local",
     { session: false },
     (err: Error | null, user: User | false, info: { message: string }) => {
-      console.log(req.body);
       if (err) {
         return res.status(500).json({ error: "Internal server error" });
       }

@@ -187,6 +187,7 @@ type ButtonProps = {
   children?: React.ReactNode;
   onClick?: () => void;
   disabled?: boolean;
+  type?: string;
 };
 
 const StyledButton = styled.button<ButtonProps>`
@@ -207,6 +208,7 @@ const StyledButton = styled.button<ButtonProps>`
 `;
 
 function Button({
+  type = "button",
   size = "medium",
   variation = "icon",
   icon,
@@ -220,6 +222,7 @@ function Button({
       variation={variation}
       onClick={onClick}
       disabled={disabled}
+      type={type}
     >
       {icon}
       {children}

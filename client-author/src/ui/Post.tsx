@@ -6,6 +6,7 @@ import CommentBox from "./CommentBox";
 import Comments from "./Comments";
 import NavInfo from "./NavInfo";
 import DOMPurify from "dompurify";
+import BackButton from "./BackButton";
 
 const StyledPost = styled.div`
   display: flex;
@@ -17,6 +18,7 @@ const StyledPost = styled.div`
   /* max-width: 60rem; */
   /* width: 100%;
   margin: 0 auto; */
+  position: relative;
 `;
 
 const PostContent = styled.div`
@@ -54,6 +56,7 @@ function Post() {
 
   return (
     <StyledPost>
+      <BackButton to="/" posContext="post" />
       <PostContent>
         <NavInfo postTitle={post?.title} />
         <Intro>

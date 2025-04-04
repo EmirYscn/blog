@@ -20,22 +20,10 @@ export function useEditPost() {
       queryClient.invalidateQueries({
         queryKey: ["post", postId],
       });
-      //   queryClient.invalidateQueries({
-      //     queryKey: ["featuredPosts"],
-      //     exact: false,
-      //   });
-      //   queryClient.invalidateQueries({
-      //     queryKey: ["archivePosts"],
-      //     exact: false,
-      //   });
-      //   queryClient.invalidateQueries({
-      //     queryKey: ["publishedPosts"],
-      //     exact: false,
-      //   });
-      //   queryClient.invalidateQueries({
-      //     queryKey: ["unpublishedPosts"],
-      //     exact: false,
-      //   });
+      queryClient.invalidateQueries({
+        queryKey: ["posts"],
+        exact: false,
+      });
     },
     onError: (err: Error) => {
       toast.error(err.message);

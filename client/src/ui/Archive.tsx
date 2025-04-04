@@ -21,6 +21,8 @@ function Archive() {
 
   if (isLoading) return <Spinner />;
 
+  if (posts?.length === 0) return null;
+
   return (
     <StyledArchive>
       <h2>Archive</h2>

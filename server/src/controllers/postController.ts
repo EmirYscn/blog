@@ -21,6 +21,24 @@ export const getAuthorPosts = catchAsync(
   }
 );
 
+export const getUserPosts = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const queryFields = {
+      search: (req.query.search as string) ?? "",
+      tag: (req.query.tag as string) ?? "",
+      page: Number(req.query.page) || 1,
+      pageSize: Number(req.query.pageSize) || 10,
+      published: (req.query.published as string) ?? "",
+      featured: (req.query.featured as string) ?? "",
+    };
+
+    const { posts, count } = await postQueries.getUserPosts(id, queryFields);
+
+    res.status(200).json({ status: "success", posts, count });
+  }
+);
+
 export const getPosts = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const posts = await postQueries.getPosts();

@@ -14,7 +14,7 @@ export const usePublishedPosts = () => {
     data: { posts: publishedPosts, count } = { publishedPosts: [], count: 0 },
     error,
   } = useQuery({
-    queryKey: ["publishedPosts", search, tag, page],
+    queryKey: ["posts", "published", search, tag, page],
     queryFn: () => getPublishedPosts({ search, tag, page }),
   });
 

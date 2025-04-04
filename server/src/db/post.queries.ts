@@ -71,6 +71,78 @@ export const getAuthorPosts = async (queryFields: {
   return { posts, count: totalCount };
 };
 
+export const getUserPosts = async (
+  id: string,
+  queryFields: {
+    search: string;
+    tag: string;
+    page: number;
+    pageSize: number;
+    published: string;
+    featured: string;
+  }
+) => {
+  const {
+    search = "",
+    tag = "all",
+    page = 1,
+    pageSize = 10,
+    published = "",
+    featured = "",
+  } = queryFields;
+
+  // Create where clause
+  const where: any = {
+    authorId: id,
+    deletedAt: null,
+  };
+
+  // Only add search filter if there's a search term
+  if (search) {
+    where.title = { contains: search, mode: "insensitive" };
+  }
+
+  // Only add tag filter if it's not 'all'
+  if (tag && tag !== "all") {
+    where.tags = { has: tag };
+  }
+
+  if (published) {
+    where.published = published === "true" ? true : false;
+  }
+
+  if (featured) {
+    where.featured = featured === "true" ? true : false;
+  }
+
+  // Get total count for pagination
+  const totalCount = await prisma.post.count({ where });
+
+  // Calculate proper skip value (page numbers typically start at 1)
+  const skip = (page - 1) * pageSize;
+
+  const posts = await prisma.post.findMany({
+    where,
+    include: {
+      author: true,
+      likes: { select: { userId: true } },
+      _count: {
+        select: {
+          likes: true,
+          comments: true,
+        },
+      },
+    },
+    skip,
+    take: pageSize,
+    orderBy: {
+      createdAt: "desc", // Most recent posts first
+    },
+  });
+
+  return { posts, count: totalCount };
+};
+
 export const getPosts = async () => {
   const posts = await prisma.post.findMany({
     include: {

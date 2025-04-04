@@ -42,7 +42,7 @@ const StyledList = styled.ul<{ position: Position; $isDarkMode?: boolean }>`
   right: ${(props) => props?.position!.x}px;
   top: ${(props) => props?.position!.y}px;
 
-  z-index: 1;
+  z-index: 200;
   width: max-content;
 `;
 

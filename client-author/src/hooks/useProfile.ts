@@ -2,8 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import { getProfile } from "../services/apiUser";
 
-export const useProfile = () => {
-  const { profileId } = useParams();
+export const useProfile = (id?: string) => {
+  const params = useParams();
+
+  const profileId = id ?? params.profileId;
 
   const {
     isLoading,
@@ -11,7 +13,11 @@ export const useProfile = () => {
     error,
   } = useQuery({
     queryKey: ["profile", profileId],
-    queryFn: () => getProfile(profileId!),
+    queryFn: () => {
+      if (!profileId) throw new Error("No profile ID provided");
+      return getProfile(profileId);
+    },
+    enabled: !!profileId,
     retry: false,
   });
 

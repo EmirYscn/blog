@@ -19,6 +19,13 @@ import AuthSuccess from "./pages/AuthSuccess";
 import Subscribe from "./pages/Subscribe";
 import ArchivePage from "./pages/ArchivePage";
 import FeaturedPage from "./pages/FeaturedPage";
+import ProtectedRoute from "./hooks/ProtectedRoute";
+import SettingsLayout from "./ui/SettingsLayout";
+
+import ProfileSettings from "./pages/Settings/Profile";
+import PasswordSettings from "./pages/Settings/Password";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -44,10 +51,24 @@ function App() {
                 <Route path="profile/:profileId" element={<Profile />} />
               </Route>
 
+              <Route
+                path="settings"
+                element={
+                  <ProtectedRoute>
+                    <SettingsLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<ProfileSettings />} />
+                <Route path="profile" element={<ProfileSettings />} />
+                <Route path="password" element={<PasswordSettings />} />
+              </Route>
+
+              <Route path="forgotPassword" element={<ForgotPassword />} />
+              <Route path="reset-password" element={<ResetPassword />} />
               <Route path="subscribe" element={<Subscribe />} />
               <Route path="login" element={<Login />} />
               <Route path="auth-success" element={<AuthSuccess />} />
-              {/* <Route path="settings" element={<Settings />} /> */}
               <Route path="signup" element={<Signup />} />
               <Route path="*" element={<PageNotFound />} />
             </Routes>

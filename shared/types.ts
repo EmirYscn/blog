@@ -95,3 +95,5 @@ export function isAdmin(user: User): boolean {
 export function isAuthor(user: User): boolean {
   return user.role === ROLE.AUTHOR;
 }
+
+export type UpdateUser = User & Profile;

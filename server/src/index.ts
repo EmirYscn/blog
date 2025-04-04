@@ -25,8 +25,7 @@ const app: Application = express();
 
 // Implement CORS
 const corsOptions = {
-  origin:
-    process.env.NODE_ENV === "development" ? "*" : "https://yourdomain.com",
+  origin: process.env.NODE_ENV === "development" ? "*" : "*",
   credentials: true, // Allow cookies & auth headers
 };
 

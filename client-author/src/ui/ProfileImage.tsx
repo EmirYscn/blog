@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const sizes = {
   sm: "3rem",
@@ -40,10 +40,56 @@ type ProfileImageProps = {
   context?: "header" | "settings";
 };
 
-function ProfileImage({ imgSrc, size }: ProfileImageProps) {
-  const imageSrc = imgSrc
-    ? `${imgSrc}?timestamp=${Date.now()}`
-    : "/default-profile-icon.png";
+const OverlayText = styled.div<{ context?: "header" | "settings" }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+
+  ${ImageWrapper}:hover & {
+    opacity: 1; /* Show on hover */
+  }
+
+  ${(props) =>
+    props.context === "header" &&
+    css`
+      /* Hide overlay for 'header' context */
+      opacity: 0 !important;
+    `}
+`;
+
+function ProfileImage({
+  imgSrc,
+  size,
+  children,
+  context,
+  onClick,
+}: ProfileImageProps) {
+  // const imageSrc = imgSrc
+  //   ? `${imgSrc}?timestamp=${Date.now()}`
+  //   : "/default-profile-icon.png";
+
+  if (context === "settings") {
+    return (
+      <StyledProfileImage>
+        <ImageWrapper size={size} onClick={onClick}>
+          <Image src={imgSrc || "/default-profile-icon.png"} />
+          <OverlayText context={context}>Change</OverlayText>
+        </ImageWrapper>
+        {children}
+      </StyledProfileImage>
+    );
+  }
 
   return (
     <StyledProfileImage>

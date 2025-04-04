@@ -5,7 +5,8 @@
     "target": "ES6", // JavaScript target
     "module": "CommonJS", // Module system
     "esModuleInterop": true, // For importing CommonJS modules
-    "strict": true // Enable strict type checking
+    "strict": true, // Enable strict type checking
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
   "include": ["src/**/*.ts", "prisma/seed.js"], // Include all TypeScript files in src
   "exclude": ["node_modules"]

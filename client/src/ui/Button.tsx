@@ -1,4 +1,3 @@
-import { subscribe } from "diagnostics_channel";
 import styled, { css } from "styled-components";
 
 const sizes = {
@@ -15,7 +14,7 @@ const sizes = {
     font-weight: 500;
   `,
   large: css`
-    font-size: 1.6rem;
+    font-size: 2.5rem;
     padding: 1.2rem 2.4rem;
     font-weight: 500;
   `,
@@ -89,6 +88,9 @@ const variations = {
   icon: css`
     /* border-radius: 50%; */
     padding: 1rem;
+    /* &:hover {
+      color: var(--color-brand-600);
+    } */
 
     &:focus {
       outline: none;
@@ -150,6 +152,16 @@ const variations = {
       outline: none;
     }
   `,
+  saveDraft: css`
+    background-color: var(--color-yellow-700);
+    color: var(--color-grey-50);
+    padding: 0.8rem 1.2rem;
+  `,
+  publish: css`
+    background-color: var(--color-green-700);
+    color: var(--color-grey-50);
+    padding: 0.8rem 1.2rem;
+  `,
 };
 
 type ButtonProps = {
@@ -168,11 +180,14 @@ type ButtonProps = {
     | "search"
     | "normal"
     | "action"
-    | "readmore";
+    | "readmore"
+    | "saveDraft"
+    | "publish";
   icon?: React.ReactNode;
   children?: React.ReactNode;
   onClick?: () => void;
   disabled?: boolean;
+  type?: string;
 };
 
 const StyledButton = styled.button<ButtonProps>`
@@ -193,6 +208,7 @@ const StyledButton = styled.button<ButtonProps>`
 `;
 
 function Button({
+  type = "button",
   size = "medium",
   variation = "icon",
   icon,
@@ -206,6 +222,7 @@ function Button({
       variation={variation}
       onClick={onClick}
       disabled={disabled}
+      type={type}
     >
       {icon}
       {children}

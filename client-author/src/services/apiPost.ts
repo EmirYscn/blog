@@ -103,7 +103,28 @@ export const getAuthorPosts = async ({
 
   try {
     const res = await api.get(url);
-    console.log(res.data.posts);
+    return { posts: res.data.posts, count: res.data.count };
+  } catch (error) {
+    console.log(error);
+    throw new Error("Couldn't fetch posts");
+  }
+};
+
+export const getUserPosts = async (
+  userId: string | undefined,
+  { search = "", tag = "all", page = 1 }: query
+): Promise<{ posts: Post[]; count: number }> => {
+  const queryParams = new URLSearchParams();
+  if (search) queryParams.append("search", search);
+  if (tag && tag !== "all") queryParams.append("tag", tag);
+
+  queryParams.append("page", String(page));
+  queryParams.append("pageSize", String(PAGE_SIZE));
+
+  const url = `/api/v1/posts/user/${userId}/?${queryParams.toString()}`;
+
+  try {
+    const res = await api.get(url);
     return { posts: res.data.posts, count: res.data.count };
   } catch (error) {
     console.log(error);

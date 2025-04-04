@@ -20,11 +20,7 @@ export function useLikePost() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["featuredPosts"],
-        exact: false,
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["archivePosts"],
+        queryKey: ["posts"],
         exact: false,
       });
     },

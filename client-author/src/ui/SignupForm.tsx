@@ -38,7 +38,7 @@ function SignupForm() {
           type="email"
           id="email"
           // This makes this form better for password managers
-          autoComplete="username"
+          autoComplete="email"
           disabled={isPending}
           {...register("email", {
             required: "This field is required",
@@ -92,7 +92,7 @@ function SignupForm() {
       </FormRowVertical>
 
       <FormRowVertical>
-        <Button size="medium" variation="primary">
+        <Button type="submit" size="medium" variation="primary">
           {!isPending ? "Sign up" : <SpinnerMini />}
         </Button>
       </FormRowVertical>

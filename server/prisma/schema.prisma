@@ -16,6 +16,10 @@ datasource db {
 model Profile {
   id     String  @id @default(uuid())
   bio    String?
+
+  createdAt DateTime?  @default(now())
+  updatedAt DateTime?  @updatedAt
+  deletedAt DateTime? // Soft delete timestamp
   
   user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String  @unique
@@ -28,6 +32,13 @@ model User {
   password String?
   role     ROLE      @default(USER)
   avatar   String? // Direct URL to avatar image
+
+  createdAt DateTime?  @default(now())
+  updatedAt DateTime?  @updatedAt
+  deletedAt DateTime? // Soft delete timestamp
+
+  resetPasswordToken String? @unique// Token for password reset
+  resetPasswordExpires DateTime? // Expiration date for the token
 
   posts    Post[]
   profile  Profile?

@@ -56,15 +56,16 @@ function LoginForm() {
         />
       </FormRowVertical>
 
-      <Link to={"/signup"}>Don't have an account?</Link>
+      <Link to="/forgotPassword">Forgot Password?</Link>
 
       <FormRowVertical>
         <GoogleButton />
         <GitHubButton />
       </FormRowVertical>
 
+      <Link to="/signup">Don't have an account?</Link>
       <FormRowVertical>
-        <Button size="large" variation="primary">
+        <Button type="submit" size="medium" variation="primary">
           {!isPending ? "Log in" : <SpinnerMini />}
         </Button>
       </FormRowVertical>

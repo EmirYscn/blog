@@ -16,7 +16,7 @@ export const useUnpublishedPosts = () => {
     },
     error,
   } = useQuery({
-    queryKey: ["unpublishedPosts", search, tag, page],
+    queryKey: ["posts", "unpublished", search, tag, page],
     queryFn: () => getUnpublishedPosts({ search, tag, page }),
   });
 

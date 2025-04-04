@@ -32,6 +32,8 @@ function UnpublishedPosts() {
 
   if (isLoading) return <Spinner />;
 
+  if (unpublishedPosts?.length === 0) return null;
+
   return (
     <StyledUnpublishedPosts>
       <Top>

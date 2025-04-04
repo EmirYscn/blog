@@ -92,7 +92,7 @@ function SignupForm() {
       </FormRowVertical>
 
       <FormRowVertical>
-        <Button size="large" variation="primary">
+        <Button type="submit" size="medium" variation="primary">
           {!isPending ? "Sign up" : <SpinnerMini />}
         </Button>
       </FormRowVertical>

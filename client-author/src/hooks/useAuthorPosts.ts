@@ -14,7 +14,7 @@ export const useAuthorPosts = () => {
     data: { posts, count } = { posts: [], count: 0 },
     error,
   } = useQuery({
-    queryKey: ["archivePosts", search, tag, page],
+    queryKey: ["posts", "archive", search, tag, page],
     queryFn: () => getAuthorPosts({ search, tag, page }),
   });
 

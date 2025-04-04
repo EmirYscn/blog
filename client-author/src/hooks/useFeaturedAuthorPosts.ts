@@ -14,7 +14,7 @@ export const useFeaturedAuthorPosts = () => {
     data: { posts: featuredPosts, count } = { featuredPosts: [], count: 0 },
     error,
   } = useQuery({
-    queryKey: ["featuredPosts", search, tag, page],
+    queryKey: ["posts", "featured", search, tag, page],
     queryFn: () => getFeaturedPosts({ search, tag, page }),
   });
 

@@ -12,4 +12,5 @@ export type {
   Media,
   Post,
   Profile,
+  UpdateUser,
 } from "../../../shared/types";

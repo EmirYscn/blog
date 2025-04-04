@@ -112,7 +112,7 @@ function CommentBox({
       <Head>
         <h3>Reply</h3>
       </Head>
-
+      
       <Comment
         placeholder="Add your comment..."
         value={text}

@@ -16,19 +16,7 @@ export function useUpdatePost() {
     }) => updatePost(postId, body),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["featuredPosts"],
-        exact: false,
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["archivePosts"],
-        exact: false,
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["publishedPosts"],
-        exact: false,
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["unpublishedPosts"],
+        queryKey: ["posts"],
         exact: false,
       });
     },

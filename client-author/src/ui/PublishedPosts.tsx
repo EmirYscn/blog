@@ -32,6 +32,8 @@ function PublishedPosts() {
 
   if (isLoading) return <Spinner />;
 
+  if (publishedPosts?.length === 0) return null;
+
   return (
     <StyledPublishedPosts>
       <Top>

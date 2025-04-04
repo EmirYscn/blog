@@ -9,6 +9,7 @@ import { useLogin } from "../hooks/useLogin";
 import GoogleButton from "./GoogleButton";
 import GitHubButton from "./GithubButton";
 import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
+import { Link } from "react-router";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -54,14 +55,14 @@ function LoginForm() {
           disabled={isPending}
         />
       </FormRowVertical>
-
+      <Link to="/forgotPassword">Forgot Password?</Link>
       <FormRowVertical>
         <GoogleButton />
         <GitHubButton />
       </FormRowVertical>
 
       <FormRowVertical>
-        <Button size="medium" variation="primary">
+        <Button type="submit" size="medium" variation="primary">
           {!isPending ? "Log in" : <SpinnerMini />}
         </Button>
       </FormRowVertical>
