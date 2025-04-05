@@ -24,8 +24,8 @@ import PostEditPage from "./pages/PostEditPage";
 import SettingsLayout from "./ui/SettingsLayout";
 import ProfileSettings from "./pages/Settings/Profile";
 import PasswordSettings from "./pages/Settings/Password";
-import ForgotPassword from "./pages/forgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const queryClient = new QueryClient({
   defaultOptions: {
