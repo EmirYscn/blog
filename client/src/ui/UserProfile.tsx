@@ -1,11 +1,12 @@
-import { Link } from "react-router";
 import styled from "styled-components";
-import { formatPostDate } from "../utils/formatPostDate";
-import { formatString } from "../utils/formatString";
+
 import { useProfile } from "../hooks/useProfile";
 
 import ProfileImage from "./ProfileImage";
 import Spinner from "./Spinner";
+import Posts from "./Posts";
+import Pagination from "./Pagination";
+import { useUserPosts } from "../hooks/useUserPosts";
 
 const StyledUserProfile = styled.div`
   display: flex;
@@ -23,50 +24,9 @@ const ProfileDetails = styled.div`
   align-self: self-end;
 `;
 
-const Posts = styled.div`
-  margin-top: 3rem;
-  padding: 2rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-`;
-
-const Post = styled.div`
-  border-radius: 8px;
-  padding: 2rem;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  transition: all 0.2s ease-out;
-
-  &:hover {
-    transform: scale(1.01);
-  }
-`;
-
-const ImageWrapper = styled.div`
-  width: 100%;
-`;
-
-const Image = styled.img`
-  object-fit: cover;
-`;
-
-const PostDetails = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const Title = styled.span`
-  font-size: 1.8rem;
-  font-weight: 600;
-`;
-
 function UserProfile() {
   const { profile, isLoading } = useProfile();
+  const { posts, count } = useUserPosts();
 
   if (isLoading) return <Spinner />;
 
@@ -79,22 +39,8 @@ function UserProfile() {
           <span>{profile?.bio}</span>
         </ProfileDetails>
       </Profile>
-
-      <Posts>
-        {profile?.user?.posts?.map((post) => (
-          <Post>
-            <Link to={`/post/${post.id}`}>
-              <ImageWrapper>
-                <Image src="/logo.jpg" />
-              </ImageWrapper>
-              <PostDetails>
-                <Title>{formatString(post.title)}</Title>
-                <span>{formatPostDate(post.createdAt)}</span>
-              </PostDetails>
-            </Link>
-          </Post>
-        ))}
-      </Posts>
+      <Posts posts={posts} />
+      {count > 0 && <Pagination count={count} />}
     </StyledUserProfile>
   );
 }
