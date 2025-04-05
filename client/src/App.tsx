@@ -4,24 +4,22 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import GlobalStyles from "./styles/GlobalStyles";
 
-import Feed from "./pages/Feed";
+import { ThemeContextProvider } from "./contexts/DarkMode/ThemeContextProvider";
+import ProtectedRoute from "./hooks/ProtectedRoute";
+
+import AppLayout from "./ui/AppLayout";
+import SettingsLayout from "./ui/SettingsLayout";
+
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import PostPage from "./pages/PostPage";
 import Home from "./pages/HomePage";
-
-import AppLayout from "./ui/AppLayout";
-
-import { ThemeContextProvider } from "./contexts/DarkMode/ThemeContextProvider";
 import AuthSuccess from "./pages/AuthSuccess";
 import Subscribe from "./pages/Subscribe";
 import ArchivePage from "./pages/ArchivePage";
 import FeaturedPage from "./pages/FeaturedPage";
-import ProtectedRoute from "./hooks/ProtectedRoute";
-import SettingsLayout from "./ui/SettingsLayout";
-
 import ProfileSettings from "./pages/Settings/Profile";
 import PasswordSettings from "./pages/Settings/Password";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -44,7 +42,6 @@ function App() {
             <Routes>
               <Route element={<AppLayout />}>
                 <Route index element={<Home />} />
-                {/* <Route path="feed" element={<Feed />} /> */}
                 <Route path="featured" element={<FeaturedPage />} />
                 <Route path="archive" element={<ArchivePage />} />
                 <Route path="post/:postId" element={<PostPage />} />

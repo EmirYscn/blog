@@ -5,7 +5,7 @@ const Tags = styled.div`
   top: 1rem;
   left: 1rem;
   padding: 0.5rem 1rem;
-  /* border: 1px solid var(--color-brand-900); */
+
   background-color: var(--color-brand-900);
   color: var(--color-white);
   border-radius: 30px;

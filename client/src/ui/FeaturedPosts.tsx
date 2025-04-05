@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 import { useFeaturedAuthorPosts } from "../hooks/useFeaturedAuthorPosts";
-import Spinner from "./Spinner";
 
+import Spinner from "./Spinner";
 import Pagination from "./Pagination";
 import SearchBar from "./SearchBar";
 import ScrollToTop from "./ScrollToTop";

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { getUnpublishedPosts } from "../services/apiPost";
 import { useSearchParams } from "react-router";
+
+import { getUnpublishedPosts } from "../services/apiPost";
 
 export const useUnpublishedPosts = () => {
   const [searchParams] = useSearchParams();

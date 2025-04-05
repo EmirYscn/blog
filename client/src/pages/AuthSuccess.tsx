@@ -1,9 +1,9 @@
-import { useNavigate, useSearchParams } from "react-router";
-import { useOAuthCallback } from "../hooks/useOAuthCallback";
-import Spinner from "../ui/Spinner";
-import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
+import { useNavigate, useSearchParams } from "react-router";
+import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+
+import Spinner from "../ui/Spinner";
 
 function AuthSuccess() {
   const [searchParams] = useSearchParams();
@@ -36,7 +36,6 @@ function AuthSuccess() {
           navigate("/", { replace: true });
         }, 300);
       } catch (error) {
-        console.error("Failed to parse auth data", error);
         navigate("/login?error=invalid_data", { replace: true });
       }
     }

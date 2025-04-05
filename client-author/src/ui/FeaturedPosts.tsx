@@ -1,18 +1,18 @@
-import styled from "styled-components";
-
-import { useFeaturedAuthorPosts } from "../hooks/useFeaturedAuthorPosts";
-import Spinner from "./Spinner";
-
-import Pagination from "./Pagination";
-import SearchBar from "./SearchBar";
-import ScrollToTop from "./ScrollToTop";
-import Filter from "./Filter";
 import { useState } from "react";
-import Button from "./Button";
+import styled from "styled-components";
 import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowLeft,
 } from "react-icons/md";
+
+import { useFeaturedAuthorPosts } from "../hooks/useFeaturedAuthorPosts";
+
+import Spinner from "./Spinner";
+import Pagination from "./Pagination";
+import SearchBar from "./SearchBar";
+import ScrollToTop from "./ScrollToTop";
+import Filter from "./Filter";
+import Button from "./Button";
 import Posts from "./Posts";
 
 const StyledFeaturedPosts = styled.div`

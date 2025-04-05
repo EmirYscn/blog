@@ -1,8 +1,10 @@
 import { NextFunction, Request, Response } from "express";
+import { User } from "@prisma/client";
+
 import catchAsync from "../utils/catchAsync";
+
 import * as commentQueries from "../db/comment.queries";
 import * as likeQueries from "../db/like.queries";
-import { User } from "@prisma/client";
 
 export const createComment = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {

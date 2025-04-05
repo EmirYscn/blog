@@ -1,15 +1,16 @@
-import Button from "../ui/Button";
-import Form from "../ui/Form";
-import Input from "./Input";
-import FormRowVertical from "../ui/FormRowVertical";
-import SpinnerMini from "../ui/SpinnerMini";
-
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { IoMdCheckmark } from "react-icons/io";
+
 import { SignupType } from "../services/apiAuth";
 import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
 import { useForgotPassword } from "../hooks/useForgotPassword";
-import { useState } from "react";
-import { IoMdCheckmark } from "react-icons/io";
+
+import Button from "./Button";
+import Form from "./Form";
+import Input from "./Input";
+import FormRowVertical from "./FormRowVertical";
+import SpinnerMini from "./SpinnerMini";
 
 function ResetPasswordFormEmail() {
   const { isDarkMode } = useDarkMode();
@@ -36,7 +37,6 @@ function ResetPasswordFormEmail() {
         <Input
           type="email"
           id="email"
-          // This makes this form better for password managers
           autoComplete="email"
           disabled={isLoading}
           {...register("email", {

@@ -2,6 +2,7 @@ import { useState, KeyboardEvent } from "react";
 import { IoClose, IoSearchOutline } from "react-icons/io5";
 import { useNavigate, useSearchParams } from "react-router";
 import styled from "styled-components";
+
 import Button from "./Button";
 
 const SearchBarContainer = styled.div`
@@ -72,7 +73,7 @@ const CurrentSearch = styled.div`
 `;
 
 type SearchBarProps = {
-  navigateTo?: string; // Optional prop with default value
+  navigateTo?: string;
 };
 
 const SearchBar = ({ navigateTo = "" }: SearchBarProps) => {

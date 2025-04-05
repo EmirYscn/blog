@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
+
 import { logout as logoutApi } from "../services/apiAuth";
 
 const USER_QUERY_KEY = "user";

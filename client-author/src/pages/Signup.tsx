@@ -1,8 +1,10 @@
 import styled from "styled-components";
+
+import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
+
 import Logo from "../ui/Logo";
 import Heading from "../ui/Heading";
 import SignupForm from "../ui/SignupForm";
-import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
 
 const SignupLayout = styled.main<{ $isDarkMode?: boolean }>`
   min-height: 100vh;

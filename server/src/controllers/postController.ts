@@ -1,8 +1,10 @@
 import { NextFunction, Request, Response } from "express";
+import { Post, User } from "@prisma/client";
+
 import catchAsync from "../utils/catchAsync";
+
 import * as postQueries from "../db/post.queries";
 import * as likeQueries from "../db/like.queries";
-import { Post, User } from "@prisma/client";
 
 export const getAuthorPosts = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {

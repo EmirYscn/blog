@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+
 import Heading from "./Heading";
 import Button from "./Button";
 
@@ -39,7 +40,6 @@ type ConfirmDeleteProps = {
 };
 
 function ConfirmDeleteModal({
-  resourceName,
   onConfirm,
   disabled,
   onCloseModal,

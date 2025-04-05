@@ -1,9 +1,11 @@
 import styled from "styled-components";
+
 import { useProfile } from "../hooks/useProfile";
+import { useUserPosts } from "../hooks/useUserPosts";
+
 import ProfileImage from "./ProfileImage";
 import Spinner from "./Spinner";
 import Posts from "./Posts";
-import { useUserPosts } from "../hooks/useUserPosts";
 import Pagination from "./Pagination";
 
 const StyledUserProfile = styled.div`

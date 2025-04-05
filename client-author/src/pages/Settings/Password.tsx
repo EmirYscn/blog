@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 import Heading from "../../ui/Heading";
-
 import PasswordSettings from "../../ui/PasswordSettings";
 
 const StyledSettings = styled.div`

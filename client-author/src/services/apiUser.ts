@@ -5,10 +5,8 @@ import { api } from "./apiAuth";
 export const getAuthor = async (): Promise<User> => {
   try {
     const res = await api.get("/api/v1/users/author");
-    console.log(res.data.author);
     return res.data.author; // Axios automatically parses JSON
   } catch (error) {
-    console.log(error);
     throw new Error("Couldn't fetch author");
   }
 };
@@ -19,7 +17,6 @@ export const getProfile = async (profileId: string): Promise<Profile> => {
 
     return res.data.profile;
   } catch (error) {
-    console.error("Profile fetch error:", error);
     throw new Error("Couldn't fetch profile");
   }
 };
@@ -28,7 +25,6 @@ export const updateProfile = async (body: Partial<UpdateUser>) => {
   try {
     await api.patch("/api/v1/users/updateProfile", body);
   } catch (error) {
-    console.error("Update user error:", error);
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =
@@ -46,7 +42,6 @@ export const updatePassword = async (body: Partial<UpdateUser>) => {
   try {
     await api.patch("/api/v1/users/updatePassword", body);
   } catch (error) {
-    console.error("Update user error:", error);
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =
@@ -64,7 +59,6 @@ export const forgotPassword = async (email: string) => {
   try {
     await api.post("/api/v1/users/forgotPassword", { email });
   } catch (error) {
-    console.error("Forgot password error:", error);
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =
@@ -83,7 +77,6 @@ export const resetPassword = async (token: string, password: string) => {
     });
     return res.data;
   } catch (error) {
-    console.error("Reset password error:", error);
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =

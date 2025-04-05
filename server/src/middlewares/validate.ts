@@ -1,6 +1,7 @@
 import { body } from "express-validator";
-import * as db from "../db/user.queries";
 import bcrypt from "bcryptjs";
+
+import * as db from "../db/user.queries";
 
 export const validateSignup = [
   body("email")
@@ -79,10 +80,3 @@ export const validatePasswordUpdate = [
       return true;
     }),
 ];
-
-// body("confirmPassword").custom((value, { req }) => {
-//   if (value !== req.body.password) {
-//     throw new Error("Passwords do not match");
-//   }
-//   return true;
-// }),

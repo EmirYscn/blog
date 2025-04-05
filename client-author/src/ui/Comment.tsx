@@ -1,18 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import { Comment as CommentType, ROLE } from "../types/types";
-import { formatString } from "../utils/formatString";
-import Button from "./Button";
-import styled, { css } from "styled-components";
-import { Link, useNavigate } from "react-router";
-import ProfileImage from "./ProfileImage";
-import { formatPostDate } from "../utils/formatPostDate";
-import { LuHeart } from "react-icons/lu";
-import { FaRegCommentDots } from "react-icons/fa6";
-import Menus from "./Menus";
-import { IoPerson } from "react-icons/io5";
 import { FaRegTrashAlt } from "react-icons/fa";
+import styled, { css } from "styled-components";
+import { Link } from "react-router";
+
 import { useUser } from "../hooks/useUser";
 import useDeleteComment from "../hooks/useDeleteComment";
+
+import { Comment as CommentType } from "../types/types";
+
+import { formatPostDate } from "../utils/formatPostDate";
+import { formatString } from "../utils/formatString";
+
+import Button from "./Button";
+import ProfileImage from "./ProfileImage";
+import Menus from "./Menus";
 import CommentBox from "./CommentBox";
 import CommentActions from "./CommentActions";
 
@@ -37,7 +38,6 @@ const AuthorLink = styled(Link)`
 const Author = styled.div`
   display: flex;
   justify-content: space-between;
-  /* gap: 1rem; */
 `;
 
 const Content = styled.span`
@@ -52,11 +52,6 @@ const Content = styled.span`
   overflow: hidden;
 `;
 
-const Actions = styled.div`
-  display: flex;
-  gap: 1rem;
-  margin-top: 0.5rem;
-`;
 const CurvedConnector = styled.div`
   position: absolute;
   top: 5px;
@@ -70,26 +65,12 @@ const CurvedConnector = styled.div`
 const ProfileImageWrapper = styled.div<{ $isReply?: boolean }>`
   position: relative;
   align-self: flex-start;
-
-  /* ${(props) =>
-    props.$isReply &&
-    css`
-      &::before {
-        content: "";
-        position: absolute;
-        top: 16px;
-        left: -30px;
-        width: 20px;
-        height: 2px;
-        background-color: var(--color-grey-300, #dee2e6);
-      }
-    `} */
 `;
 
 const VerticalLine = styled.div<{ $height: number }>`
   position: absolute;
-  top: 40px; /* Adjust based on your avatar size */
-  left: 16px; /* Center of the avatar, adjust as needed */
+  top: 40px;
+  left: 16px;
   width: 2px;
   height: ${(props) => `${props.$height}px`};
   background-color: var(--color-grey-300, #dee2e6);
@@ -126,7 +107,7 @@ function Comment({
   const { user } = useUser();
   const [lineHeight, setLineHeight] = useState(0);
   const profileRef = useRef<HTMLDivElement>(null);
-  // const actionsRef = useRef<HTMLDivElement>(null);
+
   const contentEndRef = useRef<HTMLDivElement>(null);
   const { deleteComment, isLoading: isDeleting } = useDeleteComment();
   const [isReplyExpanded, setIsReplyExpanded] = useState(false);

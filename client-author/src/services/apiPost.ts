@@ -31,7 +31,6 @@ export const getFeaturedPosts = async ({
     const res = await api.get(url);
     return { posts: res.data.posts, count: res.data.count };
   } catch (error) {
-    console.log(error);
     throw new Error("Couldn't fetch featured posts");
   }
 };
@@ -57,7 +56,6 @@ export const getPublishedPosts = async ({
     const res = await api.get(url);
     return { posts: res.data.posts, count: res.data.count };
   } catch (error) {
-    console.log(error);
     throw new Error("Couldn't fetch published posts");
   }
 };
@@ -83,7 +81,6 @@ export const getUnpublishedPosts = async ({
     const res = await api.get(url);
     return { posts: res.data.posts, count: res.data.count };
   } catch (error) {
-    console.log(error);
     throw new Error("Couldn't fetch unpublished posts");
   }
 };
@@ -105,7 +102,6 @@ export const getAuthorPosts = async ({
     const res = await api.get(url);
     return { posts: res.data.posts, count: res.data.count };
   } catch (error) {
-    console.log(error);
     throw new Error("Couldn't fetch posts");
   }
 };
@@ -127,7 +123,6 @@ export const getUserPosts = async (
     const res = await api.get(url);
     return { posts: res.data.posts, count: res.data.count };
   } catch (error) {
-    console.log(error);
     throw new Error("Couldn't fetch posts");
   }
 };
@@ -137,7 +132,6 @@ export const getPosts = async (): Promise<Post[]> => {
     const res = await api.get("/api/v1/posts");
     return res.data.posts; // Axios automatically parses JSON
   } catch (error) {
-    console.log(error);
     throw new Error("Couldn't fetch posts");
   }
 };
@@ -145,10 +139,8 @@ export const getPosts = async (): Promise<Post[]> => {
 export const getPost = async (postId: string): Promise<Post> => {
   try {
     const res = await api.get(`/api/v1/posts/${postId}`);
-    console.log(res);
     return res.data.post;
   } catch (error) {
-    console.log(error);
     throw new Error("Couldn't fetch post");
   }
 };
@@ -157,7 +149,6 @@ export const createPost = async (postData: Partial<Post>) => {
   try {
     await api.post("/api/v1/posts", postData);
   } catch (error) {
-    console.error("Create post error:", error);
     if (axios.isAxiosError(error)) {
       const serverMessage =
         error.response?.data?.message || "Couldn't create post";
@@ -172,7 +163,6 @@ export const updatePost = async (postId: string, body: Partial<Post>) => {
   try {
     await api.patch(`/api/v1/posts/${postId}`, body);
   } catch (error) {
-    console.error("Update post error:", error);
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =
@@ -188,7 +178,6 @@ export const deletePost = async (postId: string) => {
   try {
     await api.delete(`/api/v1/posts/${postId}`);
   } catch (error) {
-    console.error("Delete post error:", error);
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =

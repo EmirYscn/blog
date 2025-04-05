@@ -1,13 +1,14 @@
 import { NextFunction, Request, Response } from "express";
-import * as userQueries from "../db/user.queries";
+import { User } from "@prisma/client";
+import { validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 
 import catchAsync from "../utils/catchAsync";
 import AppError from "../utils/appError";
-import { User } from "@prisma/client";
-import { validationResult } from "express-validator";
 import { Email } from "../utils/email";
+
+import * as userQueries from "../db/user.queries";
 
 const CLIENT_URL = process.env.CLIENT_URL;
 const CLIENT_AUTHOR_URL = process.env.CLIENT_AUTHOR_URL;
@@ -146,10 +147,9 @@ export const requestPasswordReset = catchAsync(
     });
 
     // Send email with reset link
-    const resetURL = `${safeRedirect}reset-password?token=${resetToken}`;
+    const resetURL = `${safeRedirect}/reset-password?token=${resetToken}`;
     try {
-      const emailTransport = new Email(user, resetURL);
-      await emailTransport.sendPasswordReset();
+      await new Email(user, resetURL).sendPasswordReset();
 
       res.status(200).json({
         status: "success",

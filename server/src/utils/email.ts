@@ -3,7 +3,6 @@ import { User } from "@prisma/client";
 import nodemailer from "nodemailer";
 import pug from "pug";
 import { convert } from "html-to-text";
-const mailjetTransport = require("nodemailer-mailjet-transport");
 
 export class Email {
   private to: string;
@@ -22,15 +21,7 @@ export class Email {
       if (!process.env.MAILJET_API_KEY || !process.env.MAILJET_API_SECRET) {
         throw new Error("Mailjet credentials are missing in production.");
       }
-      // Mailjet
-      //   return nodemailer.createTransport(
-      //     mailjetTransport({
-      //       auth: {
-      //         apiKey: process.env.MAILJET_API_KEY,
-      //         apiSecret: process.env.MAILJET_API_SECRET,
-      //       },
-      //     })
-      //   );
+
       return nodemailer.createTransport({
         host: "in-v3.mailjet.com",
         port: 587,

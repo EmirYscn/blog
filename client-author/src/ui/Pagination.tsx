@@ -1,7 +1,9 @@
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useNavigate, useSearchParams } from "react-router";
 import styled from "styled-components";
+
 import { PAGE_SIZE } from "../utils/constants";
+
 import PageButtons from "./PageButtons";
 
 const StyledPagination = styled.div`

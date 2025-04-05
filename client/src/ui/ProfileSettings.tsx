@@ -2,16 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
+import { UpdateUser } from "../types/types";
+
+import { useUser } from "../hooks/useUser";
+import { useProfile } from "../hooks/useProfile";
+import { useUpdateProfile } from "../hooks/useUpdateProfile";
+
 import Input from "./Input";
 import FormRow from "./FormRow";
 import Form from "./Form";
 import Button from "./Button";
-
-import { useUser } from "../hooks/useUser";
-import { UpdateUser } from "../types/types";
-import ProfileImage from "./ProfileImage";
-import { useProfile } from "../hooks/useProfile";
-import { useUpdateProfile } from "../hooks/useUpdateProfile";
 
 const StyledSettings = styled.div`
   display: flex;
@@ -38,7 +38,7 @@ const BioInput = styled.textarea`
   border: 1px solid var(--color-grey-200);
   border-radius: 8px;
   resize: none;
-  /* font-size: 1rem; */
+
   min-height: 100px;
   transition: border 0.2s ease-in-out;
   overflow: auto;
@@ -46,7 +46,6 @@ const BioInput = styled.textarea`
   &:focus {
     outline: none;
     border-color: var(--color-brand-600);
-    /* background-color: var(--color-white); */
   }
 `;
 
@@ -84,27 +83,27 @@ function ProfileSettings() {
     }
   }, [user, setValue, profile]);
 
-  function handleImageClick() {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  }
+  // function handleImageClick() {
+  //   if (fileInputRef.current) {
+  //     fileInputRef.current.click();
+  //   }
+  // }
 
-  async function handleAvatarUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
+  // async function handleAvatarUpload(e: React.ChangeEvent<HTMLInputElement>) {
+  //   const file = e.target.files?.[0];
 
-    if (file) {
-      const formData = new FormData();
-      formData.append("avatar", file);
+  //   if (file) {
+  //     const formData = new FormData();
+  //     formData.append("avatar", file);
 
-      try {
-        // const userAvatar = await uploadAvatar(formData, user?.id);
-        // const refreshedAvatarUrl = `${userAvatar}?t=${Date.now()}`;
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  }
+  //     try {
+  //       // const userAvatar = await uploadAvatar(formData, user?.id);
+  //       // const refreshedAvatarUrl = `${userAvatar}?t=${Date.now()}`;
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // }
 
   async function onSubmit() {
     if (!user) return;
@@ -201,23 +200,6 @@ function ProfileSettings() {
               onChange={() => setIsEdited(true)}
             />
           </FormRow>
-          <ProfileImage
-            imgSrc={user?.avatar}
-            onClick={handleImageClick}
-            size={"lg"}
-            context="settings"
-          >
-            <ChangePhotoPara onClick={handleImageClick}>
-              Choose new photo
-            </ChangePhotoPara>
-            <input
-              type="file"
-              ref={fileInputRef}
-              style={{ display: "none" }}
-              accept="image/*"
-              onChange={handleAvatarUpload}
-            />
-          </ProfileImage>
 
           <FormRow>
             <Button

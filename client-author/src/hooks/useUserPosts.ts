@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router";
+
 import { useUser } from "./useUser";
 import { getUserPosts } from "../services/apiPost";
 

@@ -1,10 +1,11 @@
+import { Link } from "react-router";
 import styled from "styled-components";
-import { useProfile } from "../hooks/useProfile";
-import ProfileImage from "./ProfileImage";
-import Spinner from "./Spinner";
 import { formatPostDate } from "../utils/formatPostDate";
 import { formatString } from "../utils/formatString";
-import { Link } from "react-router";
+import { useProfile } from "../hooks/useProfile";
+
+import ProfileImage from "./ProfileImage";
+import Spinner from "./Spinner";
 
 const StyledUserProfile = styled.div`
   display: flex;

@@ -1,9 +1,9 @@
-import { useNavigate, useSearchParams } from "react-router";
-import { useOAuthCallback } from "../hooks/useOAuthCallback";
-import Spinner from "../ui/Spinner";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
+import { useNavigate, useSearchParams } from "react-router";
+
+import Spinner from "../ui/Spinner";
 
 function AuthSuccess() {
   const [searchParams] = useSearchParams();

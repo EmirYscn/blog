@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from "express";
+
 import catchAsync from "../utils/catchAsync";
-import * as subscriptionQueries from "../db/subscription.queries";
 import AppError from "../utils/appError";
+
+import * as subscriptionQueries from "../db/subscription.queries";
 
 export const subscribe = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {

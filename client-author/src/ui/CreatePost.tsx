@@ -1,18 +1,14 @@
 import { useState } from "react";
-import TextEditor from "./TextEditor";
-import Button from "./Button";
+import toast from "react-hot-toast";
 import styled from "styled-components";
 import { BiSave } from "react-icons/bi";
-import { useCreatePost } from "../hooks/useCreatePost";
-import { ChangeEvent, Post } from "../types/types";
-import toast from "react-hot-toast";
-import Input from "./Input";
 
-// const Form = styled.form`
-//   display: flex;
-//   flex-direction: column;
-//   gap: 2rem;
-// `;
+import { ChangeEvent, Post } from "../types/types";
+import { useCreatePost } from "../hooks/useCreatePost";
+
+import TextEditor from "./TextEditor";
+import Button from "./Button";
+import Input from "./Input";
 
 const StyledCreatePost = styled.div`
   display: flex;
@@ -26,7 +22,7 @@ const StyledCreatePost = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  /* justify-content: space-between; */
+
   align-self: flex-end;
   gap: 1rem;
 `;
@@ -149,4 +145,3 @@ const CreatePost = () => {
 };
 
 export default CreatePost;
-//   {/* <div dangerouslySetInnerHTML={{ __html: content }} /> */}

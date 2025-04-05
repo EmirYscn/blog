@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import Home from "../ui/Home";
 
 const StyledHome = styled.div``;

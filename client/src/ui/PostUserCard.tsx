@@ -1,9 +1,12 @@
-import styled from "styled-components";
-import { Post } from "../types/types";
-import ProfileImage from "./ProfileImage";
-import { formatDate } from "../utils/formatPostDate";
-import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router";
+import styled from "styled-components";
+import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
+
+import { Post } from "../types/types";
+
+import { formatDate } from "../utils/formatPostDate";
+
+import ProfileImage from "./ProfileImage";
 
 const StyledPostUserCard = styled.div`
   display: flex;

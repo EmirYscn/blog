@@ -1,9 +1,11 @@
-import styled from "styled-components";
-import Button from "./Button";
-import { IoBookmark } from "react-icons/io5";
-import { useUpdatePost } from "../hooks/useUpdatePost";
-import { Post } from "../types/types";
 import toast from "react-hot-toast";
+import { IoBookmark } from "react-icons/io5";
+import styled from "styled-components";
+
+import { Post } from "../types/types";
+import { useUpdatePost } from "../hooks/useUpdatePost";
+
+import Button from "./Button";
 
 const StyledBookmarkAction = styled.div<{ $isFeatured: boolean }>`
   position: absolute;
@@ -13,15 +15,13 @@ const StyledBookmarkAction = styled.div<{ $isFeatured: boolean }>`
   button svg {
     color: ${(props) =>
       props.$isFeatured ? "var(--color-orange-100);" : "var(--color-grey-800)"};
-    /* color: var(--color-orange-100); */
+
     transition: all 0.3s ease;
   }
 
   button:hover svg {
     color: ${(props) =>
-      props.$isFeatured
-        ? "var(--color-grey-800)"
-        : "var(--color-orange-100);"}; /* Change to your desired color */
+      props.$isFeatured ? "var(--color-grey-800)" : "var(--color-orange-100);"};
   }
 `;
 

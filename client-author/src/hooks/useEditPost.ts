@@ -1,8 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
-import { Post } from "../types/types";
-import { updatePost } from "../services/apiPost";
 import { useParams } from "react-router";
+import toast from "react-hot-toast";
+
+import { Post } from "../types/types";
+
+import { updatePost } from "../services/apiPost";
 
 export function useEditPost() {
   const { postId } = useParams();

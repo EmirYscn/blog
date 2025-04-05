@@ -2,11 +2,12 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
 import { useUser } from "../hooks/useUser";
+import { useUpdatePassword } from "../hooks/useUpdatePassword";
+
 import FormRow from "./FormRow";
 import Input from "./Input";
 import Button from "./Button";
 import Form from "./Form";
-import { useUpdatePassword } from "../hooks/useUpdatePassword";
 
 const StyledPassword = styled.div`
   display: flex;

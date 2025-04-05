@@ -1,18 +1,18 @@
 import styled from "styled-components";
-
-import Spinner from "./Spinner";
+import {
+  MdOutlineKeyboardArrowDown,
+  MdOutlineKeyboardArrowLeft,
+} from "react-icons/md";
 
 import { usePublishedPosts } from "../hooks/usePublishedPosts";
+
+import Spinner from "./Spinner";
 import Pagination from "./Pagination";
 import ScrollToTop from "./ScrollToTop";
 import SearchBar from "./SearchBar";
 import Filter from "./Filter";
 import { useState } from "react";
 import Button from "./Button";
-import {
-  MdOutlineKeyboardArrowDown,
-  MdOutlineKeyboardArrowLeft,
-} from "react-icons/md";
 import Posts from "./Posts";
 
 const StyledPublishedPosts = styled.div`

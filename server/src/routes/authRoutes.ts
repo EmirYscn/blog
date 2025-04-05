@@ -1,8 +1,9 @@
 import { Router } from "express";
+import { User } from "@prisma/client";
+
 import { validateSignup } from "../middlewares/validate";
 import * as authController from "../controllers/authController";
 import passport, { generateToken } from "../strategies/passport";
-import { User } from "@prisma/client";
 
 const router = Router();
 
@@ -19,13 +20,16 @@ router.get(
 
 // Google OAuth routes
 router.get("/google", (req, res, next) => {
+  const normalizeUrl = (url?: string) => url?.replace(/\/+$/, ""); // Remove trailing slashes
+
   const redirect = req.query.redirect || req.headers.referer; // Capture frontend origin
-  const allowedRedirects = [CLIENT_URL, CLIENT_AUTHOR_URL];
+  const normalizedRedirect = normalizeUrl(redirect?.toString());
+  const allowedRedirects = [CLIENT_URL, CLIENT_AUTHOR_URL].map(normalizeUrl);
 
   // Ensure the redirect is a valid frontend URL
-  const safeRedirect = allowedRedirects.includes(redirect?.toString())
-    ? redirect
-    : CLIENT_URL;
+  const safeRedirect = allowedRedirects.includes(normalizedRedirect)
+    ? normalizedRedirect
+    : normalizeUrl(CLIENT_URL);
 
   const state = Buffer.from(
     JSON.stringify({ redirect: safeRedirect })
@@ -69,7 +73,7 @@ router.get("/google/callback", (req, res, next) => {
 
       // Check for author access
       if (redirectUrl === CLIENT_AUTHOR_URL && user.role === "USER") {
-        return res.redirect(`${redirectUrl}login?error=unauthorized`);
+        return res.redirect(`${redirectUrl}/login?error=unauthorized`);
       }
 
       // Generate a JWT token
@@ -92,22 +96,24 @@ router.get("/google/callback", (req, res, next) => {
           provider: "Google",
         })
       ).toString("base64");
-
       // Redirect to frontend with token
-      return res.redirect(`${redirectUrl}auth-success?data=${payload}`);
+      return res.redirect(`${redirectUrl}/auth-success?data=${payload}`);
     }
   )(req, res, next);
 });
 
 // GitHub OAuth routes
 router.get("/github", (req, res, next) => {
+  const normalizeUrl = (url?: string) => url?.replace(/\/+$/, ""); // Remove trailing slashes
+
   const redirect = req.query.redirect || req.headers.referer; // Capture frontend origin
-  const allowedRedirects = [CLIENT_URL, CLIENT_AUTHOR_URL];
+  const normalizedRedirect = normalizeUrl(redirect?.toString());
+  const allowedRedirects = [CLIENT_URL, CLIENT_AUTHOR_URL].map(normalizeUrl);
 
   // Ensure the redirect is a valid frontend URL
-  const safeRedirect = allowedRedirects.includes(redirect?.toString())
-    ? redirect
-    : CLIENT_URL;
+  const safeRedirect = allowedRedirects.includes(normalizedRedirect)
+    ? normalizedRedirect
+    : normalizeUrl(CLIENT_URL);
 
   const state = Buffer.from(
     JSON.stringify({ redirect: safeRedirect })
@@ -151,7 +157,7 @@ router.get("/github/callback", (req, res, next) => {
 
       // Check for author access
       if (redirectUrl === CLIENT_AUTHOR_URL && user.role === "USER") {
-        return res.redirect(`${redirectUrl}login?error=unauthorized`);
+        return res.redirect(`${redirectUrl}/login?error=unauthorized`);
       }
 
       // Generate a JWT token
@@ -176,7 +182,7 @@ router.get("/github/callback", (req, res, next) => {
       ).toString("base64");
 
       // Redirect to frontend with token
-      return res.redirect(`${redirectUrl}auth-success?data=${payload}`);
+      return res.redirect(`${redirectUrl}/auth-success?data=${payload}`);
     }
   )(req, res, next);
 });

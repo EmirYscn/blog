@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import styled from "styled-components";
+
 import { formatString } from "../utils/formatString";
 
 const StyledNavInfo = styled.div`
@@ -13,7 +14,6 @@ const StyledNavInfo = styled.div`
     & li {
       display: flex;
       align-items: center;
-      /* gap: 0.4rem; */
     }
   }
 `;

@@ -1,13 +1,16 @@
 import styled from "styled-components";
-import Button from "./Button";
-import { usePost } from "../hooks/usePost";
+import { BiSave } from "react-icons/bi";
 import { useEffect, useState } from "react";
-import { useEditPost } from "../hooks/useEditPost";
 import toast from "react-hot-toast";
+
+import { ChangeEvent } from "../types/types";
+
+import { usePost } from "../hooks/usePost";
+import { useEditPost } from "../hooks/useEditPost";
+
+import Button from "./Button";
 import Input from "./Input";
 import TextEditor from "./TextEditor";
-import { BiSave } from "react-icons/bi";
-import { ChangeEvent } from "../types/types";
 
 const StyledEditPost = styled.div`
   display: flex;
@@ -17,14 +20,13 @@ const StyledEditPost = styled.div`
   margin: 0 auto;
 
   & > button {
-    /* margin: 0 0 0 auto; */
     align-self: flex-end;
   }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  /* justify-content: space-between; */
+
   align-self: flex-end;
   gap: 1rem;
 `;
@@ -32,16 +34,6 @@ const Label = styled.label`
   font-weight: bold;
   font-size: 2rem;
 `;
-
-// const ButtonWrapper = styled.div`
-//   display: flex;
-//   max-width: 60rem;
-//   margin: 0 auto;
-//   width: 100%;
-//   & > button {
-//     margin: 0 0 0 auto;
-//   }
-// `;
 
 function EditPost() {
   const { post } = usePost();

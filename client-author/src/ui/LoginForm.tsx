@@ -1,15 +1,18 @@
 import { useState } from "react";
-import Button from "../ui/Button";
-import Form from "../ui/Form";
-import Input from "./Input";
-import FormRowVertical from "../ui/FormRowVertical";
-import SpinnerMini from "../ui/SpinnerMini";
+import { Link } from "react-router";
+
 import { FormEvent } from "../types/types";
+
 import { useLogin } from "../hooks/useLogin";
+import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
+
+import Button from "./Button";
+import Form from "./Form";
+import Input from "./Input";
+import FormRowVertical from "./FormRowVertical";
+import SpinnerMini from "./SpinnerMini";
 import GoogleButton from "./GoogleButton";
 import GitHubButton from "./GithubButton";
-import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
-import { Link } from "react-router";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -37,7 +40,6 @@ function LoginForm() {
         <Input
           type="email"
           id="email"
-          // This makes this form better for password managers
           autoComplete="username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}

@@ -46,14 +46,34 @@ export const getCurrentUser = async (): Promise<User> => {
 };
 
 export const signup = async (data: SignupType) => {
-  const res = await api.post("/api/v1/auth/signup", data);
-  return res.data;
+  try {
+    const res = await api.post("/api/v1/auth/signup", data);
+    return res.data;
+  } catch (error) {
+    // Extract error message from response
+    if (axios.isAxiosError(error)) {
+      const serverMessage = error.response?.data?.message || "Couldn't signup";
+      throw new Error(serverMessage);
+    }
+
+    throw new Error("An unexpected error occurred.");
+  }
 };
 
 export const login = async (data: LoginCredentials): Promise<User> => {
-  const res = await api.post("/api/v1/auth/login", data);
-  localStorage.setItem("jwt", res.data.token);
-  return res.data.user;
+  try {
+    const res = await api.post("/api/v1/auth/login", data);
+    localStorage.setItem("jwt", res.data.token);
+    return res.data.user;
+  } catch (error) {
+    // Extract error message from response
+    if (axios.isAxiosError(error)) {
+      const serverMessage = error.response?.data?.message || "Couldn't login";
+      throw new Error(serverMessage);
+    }
+
+    throw new Error("An unexpected error occurred.");
+  }
 };
 
 export const handleOAuthCallback = (): { user: User; token: string } | null => {

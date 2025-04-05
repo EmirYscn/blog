@@ -1,7 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import { subscribe as subscribeApi } from "../services/apiSubscription";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
+
+import { subscribe as subscribeApi } from "../services/apiSubscription";
 
 export function useSubscribe() {
   const navigate = useNavigate();

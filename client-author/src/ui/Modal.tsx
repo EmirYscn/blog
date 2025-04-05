@@ -1,10 +1,9 @@
 import { cloneElement, createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { useOutsideClick } from "../hooks/useOutsideClick";
-
 import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
 
 const StyledModal = styled.div<{ $isDarkMode?: boolean }>`
@@ -18,12 +17,6 @@ const StyledModal = styled.div<{ $isDarkMode?: boolean }>`
   padding: 3.2rem 4rem;
   transition: all 0.5s;
   z-index: 300;
-
-  /* ${(props) =>
-    props.$isDarkMode &&
-    css`
-      background-color: var(--color-black-300);
-    `} */
 `;
 
 const Overlay = styled.div`

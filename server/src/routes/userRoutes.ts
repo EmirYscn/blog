@@ -1,6 +1,8 @@
 import { Router } from "express";
+
 import * as userController from "../controllers/userController";
 import { requireAuth, restrictTo } from "../controllers/authController";
+
 import {
   validatePasswordUpdate,
   validateProfileUpdate,

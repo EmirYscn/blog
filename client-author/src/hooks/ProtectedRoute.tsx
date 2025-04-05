@@ -1,6 +1,7 @@
 import { Navigate, useLocation } from "react-router";
-import { useUser } from "./useUser";
 import styled from "styled-components";
+
+import { useUser } from "./useUser";
 import Spinner from "../ui/Spinner";
 
 const Loading = styled.div`

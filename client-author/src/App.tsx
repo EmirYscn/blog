@@ -4,15 +4,15 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import GlobalStyles from "./styles/GlobalStyles";
 
+import AppLayout from "./ui/AppLayout";
+
+import { ThemeContextProvider } from "./contexts/DarkMode/ThemeContextProvider";
+
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import Profile from "./pages/Profile";
 import PostPage from "./pages/PostPage";
 import Home from "./pages/HomePage";
-
-import AppLayout from "./ui/AppLayout";
-
-import { ThemeContextProvider } from "./contexts/DarkMode/ThemeContextProvider";
 import AuthSuccess from "./pages/AuthSuccess";
 import Subscribe from "./pages/Subscribe";
 import ProtectedRoute from "./hooks/ProtectedRoute";
@@ -50,7 +50,6 @@ function App() {
                 }
               >
                 <Route index element={<Home />} />
-                {/* <Route path="feed" element={<Feed />} /> */}
                 <Route path="featured" element={<FeaturedPage />} />
                 <Route path="archive" element={<ArchivePage />} />
                 <Route path="published" element={<PublishedPage />} />
@@ -78,7 +77,6 @@ function App() {
               <Route path="subscribe" element={<Subscribe />} />
               <Route path="login" element={<Login />} />
               <Route path="auth-success" element={<AuthSuccess />} />
-              {/* <Route path="signup" element={<Signup />} /> */}
               <Route path="*" element={<PageNotFound />} />
             </Routes>
           </BrowserRouter>

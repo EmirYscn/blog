@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import Logo from "../ui/Logo";
-import Heading from "../ui/Heading";
 
 import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
+
+import Logo from "../ui/Logo";
+import Heading from "../ui/Heading";
 import ResetPasswordFormEmail from "../ui/ResetPasswordFormEmail";
 
 const SignupLayout = styled.main<{ $isDarkMode?: boolean }>`

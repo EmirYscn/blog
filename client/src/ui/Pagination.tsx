@@ -1,7 +1,9 @@
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useNavigate, useSearchParams } from "react-router";
 import styled from "styled-components";
+
 import { PAGE_SIZE } from "../utils/constants";
+
 import PageButtons from "./PageButtons";
 
 const StyledPagination = styled.div`
@@ -80,14 +82,14 @@ function Pagination({ count, navigateTo = "" }: PaginationProps) {
     const next = currentPage === pageCount ? currentPage : currentPage + 1;
 
     newSearchParams.set("page", next.toString());
-    // setSearchParams(searchParams);
+
     navigate(`/${navigateTo}?${newSearchParams.toString()}`);
   }
 
   function goToPage(page: number) {
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.set("page", page.toString());
-    // setSearchParams(searchParams);
+
     navigate(`/${navigateTo}?${newSearchParams.toString()}`);
   }
 
@@ -96,7 +98,7 @@ function Pagination({ count, navigateTo = "" }: PaginationProps) {
     const prev = currentPage === 1 ? currentPage : currentPage - 1;
 
     newSearchParams.set("page", prev.toString());
-    // setSearchParams(searchParams);
+
     navigate(`/${navigateTo}?${newSearchParams.toString()}`);
   }
 

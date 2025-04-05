@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import Logo from "./Logo";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
+
+import Logo from "./Logo";
 import SubscribeButton from "./SubscribeButton";
 
 const Header = styled.div`
@@ -34,7 +35,6 @@ const Author = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  /* flex-direction: column; */
 `;
 
 const Media = styled.div`

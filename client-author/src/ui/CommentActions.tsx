@@ -1,11 +1,12 @@
 import styled from "styled-components";
-import Button from "./Button";
 import { FaComment, FaHeart } from "react-icons/fa6";
+
 import { Comment } from "../types/types";
 
 import { useUser } from "../hooks/useUser";
-
 import { useLikeComment } from "../hooks/useLikeComment";
+
+import Button from "./Button";
 
 const StyledPostActions = styled.div`
   display: flex;

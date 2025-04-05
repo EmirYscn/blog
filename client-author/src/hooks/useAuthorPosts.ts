@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAuthorPosts } from "../services/apiPost";
 import { useSearchParams } from "react-router";
+
+import { getAuthorPosts } from "../services/apiPost";
 
 export const useAuthorPosts = () => {
   const [searchParams] = useSearchParams();

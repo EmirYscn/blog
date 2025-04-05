@@ -1,13 +1,14 @@
-import Button from "../ui/Button";
-import Form from "../ui/Form";
-import Input from "./Input";
-import FormRowVertical from "../ui/FormRowVertical";
-import SpinnerMini from "../ui/SpinnerMini";
+import { useForm } from "react-hook-form";
 
 import { useSignup } from "../hooks/useSignup";
-import { useForm } from "react-hook-form";
 import { SignupType } from "../services/apiAuth";
 import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
+
+import Button from "./Button";
+import Form from "./Form";
+import Input from "./Input";
+import FormRowVertical from "./FormRowVertical";
+import SpinnerMini from "./SpinnerMini";
 
 function SignupForm() {
   const { isDarkMode } = useDarkMode();
@@ -37,7 +38,6 @@ function SignupForm() {
         <Input
           type="email"
           id="email"
-          // This makes this form better for password managers
           autoComplete="email"
           disabled={isPending}
           {...register("email", {
@@ -53,7 +53,6 @@ function SignupForm() {
         <Input
           type="username"
           id="username"
-          // This makes this form better for password managers
           autoComplete="username"
           disabled={isPending}
           {...register("username", { required: "This field is required" })}

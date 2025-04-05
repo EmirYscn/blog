@@ -1,6 +1,7 @@
+import { useNavigate } from "react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router";
+
 import { useUser } from "./useUser";
 import { likePost as likeApi } from "../services/apiLike";
 
@@ -20,11 +21,7 @@ export function useLikePost() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["featuredPosts"],
-        exact: false,
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["authorPosts"],
+        queryKey: ["posts"],
         exact: false,
       });
     },

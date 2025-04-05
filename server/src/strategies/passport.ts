@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
@@ -9,11 +10,10 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import * as db from "../db/user.queries";
-import { User } from "@prisma/client";
 import { prisma } from "../db/prismaClient";
 
-const SERVER_URL = process.env.SERVER_URL || "http://localhost:3000";
-const JWT_SECRET = process.env.JWT_SECRET || "secret2121";
+const SERVER_URL = process.env.SERVER_URL;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const generateToken = (user: User) => {
   const payload = {
@@ -22,7 +22,7 @@ export const generateToken = (user: User) => {
     username: user.username,
   };
 
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: "1d" });
+  return jwt.sign(payload, JWT_SECRET!, { expiresIn: "1d" });
 };
 
 const verifyCallback = async (email: string, password: string, done: any) => {
@@ -145,7 +145,7 @@ const githubStrategy = new GithubStrategy(
 // JWT Strategy configuration
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: JWT_SECRET,
+  secretOrKey: JWT_SECRET!,
 };
 
 const jwtStrategy = new JwtStrategy(jwtOptions, async (payload, done) => {

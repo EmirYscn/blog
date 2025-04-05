@@ -1,15 +1,16 @@
-import Button from "../ui/Button";
-import Form from "../ui/Form";
-import Input from "./Input";
-import FormRowVertical from "../ui/FormRowVertical";
-import SpinnerMini from "../ui/SpinnerMini";
-
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSearchParams } from "react-router";
+
 import { SignupType } from "../services/apiAuth";
 import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router";
 import { useResetPassword } from "../hooks/useResetPassword";
+
+import Button from "./Button";
+import Form from "./Form";
+import Input from "./Input";
+import FormRowVertical from "./FormRowVertical";
+import SpinnerMini from "./SpinnerMini";
 
 function ResetPasswordFormPassword() {
   const { isDarkMode } = useDarkMode();

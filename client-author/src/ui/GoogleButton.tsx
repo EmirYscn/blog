@@ -57,7 +57,6 @@ const GoogleIcon = () => (
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
-// Usage in your Login component
 function GoogleButton() {
   const handleGoogleLogin = () => {
     window.location.href = `${API_BASE_URL}/api/v1/auth/google`;

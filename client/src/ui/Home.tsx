@@ -15,10 +15,6 @@ const StyledHome = styled.div`
   & > *:nth-child(n + 2) {
     margin-top: 10rem;
   }
-
-  /* @media (max-width: 440px) {
-    max-width: 40rem;
-  } */
 `;
 
 function Home() {

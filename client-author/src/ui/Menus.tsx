@@ -1,16 +1,15 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
+import { createPortal } from "react-dom";
 import { HiEllipsisVertical } from "react-icons/hi2";
 
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
-import { createPortal } from "react-dom";
 
 const Menu = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  /* position: relative; */
 `;
 
 const StyledToggle = styled.button<{ $isDarkMode?: boolean }>`

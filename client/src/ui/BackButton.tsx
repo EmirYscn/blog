@@ -1,6 +1,6 @@
-import { FaArrowCircleLeft } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import styled, { css } from "styled-components";
+import { FaArrowCircleLeft } from "react-icons/fa";
 
 const StyledBackButton = styled.button<{ poscontext?: string }>`
   padding: 0.5em 1em;
@@ -38,12 +38,7 @@ type BackButtonProps = {
 
 function BackButton({ posContext = "settings", to }: BackButtonProps) {
   const navigate = useNavigate();
-  //   const location = useLocation();
-  //   const pathSegments = location.pathname.split("/");
-  //   pathSegments.shift();
-  //   const isSubRoot = pathSegments.length > 1;
-  //   const isSignup = pathSegments[0] === "signup";
-  //   const isProfile = pathSegments[0] === "profile";
+
   return (
     <StyledBackButton
       onClick={() => (to ? navigate(to) : navigate(-1))}

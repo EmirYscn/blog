@@ -59,7 +59,6 @@ const variations = {
       background-color: var(--color-brand-600);
       color: var(--color-white);
     }
-    /* color: var(--color-white); */
   `,
   primary: css`
     background-color: var(--color-brand-600);
@@ -86,11 +85,7 @@ const variations = {
     }
   `,
   icon: css`
-    /* border-radius: 50%; */
     padding: 1rem;
-    /* &:hover {
-      color: var(--color-brand-600);
-    } */
 
     &:focus {
       outline: none;
@@ -193,7 +188,7 @@ type ButtonProps = {
 const StyledButton = styled.button<ButtonProps>`
   border: none;
   border-radius: var(--border-radius-sm);
-  /* box-shadow: var(--shadow-sm); */
+
   background: none;
   display: flex;
   align-items: center;

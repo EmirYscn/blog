@@ -1,7 +1,8 @@
-import { NextFunction, Request, Response } from "express";
-import AppError from "../utils/appError";
-import { PrismaClientValidationError } from "@prisma/client/runtime/library";
 import { Prisma } from "@prisma/client";
+import { NextFunction, Request, Response } from "express";
+import { PrismaClientValidationError } from "@prisma/client/runtime/library";
+
+import AppError from "../utils/appError";
 
 // const handleCastErrorDB = (err) => {
 //   const message = `Invalid ${err.path}: ${err.value}.`;

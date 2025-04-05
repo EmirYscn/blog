@@ -61,7 +61,6 @@ function Filter({ filterField, navigateTo = "", options }: FilterProps) {
       newSearchParams.set(filterField, value);
     }
 
-    // setSearchParams(searchParams);
     navigate(`/${navigateTo}?${newSearchParams.toString()}`);
   }
 

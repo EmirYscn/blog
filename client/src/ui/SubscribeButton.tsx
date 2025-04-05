@@ -1,9 +1,11 @@
+import { useState } from "react";
+import toast from "react-hot-toast";
 import styled from "styled-components";
+
+import { useSubscribe } from "../hooks/useSubscribe";
+
 import Input from "./Input";
 import Button from "./Button";
-import { useState } from "react";
-import { useSubscribe } from "../hooks/useSubscribe";
-import toast from "react-hot-toast";
 
 const StyledSubscribeButton = styled.div`
   display: flex;

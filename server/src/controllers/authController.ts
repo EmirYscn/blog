@@ -1,12 +1,14 @@
+import { ROLE, User } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
-import * as userQueries from "../db/user.queries";
-import catchAsync from "../utils/catchAsync";
+import { validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 
-import passport, { generateToken } from "../strategies/passport";
-import { ROLE, User } from "@prisma/client";
-import { validationResult } from "express-validator";
+import catchAsync from "../utils/catchAsync";
 import AppError from "../utils/appError";
+
+import * as userQueries from "../db/user.queries";
+
+import passport, { generateToken } from "../strategies/passport";
 
 export const getCurrentUser = (
   req: Request,
@@ -80,7 +82,7 @@ export const login = async (
         return res.status(500).json({ error: "Internal server error" });
       }
       if (!user) {
-        return res.status(401).json({ error: "Invalid email or password" });
+        return next(new AppError("Invalid email or password", 401));
       }
       // Generate a JWT token
       const token = generateToken(user);

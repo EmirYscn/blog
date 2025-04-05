@@ -1,11 +1,10 @@
 import styled from "styled-components";
+
 import Logo from "../ui/Logo";
 import Heading from "../ui/Heading";
-
-import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
 import ResetPasswordFormEmail from "../ui/ResetPasswordFormEmail";
 
-const SignupLayout = styled.main<{ $isDarkMode?: boolean }>`
+const SignupLayout = styled.main`
   min-height: 100vh;
   display: grid;
   grid-template-columns: 48rem;
@@ -17,9 +16,8 @@ const SignupLayout = styled.main<{ $isDarkMode?: boolean }>`
 `;
 
 function ForgotPassword() {
-  const { isDarkMode } = useDarkMode();
   return (
-    <SignupLayout $isDarkMode={isDarkMode}>
+    <SignupLayout>
       <Logo />
       <Heading as="h4">Confirmation email will be sent to this email</Heading>
       <ResetPasswordFormEmail />

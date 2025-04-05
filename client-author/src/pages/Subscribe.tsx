@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Logo from "../ui/Logo";
 
+import Logo from "../ui/Logo";
 import SubscribeButton from "../ui/SubscribeButton";
 
 const StyledSubscribe = styled.div`

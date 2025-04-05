@@ -1,11 +1,15 @@
 import styled from "styled-components";
-import Button from "./Button";
-import { FaComment, FaCopy, FaHeart, FaShare } from "react-icons/fa6";
+import { Link } from "react-router";
+import { IoIosCopy } from "react-icons/io";
+import { FaComment, FaHeart } from "react-icons/fa6";
+
 import { Post } from "../types/types";
+
 import { useLikePost } from "../hooks/useLikePost";
 import { useUser } from "../hooks/useUser";
 import useCopyPostLink from "../hooks/useCopyPostLink";
-import { IoIosCopy } from "react-icons/io";
+
+import Button from "./Button";
 
 const StyledPostActions = styled.div`
   display: flex;
@@ -55,9 +59,11 @@ function PostActions({ post }: { post: Post }) {
         </Button>
       </LikeButtonWrapper>
       <CommentButtonWrapper>
-        <Button icon={<FaComment />} variation="icon">
-          <span>{post._count.comments}</span>
-        </Button>
+        <Link to={`/post/${post.id}`}>
+          <Button icon={<FaComment />} variation="icon">
+            <span>{post._count.comments}</span>
+          </Button>
+        </Link>
       </CommentButtonWrapper>
       <ShareButtonWrapper>
         <Button

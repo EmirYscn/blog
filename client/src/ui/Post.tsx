@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import DOMPurify from "dompurify";
+
 import { usePost } from "../hooks/usePost";
+
 import PostUserCard from "./PostUserCard";
 import Spinner from "./Spinner";
-import DOMPurify from "dompurify";
 import CommentBox from "./CommentBox";
 import Comments from "./Comments";
 import NavInfo from "./NavInfo";
@@ -10,13 +12,6 @@ import NavInfo from "./NavInfo";
 const StyledPost = styled.div`
   display: flex;
   flex-direction: column;
-  /* grid-template-rows: 1fr auto; */
-  /* height: 100vh; */
-  /* flex-direction: column; */
-  /* gap: 2rem; */
-  /* max-width: 60rem; */
-  /* width: 100%;
-  margin: 0 auto; */
 `;
 
 const PostContent = styled.div`
@@ -26,7 +21,6 @@ const PostContent = styled.div`
   width: 100%;
   margin: 0 auto;
   gap: 4rem;
-  /* flex-grow: 1; */
 `;
 
 const Intro = styled.div`

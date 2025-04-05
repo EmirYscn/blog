@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
+
 import { getProfile } from "../services/apiUser";
 
 export const useProfile = (id?: string) => {

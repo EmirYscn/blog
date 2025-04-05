@@ -1,8 +1,9 @@
-import Menus from "./Menus";
 import { useNavigate } from "react-router";
 import { useUser } from "../hooks/useUser";
 import { FaRegUser } from "react-icons/fa6";
 import { HiOutlineTrash } from "react-icons/hi2";
+
+import Menus from "./Menus";
 
 type PostMenusType = {
   postId: string;

@@ -24,9 +24,20 @@ const app: Application = express();
 // app.enable("trust proxy");
 
 // Implement CORS
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  process.env.CLIENT_AUTHOR_URL,
+].filter(Boolean); // remove undefined/null values
+
 const corsOptions = {
-  origin: process.env.NODE_ENV === "development" ? "*" : "*",
-  credentials: true, // Allow cookies & auth headers
+  origin: (origin: string | undefined, callback: Function) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
@@ -40,23 +51,20 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // Limit requests from same API
-// const limiter = rateLimit({
-//   max: 100,
-//   windowMs: 60 * 60 * 1000,
-//   message: "Too many requests from this IP, please try again in an hour!",
-// });
-// app.use("/api", limiter);
+if (process.env.NODE_ENV === "production") {
+  const limiter = rateLimit({
+    max: 100,
+    windowMs: 60 * 60 * 1000,
+    message: "Too many requests from this IP, please try again in an hour!",
+  });
+  app.use("/api", limiter);
+}
 
 // app middleware to use form body in post router
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../public")));
 
-// app.post("/upload-image", (req, res) => {
-//   console.log("in upload image");
-//   console.log(req.body);
-//   res.status(200).send();
-// });
 // Routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);

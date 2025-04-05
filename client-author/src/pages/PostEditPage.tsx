@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Post from "../ui/Post";
 
+import Post from "../ui/Post";
 import EditPost from "../ui/EditPost";
 
 const StyledPostEdit = styled.div`

@@ -1,6 +1,7 @@
+import { useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router";
+
 import { resetPassword as resetPasswordApi } from "../services/apiUser";
 
 export function useResetPassword() {

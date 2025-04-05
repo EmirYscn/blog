@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
-import { handleOAuthCallback } from "../services/apiAuth";
 import toast from "react-hot-toast";
+
+import { handleOAuthCallback } from "../services/apiAuth";
 
 const USER_QUERY_KEY = "user";
 
@@ -37,7 +38,6 @@ export function useOAuthCallback() {
           navigate("/", { replace: true });
         }, 100);
       } catch (error) {
-        console.error("OAuth login failed:", error);
         toast.error("Login failed, please try again.");
 
         // Ensure state update before navigation

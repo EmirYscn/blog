@@ -1,16 +1,18 @@
 import { Link } from "react-router";
-import styled from "styled-components";
-import Button from "./Button";
-import { useUser } from "../hooks/useUser";
-import ProfileImage from "./ProfileImage";
 import { useState } from "react";
+import styled from "styled-components";
+
+import { useUser } from "../hooks/useUser";
 import useCreateComment from "../hooks/useCreateComment";
+
+import Button from "./Button";
+import ProfileImage from "./ProfileImage";
 
 const StyledCommentBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  /* padding: 1.5rem; */
+
   border-radius: 12px;
   max-width: 600px;
   width: 100%;
@@ -22,7 +24,6 @@ const Head = styled.div`
   align-items: center;
 
   h3 {
-    /* font-size: 1.2rem; */
     font-weight: 600;
     color: var(--color-grey-800);
   }
@@ -34,7 +35,7 @@ const Comment = styled.textarea`
   border: 1px solid var(--color-grey-200);
   border-radius: 8px;
   resize: none;
-  /* font-size: 1rem; */
+
   min-height: 100px;
   transition: border 0.2s ease-in-out;
   overflow: auto;
@@ -42,15 +43,12 @@ const Comment = styled.textarea`
   &:focus {
     outline: none;
     border-color: var(--color-brand-600);
-    /* background-color: var(--color-white); */
   }
 `;
 
 const LoginPrompt = styled.div`
-  /* font-size: 0.9rem; */
   color: var(--color-grey-600);
-  /* text-align: center; */
-  /* padding: 0 1rem; */
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -112,7 +110,7 @@ function CommentBox({
       <Head>
         <h3>Reply</h3>
       </Head>
-      
+
       <Comment
         placeholder="Add your comment..."
         value={text}

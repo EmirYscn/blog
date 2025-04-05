@@ -38,12 +38,7 @@ type BackButtonProps = {
 
 function BackButton({ posContext = "settings", to }: BackButtonProps) {
   const navigate = useNavigate();
-  //   const location = useLocation();
-  //   const pathSegments = location.pathname.split("/");
-  //   pathSegments.shift();
-  //   const isSubRoot = pathSegments.length > 1;
-  //   const isSignup = pathSegments[0] === "signup";
-  //   const isProfile = pathSegments[0] === "profile";
+
   return (
     <StyledBackButton
       onClick={() => (to ? navigate(to) : navigate(-1))}

@@ -1,19 +1,22 @@
 import styled from "styled-components";
-import Button from "./Button";
-import { FaBookmark, FaComment, FaHeart, FaTrash } from "react-icons/fa6";
-import { Post } from "../types/types";
-import { useUser } from "../hooks/useUser";
-import Menus from "./Menus";
+import { Link, useNavigate } from "react-router";
 import { FaEdit } from "react-icons/fa";
 import { TbWorldUp } from "react-icons/tb";
-import { useUpdatePost } from "../hooks/useUpdatePost";
 import toast from "react-hot-toast";
 import { IoIosCopy } from "react-icons/io";
-import useCopyPostLink from "../hooks/useCopyPostLink";
+import { FaBookmark, FaComment, FaHeart, FaTrash } from "react-icons/fa6";
+
+import { Post } from "../types/types";
+
+import Menus from "./Menus";
+import Button from "./Button";
 import Modal from "./Modal";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
+
+import { useUser } from "../hooks/useUser";
+import { useUpdatePost } from "../hooks/useUpdatePost";
+import useCopyPostLink from "../hooks/useCopyPostLink";
 import { useDeletePost } from "../hooks/useDeletePost";
-import { useNavigate } from "react-router";
 import { useLikePost } from "../hooks/useLikePost";
 
 const StyledPostActions = styled.div`
@@ -118,9 +121,11 @@ function PostActions({ post }: { post: Post }) {
         </Button>
       </LikeButtonWrapper>
       <CommentButtonWrapper>
-        <Button icon={<FaComment />} variation="icon">
-          <span>{post._count.comments}</span>
-        </Button>
+        <Link to={`/post/${post.id}`}>
+          <Button icon={<FaComment />} variation="icon">
+            <span>{post._count.comments}</span>
+          </Button>
+        </Link>
       </CommentButtonWrapper>
       <ShareButtonWrapper>
         <Button

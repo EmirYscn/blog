@@ -1,11 +1,13 @@
-import styled from "styled-components";
-import Logo from "../ui/Logo";
-import Heading from "../ui/Heading";
-import LoginForm from "../ui/LoginForm";
-import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "react-router";
 import toast from "react-hot-toast";
+import styled from "styled-components";
+
+import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
+
+import Logo from "../ui/Logo";
+import Heading from "../ui/Heading";
+import LoginForm from "../ui/LoginForm";
 
 const LoginLayout = styled.main<{ $isDarkMode?: boolean }>`
   min-height: 100vh;

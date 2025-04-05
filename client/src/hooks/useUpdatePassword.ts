@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+
 import { UpdateUser } from "../types/types";
 import { updatePassword } from "../services/apiUser";
 

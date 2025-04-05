@@ -1,18 +1,19 @@
 import styled from "styled-components";
-import ProfileImage from "./ProfileImage";
+import { Link, useSearchParams } from "react-router";
+
+import { Post as PostType } from "../types/types";
 
 import { formatPostDate } from "../utils/formatPostDate";
+import { formatString } from "../utils/formatString";
 
 import Spinner from "./Spinner";
-import { Link, useSearchParams } from "react-router";
-import { Post as PostType } from "../types/types";
-import { formatString } from "../utils/formatString";
+import ProfileImage from "./ProfileImage";
 import PostActions from "./PostActions";
 import PostTags from "./PostTags";
 
 const StyledPosts = styled.div`
   margin-top: 3rem;
-  /* padding: 2rem; */
+
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 3rem;
@@ -22,7 +23,6 @@ const Author = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  /* flex-direction: column; */
 `;
 
 const Post = styled.div`

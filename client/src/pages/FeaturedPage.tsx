@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import FeaturedPosts from "../ui/FeaturedPosts";
 
 const StyledFeatured = styled.div`

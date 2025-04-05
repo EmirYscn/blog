@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import Logo from "./Logo";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
+
+import Logo from "./Logo";
 import SubscribeButton from "./SubscribeButton";
 
 const StyledFooter = styled.div`
@@ -13,7 +14,6 @@ const Container = styled.div`
   max-width: 120rem;
   margin: 0 auto;
   display: grid;
-  /* grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); */
   grid-template-columns: 30rem auto auto auto;
   gap: 3rem;
   background-color: var(--color-grey-50);

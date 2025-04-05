@@ -1,8 +1,9 @@
 import styled from "styled-components";
+
 import UserProfile from "../ui/UserProfile";
 
 const StyledProfile = styled.div`
-  height: 100%; // Ensure full height
+  height: 100%;
   display: flex;
   flex-direction: column;
 `;

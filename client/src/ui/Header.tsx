@@ -1,36 +1,33 @@
 import styled from "styled-components";
-import ProfileImage from "./ProfileImage";
-import { FaBars, FaRegBell } from "react-icons/fa6";
-import Button from "./Button";
-import Logo from "./Logo";
 import { Link, useNavigate } from "react-router";
-import { useUser } from "../hooks/useUser";
-import { useLogout } from "../hooks/useLogout";
-import DarkModeToggle from "./DarkModeToggle";
-import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
-import Menus from "./Menus";
 import { IoPerson, IoSettingsOutline } from "react-icons/io5";
 import { TbLogout } from "react-icons/tb";
 import { useState } from "react";
+import { FaBars, FaRegBell } from "react-icons/fa6";
+
+import ProfileImage from "./ProfileImage";
+import Button from "./Button";
+import Logo from "./Logo";
+import Menus from "./Menus";
+import DarkModeToggle from "./DarkModeToggle";
+
+import { useUser } from "../hooks/useUser";
+import { useLogout } from "../hooks/useLogout";
+
+import { useDarkMode } from "../contexts/DarkMode/ThemeContextProvider";
 
 const StyledHeader = styled.div<{ $isDarkMode?: boolean }>`
-  /* padding: 1rem 20rem; */
   padding: 1rem 0;
   background-color: var(--color-grey-50);
   box-shadow: var(--shadow-sm);
   z-index: 100;
-  /* border-bottom: 1px solid
-    ${(props) => (props.$isDarkMode ? "#d1a5864d" : "#1d5d914d")}; */
-  /* display: flex;
-  justify-content: space-between;
-  align-items: center; */
+
   @media (max-width: 768px) {
     padding: 1rem;
   }
 `;
 
 const Container = styled.div`
-  /* padding: 0 2rem; */
   max-width: 120rem;
   margin: 0 auto;
   width: 100%;
@@ -48,7 +45,7 @@ const ProfileContainer = styled.div`
   gap: 1rem;
 
   @media (max-width: 768px) {
-    display: none; /* Hide profile section on small screens */
+    display: none;
   }
 `;
 

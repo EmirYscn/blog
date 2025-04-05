@@ -133,6 +133,14 @@ html {
   scrollbar-width: none;
 }
 
+html.light-mode body {
+  background-color: #f9fafb;
+}
+
+html.dark-mode body {
+  background-color: #111827;
+}
+
 body {
   font-family: "Poppins", sans-serif;
   color: var(--color-grey-700);
