@@ -32,8 +32,6 @@ function FeaturedPosts() {
 
   if (isLoading) return <Spinner />;
 
-  if (featuredPosts?.length === 0) return null;
-
   return (
     <StyledFeaturedPosts>
       <Top>
