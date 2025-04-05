@@ -6,8 +6,7 @@ export const getPostComments = async (postId: string): Promise<Comment[]> => {
   try {
     const res = await api.get(`/api/v1/comments/post/${postId}`);
     return res.data.comments;
-  } catch (error) {
-    console.error("Comment error:", error);
+  } catch (error: unknown) {
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =
@@ -29,8 +28,7 @@ export const createComment = async (
       comment,
       parentCommentId,
     });
-  } catch (error) {
-    console.error("Comment error:", error);
+  } catch (error: unknown) {
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage = error.response?.data?.message || "Couldn't comment";
@@ -44,8 +42,7 @@ export const createComment = async (
 export const deleteComment = async (commentId: string) => {
   try {
     await api.delete(`/api/v1/comments/${commentId}`);
-  } catch (error) {
-    console.error("Comment deletion error:", error);
+  } catch (error: unknown) {
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =

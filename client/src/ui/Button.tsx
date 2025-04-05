@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { MouseEvent } from "../types/types";
 
 const sizes = {
   small: css`

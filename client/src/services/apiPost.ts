@@ -30,8 +30,7 @@ export const getFeaturedPosts = async ({
   try {
     const res = await api.get(url);
     return { posts: res.data.posts, count: res.data.count };
-  } catch (error) {
-    console.log(error);
+  } catch (error: unknown) {
     throw new Error("Couldn't fetch featured posts");
   }
 };
@@ -57,10 +56,9 @@ export const getAuthorPosts = async ({
 
   try {
     const res = await api.get(url);
-    console.log(res.data.posts);
+
     return { posts: res.data.posts, count: res.data.count };
-  } catch (error) {
-    console.log(error);
+  } catch (error: unknown) {
     throw new Error("Couldn't fetch posts");
   }
 };
@@ -69,8 +67,7 @@ export const getPosts = async (): Promise<Post[]> => {
   try {
     const res = await api.get("/api/v1/posts");
     return res.data.posts; // Axios automatically parses JSON
-  } catch (error) {
-    console.log(error);
+  } catch (error: unknown) {
     throw new Error("Couldn't fetch posts");
   }
 };
@@ -78,10 +75,9 @@ export const getPosts = async (): Promise<Post[]> => {
 export const getPost = async (postId: string): Promise<Post> => {
   try {
     const res = await api.get(`/api/v1/posts/${postId}`);
-    console.log(res);
+
     return res.data.post;
-  } catch (error) {
-    console.log(error);
+  } catch (error: unknown) {
     throw new Error("Couldn't fetch post");
   }
 };

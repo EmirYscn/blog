@@ -4,8 +4,7 @@ import { api } from "./apiAuth";
 export const likePost = async (postId: string) => {
   try {
     await api.post(`/api/v1/posts/${postId}/like`);
-  } catch (error) {
-    console.error("Like error:", error);
+  } catch (error: unknown) {
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =
@@ -20,8 +19,7 @@ export const likePost = async (postId: string) => {
 export const likeComment = async (commentId: string) => {
   try {
     await api.post(`/api/v1/comments/${commentId}/like`);
-  } catch (error) {
-    console.error("Like error:", error);
+  } catch (error: unknown) {
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =

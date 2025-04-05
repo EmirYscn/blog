@@ -4,8 +4,7 @@ import { api } from "./apiAuth";
 export const subscribe = async (email: string) => {
   try {
     await api.post("/api/v1/subscribe", { email });
-  } catch (error) {
-    console.error("Subscribe error:", error);
+  } catch (error: unknown) {
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =
