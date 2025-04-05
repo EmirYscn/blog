@@ -24,7 +24,7 @@ export class Email {
 
       return nodemailer.createTransport({
         host: "in-v3.mailjet.com",
-        port: 587,
+        port: 465,
         auth: {
           user: process.env.MAILJET_API_KEY,
           pass: process.env.MAILJET_API_SECRET,
