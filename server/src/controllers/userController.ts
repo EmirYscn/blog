@@ -149,7 +149,8 @@ export const requestPasswordReset = catchAsync(
     // Send email with reset link
     const resetURL = `${safeRedirect}/reset-password?token=${resetToken}`;
     try {
-      await new Email(user, resetURL).sendPasswordReset();
+      const emailTransporter = new Email(user, resetURL);
+      await emailTransporter.sendPasswordReset();
 
       res.status(200).json({
         status: "success",
