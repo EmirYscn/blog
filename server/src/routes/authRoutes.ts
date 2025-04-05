@@ -31,8 +31,6 @@ router.get("/google", (req, res, next) => {
     ? normalizedRedirect
     : normalizeUrl(CLIENT_URL);
 
-  console.log(redirect, normalizedRedirect, allowedRedirects, safeRedirect);
-
   const state = Buffer.from(
     JSON.stringify({ redirect: safeRedirect })
   ).toString("base64");
