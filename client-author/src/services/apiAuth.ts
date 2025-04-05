@@ -10,14 +10,14 @@ export const api = axios.create({
 
 // Request interceptor to add authorization header
 api.interceptors.request.use(
-  (config) => {
+  (config: any) => {
     const token = localStorage.getItem("jwt");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error: any) => Promise.reject(error)
 );
 
 export type LoginCredentials = {
@@ -36,7 +36,7 @@ export const getCurrentUser = async (): Promise<User> => {
   try {
     const res = await api.get("/api/v1/auth/getCurrentUser");
     return res.data.user;
-  } catch (error) {
+  } catch (error: unknown) {
     // If the token is invalid or expired, clear it
     if (axios.isAxiosError(error) && error.response?.status === 401) {
       localStorage.removeItem("jwt");
@@ -49,7 +49,7 @@ export const signup = async (data: SignupType) => {
   try {
     const res = await api.post("/api/v1/auth/signup", data);
     return res.data;
-  } catch (error) {
+  } catch (error: unknown) {
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage = error.response?.data?.message || "Couldn't signup";
@@ -65,7 +65,7 @@ export const login = async (data: LoginCredentials): Promise<User> => {
     const res = await api.post("/api/v1/auth/login", data);
     localStorage.setItem("jwt", res.data.token);
     return res.data.user;
-  } catch (error) {
+  } catch (error: unknown) {
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage = error.response?.data?.message || "Couldn't login";
@@ -97,7 +97,7 @@ export const handleOAuthCallback = (): { user: User; token: string } | null => {
       user: decoded.user,
       token: decoded.token,
     };
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Failed to parse OAuth callback data", error);
     return null;
   }

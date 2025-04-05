@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
-import { UpdateUser } from "../types/types";
+import { MouseEvent, UpdateUser } from "../types/types";
 
 import { useUser } from "../hooks/useUser";
 import { useProfile } from "../hooks/useProfile";
@@ -49,12 +49,6 @@ const BioInput = styled.textarea`
   }
 `;
 
-const ChangePhotoPara = styled.p`
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
 type UpdateProfile = UpdateUser;
 
 function ProfileSettings() {
@@ -73,8 +67,6 @@ function ProfileSettings() {
   const [isEdited, setIsEdited] = useState(false);
   const { update, isLoading: isUpdating } = useUpdateProfile();
 
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-
   useEffect(() => {
     if (user) {
       setValue("email", user.email || "");
@@ -82,28 +74,6 @@ function ProfileSettings() {
       setValue("bio", profile?.bio || "");
     }
   }, [user, setValue, profile]);
-
-  // function handleImageClick() {
-  //   if (fileInputRef.current) {
-  //     fileInputRef.current.click();
-  //   }
-  // }
-
-  // async function handleAvatarUpload(e: React.ChangeEvent<HTMLInputElement>) {
-  //   const file = e.target.files?.[0];
-
-  //   if (file) {
-  //     const formData = new FormData();
-  //     formData.append("avatar", file);
-
-  //     try {
-  //       // const userAvatar = await uploadAvatar(formData, user?.id);
-  //       // const refreshedAvatarUrl = `${userAvatar}?t=${Date.now()}`;
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // }
 
   async function onSubmit() {
     if (!user) return;
@@ -203,7 +173,7 @@ function ProfileSettings() {
 
           <FormRow>
             <Button
-              onClick={handleReset}
+              onClick={(e: MouseEvent) => handleReset(e)}
               variation="danger"
               disabled={isUpdating || !isEdited}
             >

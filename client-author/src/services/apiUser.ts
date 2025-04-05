@@ -6,7 +6,7 @@ export const getAuthor = async (): Promise<User> => {
   try {
     const res = await api.get("/api/v1/users/author");
     return res.data.author; // Axios automatically parses JSON
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error("Couldn't fetch author");
   }
 };
@@ -16,7 +16,7 @@ export const getProfile = async (profileId: string): Promise<Profile> => {
     const res = await api.get(`/api/v1/users/profile/${profileId}`);
 
     return res.data.profile;
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error("Couldn't fetch profile");
   }
 };
@@ -24,7 +24,7 @@ export const getProfile = async (profileId: string): Promise<Profile> => {
 export const updateProfile = async (body: Partial<UpdateUser>) => {
   try {
     await api.patch("/api/v1/users/updateProfile", body);
-  } catch (error) {
+  } catch (error: unknown) {
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =
@@ -41,7 +41,7 @@ export const updateProfile = async (body: Partial<UpdateUser>) => {
 export const updatePassword = async (body: Partial<UpdateUser>) => {
   try {
     await api.patch("/api/v1/users/updatePassword", body);
-  } catch (error) {
+  } catch (error: unknown) {
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =
@@ -58,7 +58,7 @@ export const updatePassword = async (body: Partial<UpdateUser>) => {
 export const forgotPassword = async (email: string) => {
   try {
     await api.post("/api/v1/users/forgotPassword", { email });
-  } catch (error) {
+  } catch (error: unknown) {
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =
@@ -76,7 +76,7 @@ export const resetPassword = async (token: string, password: string) => {
       password,
     });
     return res.data;
-  } catch (error) {
+  } catch (error: unknown) {
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =

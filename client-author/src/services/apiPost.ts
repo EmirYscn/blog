@@ -30,7 +30,7 @@ export const getFeaturedPosts = async ({
   try {
     const res = await api.get(url);
     return { posts: res.data.posts, count: res.data.count };
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error("Couldn't fetch featured posts");
   }
 };
@@ -55,7 +55,7 @@ export const getPublishedPosts = async ({
   try {
     const res = await api.get(url);
     return { posts: res.data.posts, count: res.data.count };
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error("Couldn't fetch published posts");
   }
 };
@@ -80,7 +80,7 @@ export const getUnpublishedPosts = async ({
   try {
     const res = await api.get(url);
     return { posts: res.data.posts, count: res.data.count };
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error("Couldn't fetch unpublished posts");
   }
 };
@@ -101,7 +101,7 @@ export const getAuthorPosts = async ({
   try {
     const res = await api.get(url);
     return { posts: res.data.posts, count: res.data.count };
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error("Couldn't fetch posts");
   }
 };
@@ -122,7 +122,7 @@ export const getUserPosts = async (
   try {
     const res = await api.get(url);
     return { posts: res.data.posts, count: res.data.count };
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error("Couldn't fetch posts");
   }
 };
@@ -131,7 +131,7 @@ export const getPosts = async (): Promise<Post[]> => {
   try {
     const res = await api.get("/api/v1/posts");
     return res.data.posts; // Axios automatically parses JSON
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error("Couldn't fetch posts");
   }
 };
@@ -140,7 +140,7 @@ export const getPost = async (postId: string): Promise<Post> => {
   try {
     const res = await api.get(`/api/v1/posts/${postId}`);
     return res.data.post;
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error("Couldn't fetch post");
   }
 };
@@ -148,7 +148,7 @@ export const getPost = async (postId: string): Promise<Post> => {
 export const createPost = async (postData: Partial<Post>) => {
   try {
     await api.post("/api/v1/posts", postData);
-  } catch (error) {
+  } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       const serverMessage =
         error.response?.data?.message || "Couldn't create post";
@@ -162,7 +162,7 @@ export const createPost = async (postData: Partial<Post>) => {
 export const updatePost = async (postId: string, body: Partial<Post>) => {
   try {
     await api.patch(`/api/v1/posts/${postId}`, body);
-  } catch (error) {
+  } catch (error: unknown) {
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =
@@ -177,7 +177,7 @@ export const updatePost = async (postId: string, body: Partial<Post>) => {
 export const deletePost = async (postId: string) => {
   try {
     await api.delete(`/api/v1/posts/${postId}`);
-  } catch (error) {
+  } catch (error: unknown) {
     // Extract error message from response
     if (axios.isAxiosError(error)) {
       const serverMessage =
