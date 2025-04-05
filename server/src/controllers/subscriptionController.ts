@@ -12,7 +12,6 @@ export const subscribe = catchAsync(
     if (!email) {
       throw new AppError("Email is required", 400);
     }
-    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     await subscriptionQueries.subscribe(email);
 
